@@ -63,7 +63,7 @@ abstract class G {
 	private FileWriter fw;
 	
 	/**Constructor G*/
-	public G(Edge edge, Node nodei, Node nodej, int i, int j){
+	/*public G(Edge edge, Node nodei, Node nodej, int i, int j){
 		numNodes();
 		numEdges();
 		putEdge(edge);
@@ -82,7 +82,7 @@ abstract class G {
 		adjacentVertices(i);
 		areAdjacent(nodei, nodej);
 		areAdjacent(i, j);
-	}
+	}*/
 	
 	/**Default constructor G initializes empty arrays of nodes and edges*/
 	public G(){
@@ -127,10 +127,13 @@ abstract class G {
 		}
 		
 		consolidateNodes(fnodes);
-		System.out.println("Number of Nodes: "+numOfNodes);
-		System.out.println("Number of Edges: "+numOfEdges);
+		System.out.println("\nNumber of Nodes: "+numOfNodes);
+		printNodeArray(cnodes);
 		
-		constructAM();
+		System.out.println("\nNumber of Edges: "+numOfEdges);
+		printEdgeArray(edges);
+		
+		constructAD();
 		print();
 		
 		inDegs = new Edge[0];
@@ -140,7 +143,7 @@ abstract class G {
 
 	abstract protected void print();
 	
-	abstract protected void constructAM();
+	abstract protected void constructAD();
 	
 	private Node[] consolidateNodes(Node[] fnodes){
 		/*DEBUG*///System.out.println("breakpoint");
@@ -168,13 +171,19 @@ abstract class G {
 		for(int n = 0; n < numOfNodes; n++){
 			cnodes[n] = tempNodes[n];
 		}
-		printNodeArray(cnodes);
+		//printNodeArray(cnodes);
 		return cnodes;
 	}
 	
 	private void printNodeArray(Node[] array){
 		for(int i = 0; i < array.length; i++){
 			System.out.println("index"+i+": "+array[i].getVLabel());
+		}
+	}
+	
+	private void printEdgeArray(Edge[] array){
+		for(int i = 0; i < array.length; i++){
+			System.out.println("index: "+i+" | adji: "+array[i].getAdjNodei().getVLabel()+" | adji: "+array[i].getAdjNodej().getVLabel()+" " );
 		}
 	}
 	
@@ -193,7 +202,6 @@ abstract class G {
 	protected void associateIndexWithVLabel(){
 		for(aiv = 0; aiv < cnodes.length; aiv++){
 			cnodes[aiv].setIndex(aiv); 
-			//System.out.println("index"+i+": "+array[i].getVLabel());
 		}
 	}
 	
@@ -283,7 +291,6 @@ abstract class G {
 	/**removeEdge(int i, int j): deletes the edge from i to j from the graph*/
 	private void removeEdge(int i, int j){
 		boolean found = false;
-		//Edge e = new Edge(i, j);
 		for(int k = 0; k <= edges.length - 1; k++){
 			if((i == edges[k].getAdjNodei().getVLabel())&&(j == edges[k].getAdjNodej().getVLabel())&&(k != (edges.length - 1))){
 				found = true;
@@ -343,10 +350,7 @@ abstract class G {
 	
 	/**adjacentVertices(Node: i): returns the nodes that are adjacent to i*/
 	private Node adjacentVertices(Node i){		
-		//if(existsEdge(i)){
-			
-		//}
-		return i;//adjNodes;
+		return i;
 	}
 	
 	/**adjacentVertices(int: i):  returns the nodes that are adjacent to i*/

@@ -25,12 +25,10 @@ public class AMDG extends G{
 	/**Constructor calls the super constructor and passes a file with graph data*/
 	public AMDG(boolean weighted, File inFile, int numOfLines, Edge[] fedges, Node[] fnodes){
 		super(weighted, inFile, numOfLines, fedges, fnodes);
-		System.out.println("\n\nInside AMDG Constructor");
-		constructAM();
-		print();
+		System.out.println("\nInside AMDG Constructor\n");
 	}
 	
-	protected void constructAM(){
+	protected void constructAD(){
 		/*DEBUG*///System.out.println("breakpoint: inside constructAM");
 		AM = new int[numNodes()][numNodes()];
 		associateIndexWithVLabel();
@@ -39,20 +37,26 @@ public class AMDG extends G{
 				AM[i][j] = 0;
 			}
 		}
-		//int c = 0;
 		/*DEBUG*///System.out.println("breakpoint: "+ getEdges()[k].getAdjNodei().getIndex());
-		for(int k = 0;  k < getEdges().length; k++){
+		/*DEBUG*///System.out.println("breakpoint: "+ numEdges());
+		for(int k = 0;  k < numEdges(); k++){
 			for(int p = 0; p < numNodes(); p++){
-				/*DEBUG*/System.out.println("breakpoint: cnode: "+ getCnodes()[p].getVLabel()+" adj: "+getEdges()[k].getAdjNodei().getVLabel());
+				/*DEBUG*///System.out.println("breakpoint: cnode: "+ getCnodes()[p].getVLabel()+"cnodeIndex: "+ getCnodes()[p].getIndex()+" adjiLabel: "+getEdges()[k].getAdjNodei().getVLabel()+""
+						//+" adjjLabel: "+getEdges()[k].getAdjNodej().getVLabel());
 				if(getCnodes()[p].getVLabel() == getEdges()[k].getAdjNodei().getVLabel()){
 					getEdges()[k].getAdjNodei().setIndex(getCnodes()[p].getIndex());
+					/*DEBUG*///System.out.println("breakpoint: adjiindex: "+ getEdges()[k].getAdjNodei().getIndex());
 				}
 				if(getCnodes()[p].getVLabel() == getEdges()[k].getAdjNodej().getVLabel()){
 					getEdges()[k].getAdjNodej().setIndex(getCnodes()[p].getIndex());
+					/*DEBUG*///System.out.println("breakpoint: adjjindex: "+ getEdges()[k].getAdjNodej().getIndex());
 				}
+				
 			}
-			AM[getEdges()[k].getAdjNodei().getIndex()][getEdges()[k].getAdjNodei().getIndex()] = 1;
-			/*DEBUG*/System.out.println("breakpoint: "+ getEdges()[k].getAdjNodei().getIndex());
+			int ai = getEdges()[k].getAdjNodei().getIndex();
+			int aj = getEdges()[k].getAdjNodej().getIndex();
+			AM[ai][aj] = 1;
+			/*DEBUG*///System.out.println("\nbreakpoint: adjiIndex"+ ai+" adjjIndex"+ aj+"\n");
 		}
 	}
 	
