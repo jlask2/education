@@ -48,7 +48,9 @@ abstract class G {
 	private int iinDegs;
 	private int ioutDegs;
 	private int idegrees;
+	private int aiv;
 	
+	private Node[] cnodes;
 	private Node[] nodes;
 	private Edge[] edges;
 	private Edge[] inDegs;
@@ -64,9 +66,10 @@ abstract class G {
 	public G(Edge edge, Node nodei, Node nodej, int i, int j){
 		numNodes();
 		numEdges();
+		putEdge(edge);
+		putEdge(i, j);
 		existsEdge(edge);
 		existsEdge(i, j);
-		putEdge(i, j);
 		removeEdge(edge);
 		removeEdge(i, j);
 		degree(nodei);
@@ -101,9 +104,10 @@ abstract class G {
 	
 	/**Constructor G accepts a file with graph data*/
 	public G(boolean weighted, File inFile, int numOfLines, Edge[] fedges, Node[] fnodes){
-		numOfNodes = 0;
+		//numOfNodes = 0;
 		numOfEdges = numOfLines;
-		System.out.println("Number of Edges: "+numOfEdges);
+		//System.out.println("Number of Edges: "+numOfEdges);
+		//System.out.println("Number of Nodes: "+numOfNodes);
 		
 		inodes = 0;
 		iedges = 0;
@@ -122,18 +126,84 @@ abstract class G {
 			System.out.println("No Raw Data To Print");
 		}
 		
+		consolidateNodes(fnodes);
+		System.out.println("Number of Nodes: "+numOfNodes);
+		System.out.println("Number of Edges: "+numOfEdges);
+		
+		constructAM();
+		print();
+		
 		inDegs = new Edge[0];
 		outDegs = new Edge[0];
 		degrees = new Edge[0];
 	}
 
+	abstract protected void print();
+	
+	abstract protected void constructAM();
+	
+	private Node[] consolidateNodes(Node[] fnodes){
+		/*DEBUG*///System.out.println("breakpoint");
+		boolean duplicate = false;
+		Node[] tempNodes = new Node[fnodes.length];
+		for(int p = 0; p < tempNodes.length; p++){
+			/*DEBUG*///System.out.println("breakpoint");
+			tempNodes[p] = new Node(0);
+		}
+		/*DEBUG*///System.out.println("breakpoint");
+		for(int k = 0; k < fnodes.length; k++){
+			duplicate = false;
+			/*DEBUG*///System.out.println("breakpoint");
+			for(int t = 0; t < tempNodes.length; t++){
+				if(fnodes[k].getVLabel() == tempNodes[t].getVLabel()){
+					duplicate = true;
+				}
+			}
+			if(duplicate == false){
+				tempNodes[numOfNodes] = fnodes[k];
+				numOfNodes++;
+			}
+		}
+		cnodes = new Node[numOfNodes];
+		for(int n = 0; n < numOfNodes; n++){
+			cnodes[n] = tempNodes[n];
+		}
+		printNodeArray(cnodes);
+		return cnodes;
+	}
+	
+	private void printNodeArray(Node[] array){
+		for(int i = 0; i < array.length; i++){
+			System.out.println("index"+i+": "+array[i].getVLabel());
+		}
+	}
+	
+	protected Node[] getCnodes(){
+		return cnodes;
+	}
+	
+	protected Node[] getNodes(){
+		return nodes;
+	}
+	
+	protected Edge[] getEdges(){
+		return edges;
+	}
+	
+	protected void associateIndexWithVLabel(){
+		for(aiv = 0; aiv < cnodes.length; aiv++){
+			cnodes[aiv].setIndex(aiv); 
+			//System.out.println("index"+i+": "+array[i].getVLabel());
+		}
+	}
+	
 	/**numNodes( ) – returns the number of nodes*/
-	private int numNodes(){
+	protected int numNodes(){
 		return numOfNodes;
 	}
 	
 	/**numEdges( ) : returns the number of edges*/
-	private int numEdges(){
+	protected int numEdges(){
 		return numOfEdges;
 	}
 	
@@ -287,7 +357,14 @@ abstract class G {
 	
 	/**areAdjacent(Node i, Node j): returns true if the nodes i and j are adjacent else returns false.*/
 	private boolean areAdjacent(Node i, Node j){
-		if(true){
+		Edge e = new Edge(i, j);
+		boolean found = false;
+		for(int k = 0; k < numOfEdges; k++){
+			if(e.equals(edges[k])){
+				found = true;
+			}
+		}
+		if(found == true){
 			return true;
 		}else{
 			return false;
@@ -296,15 +373,11 @@ abstract class G {
 	
 	/**areAdjacent(int i, int j): returns true if the nodes i and j are adjacent else returns false.*/
 	private boolean areAdjacent(int i, int j){
-		if(true){
-			return true;
-		}else{
-			return false;
-		}
+		return existsEdge(i, j);
 	}
 	
 	private void printRawUnWeightedData(Node[] fnodes, Edge[] fedges) {
-		System.out.println("Un-Weighted");
+		System.out.println("\nUn-Weighted");
 		int k = 0;
 		for(int i = 0; i < numOfEdges; i++){
 			System.out.println(fnodes[k].getVLabel() +" "+fnodes[k+1].getVLabel());
@@ -313,7 +386,7 @@ abstract class G {
 	}
 
 	private void printRawWeightedData(Node[] fnodes, Edge[] fedges) {
-		System.out.println("Weighted");
+		System.out.println("\nWeighted");
 		int k = 0;
 		for(int i = 0; i < numOfEdges; i++){
 			System.out.println(fnodes[k].getVLabel() +" "+fnodes[k+1].getVLabel()+" "+fedges[i].getWeight());

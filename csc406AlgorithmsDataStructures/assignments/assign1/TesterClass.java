@@ -129,12 +129,12 @@ class TesterClass {
 	     
 	                  buffIn = new BufferedReader(fileIn = new FileReader(inFile));
 	           
-	                  System.out.println("breakpoint1: ");//+ buffIn.lines().count());
+	                  /*DEBUG*///System.out.println("breakpoint1: ");//+ buffIn.lines().count());
 	                  
 	                  do {
 	                	  
 	                	  token = new StringTokenizer(buffIn.readLine());
-	                	  System.out.println("breakpoint2" + token.countTokens());
+	                	  /*DEBUG*///System.out.println("breakpoint2" + token.countTokens());
 		  	              if(token != null){
 		                	  if(token.countTokens() == 2){
 			  	            	  numOfTokens[0] = token.countTokens();
@@ -149,7 +149,7 @@ class TesterClass {
 			  	            	  Node nodei = new Node(Integer.parseInt(token.nextToken()));
 			  	            	  Node nodej = new Node(Integer.parseInt(token.nextToken()));
 			  	            	  Edge edge = new Edge(nodei, nodej);
-			  	            	System.out.println("breakpoint2.3");
+			  	            	/*DEBUG*///System.out.println("breakpoint2.3");
 			  	            	  fnodes[nodeNum] = nodei;
 			  	            	  nodeNum++;
 			  	            	  fnodes[nodeNum] = nodej;
@@ -172,7 +172,7 @@ class TesterClass {
 		              			  difference = true;
 	              		      }
 		  	              }
-			  	        System.out.println("breakpoint2.5");
+		  	            /*DEBUG*///System.out.println("breakpoint2.5");
 	                  }while((token != null) && (difference != true));//((!(token = new StringTokenizer(buffIn.readLine())).equals(""))&&(token != null)){
 	                  
 		                  if(difference == true){
@@ -180,7 +180,7 @@ class TesterClass {
 		                  }
 	                 
 	                 }catch(NullPointerException np){
-	                  System.out.println("breakpoint3");
+	                	 /*DEBUG*///System.out.println("breakpoint3");
 		          		if((!difference)&&(weighted)&&(numOfLines != 0)){
 		          			ALWDG alwdg = new ALWDG(weighted, inFile, numOfLines, fedges, fnodes);
 		          			AMWDG amwdg = new AMWDG(weighted, inFile, numOfLines, fedges, fnodes);
@@ -193,13 +193,13 @@ class TesterClass {
 		          		buffIn.close();
 	                 }
 	               }else{
-	            	   System.out.println("breakpoint4");
+	            	   /*DEBUG*///System.out.println("breakpoint4");
 	                  System.out.println("Failed to create a valid File. \n"+
 	                         "Reading from File in current working directory: inFileD.txt");
 	                  fileIn = new FileReader("inFileD.txt");         
 	               }
 	            }else{
-	            	System.out.println("breakpoint5");
+	            	/*DEBUG*///System.out.println("breakpoint5");
 	            	buffIn = new BufferedReader(fileIn = new FileReader(inFile));
 	            	buffIn.mark(100);
 	            	int lineNum = Integer.valueOf(Long.toString(buffIn.lines().count()));
@@ -208,12 +208,12 @@ class TesterClass {
 	                  buffIn.reset();
 	              try{ 
 	            	 
-	                  System.out.println("breakpoint1.2: ");//+ buffIn.lines().count());
+	            	  /*DEBUG*///System.out.println("breakpoint1.2: ");//+ buffIn.lines().count());
 	                  
 	                  do {
 	                	  
 	                	  token = new StringTokenizer(buffIn.readLine());
-	                	  System.out.println("breakpoint2.2");
+	                	  /*DEBUG*///System.out.println("breakpoint2.2");
 		  	              if(token != null){
 		                	  if(token.countTokens() == 2){
 			  	            	  numOfTokens[0] = token.countTokens();
@@ -251,7 +251,7 @@ class TesterClass {
 		              			  difference = true;
 	              		      }
 		  	              }
-			  	        System.out.println("breakpoint2.5.2");
+		  	            /*DEBUG*///System.out.println("breakpoint2.5.2");
 	                  }while((token != null) && (difference != true));//((!(token = new StringTokenizer(buffIn.readLine())).equals(""))&&(token != null)){
 	                  
 		                  if(difference == true){
@@ -259,7 +259,7 @@ class TesterClass {
 		                  }
 		                  
 	                 }catch(NullPointerException np){
-	                  System.out.println("breakpoint3");
+	                	 /*DEBUG*///System.out.println("breakpoint3");
 		          		if((!difference)&&(weighted)&&(lineNum != 0)){
 		          			ALWDG alwdg = new ALWDG(weighted, inFile, lineNum, fedges, fnodes);
 		          			AMWDG amwdg = new AMWDG(weighted, inFile, lineNum, fedges, fnodes);
@@ -273,7 +273,7 @@ class TesterClass {
 	                 }
 	            }
 	         }catch(FileNotFoundException f){
-	        	 System.out.println("breakpoint6");
+	        	 /*DEBUG*///System.out.println("breakpoint6");
 	            System.out.println("Failed to create a valid File. "+
 	                               "Reading from File in current working directory: inFileD.txt");
 	                  fileIn = new FileReader("inFileD.txt");
