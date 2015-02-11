@@ -1,3 +1,13 @@
+/************************************
+ * Jason Laske
+ * Professor Rajasethupathy
+ * CSC 406 01 Spring 2015
+ * Assignment 1
+ * Date Assigned: 1/25/2015
+ * Date Due: 2/11/2015
+ * Date Submitted: 2/11/2015 
+ ***********************************/
+
 package poset;
 
 public class Node {
@@ -6,19 +16,26 @@ public class Node {
 	private int degOfNode;
 	private int inDegOfNode;
 	private int outDegOfNode;
+	private int vLabel;
 	
 	/**Constructor Node */
 	public Node(){
 		degOfNode = 0;
 		inDegOfNode = 0;
 		outDegOfNode = 0;
+		vLabel = 0;
 	}
 	
 	/**Constructor Node with parameters */
-	public Node(int degOfNode, int inDegOfNode, int outDegOfNode){
+	public Node(int degOfNode, int inDegOfNode, int outDegOfNode, int vlabel){
 		this.degOfNode = degOfNode;
 		this.inDegOfNode = inDegOfNode;
 		this.outDegOfNode = outDegOfNode;
+		this.vLabel = vLabel;
+	}
+	
+	public Node(int vLabel){
+		this.vLabel = vLabel;
 	}
 	
 	/**Mutator Methods*/
@@ -34,6 +51,10 @@ public class Node {
 		this.outDegOfNode = outDegOfNode;
 	}
 	
+	protected void setVLabel(int vLabel){
+		this.vLabel = vLabel;
+	}
+	
 	/**Accessor Methods*/
 	protected int getDegOfNode(){
 		return degOfNode;
@@ -46,4 +67,9 @@ public class Node {
 	protected int getOutDegOfNode(){
 		return outDegOfNode;
 	}
+	
+	protected int getVLabel(){
+		return vLabel;
+	}
+
 }

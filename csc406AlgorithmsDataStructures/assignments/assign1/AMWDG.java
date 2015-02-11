@@ -10,7 +10,19 @@
 
 package poset;
 
-/**Adjacecy Matrix Weighted Directed Graph*/
-public class AMWDG {
+import java.io.File;
 
+/**Adjacecy Matrix Weighted Directed Graph*/
+public class AMWDG extends G{
+
+	/**Default constructor calls the super default constructor and initializes an empty graph*/
+	public AMWDG(){
+		super();
+	}
+	
+	/**Constructor calls the super constructor and passes a file with graph data*/
+	public AMWDG(boolean weighted, File inFile, int numOfLines, Edge[] fedges, Node[] fnodes){
+		super(weighted, inFile, numOfLines, fedges, fnodes);
+		System.out.println("Inside AMWDG Constructor");
+	}
 }
