@@ -13,35 +13,35 @@ package poset;
 public class Edge {
 
 	/**private data members*/
+	private int eLabel = 0;
 	private int weight;
 	private Node adjNodei;
 	private Node adjNodej;
-	private int eLabel = 0;
 	
 	/**Constructor Edge */
 	public Edge(){
+		eLabel = 0;
 		weight = 0;
 		adjNodei = null;
 		adjNodej = null;
-		eLabel = 0;
 	}
 	
 	/**Constructor Edge with parameters for weighted*/
-	public Edge(int weight, Node adjNodei, Node adjNodej, int eLabel){
+	public Edge(int eLabel, int weight, Node adjNodei, Node adjNodej){
+		this.eLabel = eLabel;
 		this.weight = weight;
 		this.adjNodei = adjNodei;
 		this.adjNodej = adjNodej;
-		this.eLabel = eLabel;
 	}
 	
 	/**Constructor Edge with parameters for weighted*/
 	public Edge(int i, int j, int weight){
+		this.eLabel = eLabel++;
 		this.weight = weight;
 		Node nodei = new Node(i);
 		adjNodei = nodei;
 		Node nodej = new Node(j);
 		adjNodej = nodej;
-		this.eLabel = eLabel++;
 	}
 	
 	/**Constructor Edge with parameters for weighted*/
@@ -53,11 +53,11 @@ public class Edge {
 	
 	/**Constructor Edge with parameters for unweighted*/
 	public Edge(int i, int j){
+		this.eLabel = eLabel++;
 		Node nodei = new Node(i);
 		adjNodei = nodei;
 		Node nodej = new Node(j);
 		adjNodej = nodej;
-		this.eLabel = eLabel++;
 	}
 	
 	/**Constructor Edge with parameters for unweighted*/
@@ -66,9 +66,11 @@ public class Edge {
 		this.adjNodej = adjNodej;
 	}
 	
-	
-	
 	/**Mutator Methods*/
+	protected void seteLabel(int eLabel){
+		this.eLabel = eLabel;
+	}
+	
 	protected void setWeight(int weight){
 		this.weight = weight;
 	}
@@ -82,6 +84,10 @@ public class Edge {
 	}
 	
 	/**Accessor Methods*/
+	protected int geteLabel(){
+		return eLabel;
+	}
+	
 	protected int getWeight(){
 		return weight;
 	}

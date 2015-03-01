@@ -22,6 +22,22 @@ import java.util.StringTokenizer;
 
 import javax.swing.SwingUtilities;
 
+class TesterClass {
+    
+	public static void main(String[] args) {
+	  SwingUtilities.invokeLater(new Runnable()
+	  {
+		  public void run(){
+			  start();
+		  }
+	  });
+	}
+
+	protected static void start() {
+		new FileIO();
+	}
+}
+
 /*
 CSC406Assignment#1:  	Due on or before February 11, 2015		rajasethupathy
 
@@ -64,222 +80,62 @@ General instructions:
 12.	Program has to be tested for at least one positive and one negative result.
 13.	Submit readable hard copy and flash-drive versions of the source code, input data, test data and a test run.
 14.	Seek immediate help if you need help in understanding/implementing your project.
+
+*************************************************************************************************************************
+
+CSC406Assignment#2 	¬¬¬	Due on or before March 4, 2015		raj 
+
+Implement the following algorithms:
+
+1.	Topological sort.
+2.	Kruskal’s algorithm for finding a MST.
+
+This assignment needs the implementation of undirected and weighted ( > 0 ) graphs. Such a graph must be implemented in both matrix and list representations. Must use Java’s PriorityQueue to implement a heap. This project needs to be built on top of the first assignment. 
+
+As usual pay attention to the following additional requirements. More may be added to this list after I look through your first assignment.
+ 
+1.	Clearly highlight the Assignment#2 code. 
+2.	Don’t maintain a collection of edges. Maintaining such a collection is yet another way of representing a graph. We want to use only two rerpesentations of a  graph, namely, adjacency matrix and adjacency list representations. Storing the edges within each of these representations is redundant, and redundancy can lead to data integrity problems in addition to increasing the memory requirement by one hundred percent.
+3.	Correctness of the code alone is not sufficient for full credit. Be aware of complexity of your code.
+4.	Using an arrayList is generally costlier than using an array. So, if you know the size of the collection then use an array for the collection instead of an arrayList.
+5.	Use Iterators wherever you have to step through each element of a collection from beginning to end. Using an iterator is very simple. Here is a skeleton code.
+
+         ArrayList<Node>   aList;
+         Iterator<Node>   ite  =  aList.iterator( );   //note the case for i in iterator
+        // repeat if there are more elements in the collection
+        while (ite.hasNext( )  )  {                    
+Node node  =  ite.next(  );	//get the next element from the collection
+	     …		   		//process node.
+            }
+  
+6.	Provide appropriate documentation to explain complex code.
+7.	When operating on a collection (such as an ArrayList ) write your own method only if an equivalent method is not available in the API listing for that collection. 
+8.	While implementing Topological Sort don’t remove the edge from the graph every time through the loop. It is generally desirable to preserve the input as much as possible. So, don’t remove the edge from the graph; instead, simply adjust the inDegree.
+9.	Operations such as search or delete elements from a collection involves comparison for equality between objects. So, don’t forget to add an equals method to the class whose instances may have to be compared.
+
+For example, given the collection  ArrrayList<Node>   aList;
+To perfrom a search on aList using contains method, aList.contains(n), you must have an equals method in the Node class with the following signature.
+
+    public  boolean  equal(Object   node)  {          //note the type of the parameter
+          Node   n1  =  (Node)  node;               // cast the parameter before use
+          ….
+} 
+
+10.	In all versions of your program include your name, course#, semester, and assignment# along with date assigned and date submitted.
+11.	Seek immediate help if you need help in understanding/implementing your project.
+
+Addendum to assignment 2 instructions
+
+1.	hard copies of several projects were simply unreadable. So here are some additional guidelines. 
+print your hard copies with at least 12 font Times New Roman.
+Print only one page of code on one side of the paper.
+If lines are wrapped around, print in landscape.
+You may print on both sides of the paper.
+Arrange your classes in the level-order traversal of the  inheritance hierarchy.
+
+2.	In assignment 1, you are asked to implement only two representations of a graph: adjacency matrix and adjacency list. 
+storing all the edges of a graph is a third representation of the graph. It should not be done. Modify your accordingly in assignment 2.
+3.	 Even if left unstated, in every class it is strongly recommended to include toString() and equals().
+4.	 If you use your own helper methods, you must document it well.
+5.	Those of you who did not implement a range check, do it in assignment 2 by including a method in the root class.
 */
-
-class TesterClass {
-
-	private static BufferedReader br;
-	private static BufferedWriter bw;
-	private static FileReader fr;
-	private static FileWriter fw;
-	private static StringTokenizer token;
-    private static BufferedWriter buffOut;
-    private static BufferedReader buffIn;
-    private static FileWriter fileOut;
-    private static FileReader fileIn;
-    
-	public static void main(String[] args) {
-	  SwingUtilities.invokeLater(new Runnable()
-	  {
-		  public void run(){
-			  start();
-		  }
-	  });
-	}
-
-	protected static void start() {
-		//local variables
-	      Scanner sc1;
-	      String line;
-	      int numOfLines = 0;
-	      
-	      boolean weighted = false;
-          boolean difference = false;
-          int edgeNum = 0;
-          int nodeNum = 0;
-          int[] numOfTokens = {0, 0};
-		
-		//****HANDLE THE CASE OF INVALID SPECIFIED FILE WITH A DEFAULT FILE AND FILE CREATION(createNewFile)****//
-	      try{
-	         System.out.println("Please specify the name of the file you would like to read from or create. i.e. 'inFileX'\n");
-	         sc1 = new Scanner(System.in);
-	         String fileInName = sc1.nextLine();
-	         
-	         File inFile = new File(fileInName+".txt");
-	         /**DEBUG*///System.out.println(fileInName);   
-	         try{
-	            if(!(inFile.exists())){
-	               if(inFile.createNewFile()){
-	                  System.out.println("Please enter in the contents of the file. Hit enter twice in a row when you are finished: \n");
-	                  buffOut = new BufferedWriter(fileOut = new FileWriter(inFile));
-	                  sc1 = new Scanner(System.in);
-	                  while(!(line = sc1.nextLine()).equals("")){
-	                     /**DEBUG*///System.out.println(line);
-	                	 numOfLines++;
-	                     buffOut.write(line);
-	                     buffOut.newLine();
-	                     sc1 = new Scanner(System.in);   
-	                  }
-	                  
-	                  buffOut.close();
-	                  Edge[] fedges = new Edge[numOfLines];
-	                  Node[] fnodes = new Node[numOfLines*2];
-	                  
-	              try{ 
-	     
-	                  buffIn = new BufferedReader(fileIn = new FileReader(inFile));
-	           
-	                  /*DEBUG*///System.out.println("breakpoint1: ");//+ buffIn.lines().count());
-	                  
-	                  do {
-	                	  
-	                	  token = new StringTokenizer(buffIn.readLine());
-	                	  /*DEBUG*///System.out.println("breakpoint2" + token.countTokens());
-		  	              if(token != null){
-		                	  if(token.countTokens() == 2){
-			  	            	  numOfTokens[0] = token.countTokens();
-			  	              }else if(token.countTokens() == 3){
-			  	            	  numOfTokens[1] = token.countTokens();
-			  	              }else{
-			  	            	  numOfTokens[0] = 0;
-			  	            	  numOfTokens[1] = 0;
-			  	            	  difference = true;
-			  	              }
-			  	              if((difference != true) && (numOfTokens[0] == 2) && (numOfTokens[1] == 0)){
-			  	            	  Node nodei = new Node(Integer.parseInt(token.nextToken()));
-			  	            	  Node nodej = new Node(Integer.parseInt(token.nextToken()));
-			  	            	  Edge edge = new Edge(nodei, nodej);
-			  	            	/*DEBUG*///System.out.println("breakpoint2.3");
-			  	            	  fnodes[nodeNum] = nodei;
-			  	            	  nodeNum++;
-			  	            	  fnodes[nodeNum] = nodej;
-			  	            	  nodeNum++;
-			  	            	  fedges[edgeNum] = edge;
-			  	            	  edgeNum++;
-			  	            	  weighted = false;
-			  	              }else if((difference != true) && (numOfTokens[1] == 3) && (numOfTokens[0] == 0)){
-			  	            	  Node nodei = new Node(Integer.parseInt(token.nextToken()));
-			  	            	  Node nodej = new Node(Integer.parseInt(token.nextToken()));
-			  	            	  Edge edge = new Edge(nodei, nodej, Integer.parseInt(token.nextToken()));
-			  	            	  fnodes[nodeNum] = nodei;
-			  	            	  nodeNum++;
-			  	            	  fnodes[nodeNum] = nodej;
-			  	            	  nodeNum++;
-			  	            	  fedges[edgeNum] = edge;
-			  	            	  edgeNum++;
-			  	            	  weighted = true;
-			  	              }else if(((numOfTokens[0] == 2) && (numOfTokens[1] == 3))||((numOfTokens[0] == 0) && (numOfTokens[1] == 0))){
-		              			  difference = true;
-	              		      }
-		  	              }
-		  	            /*DEBUG*///System.out.println("breakpoint2.5");
-	                  }while((token != null) && (difference != true));//((!(token = new StringTokenizer(buffIn.readLine())).equals(""))&&(token != null)){
-	                  
-		                  if(difference == true){
-		                	  System.out.println("Erroneous input");
-		                  }
-	                 
-	                 }catch(NullPointerException np){
-	                	 /*DEBUG*///System.out.println("breakpoint3");
-		          		if((!difference)&&(weighted)&&(numOfLines != 0)){
-		          			ALWDG alwdg = new ALWDG(weighted, inFile, numOfLines, fedges, fnodes);
-		          			AMWDG amwdg = new AMWDG(weighted, inFile, numOfLines, fedges, fnodes);
-		          		}else if((!difference)&&(!weighted)&&(numOfLines != 0)){
-		          			ALDG aldg = new ALDG(weighted, inFile, numOfLines, fedges, fnodes);
-		          			AMDG amdg = new AMDG(weighted, inFile, numOfLines, fedges, fnodes);
-		          		}else{
-		          			System.out.println("Erroneous input");
-		          		}
-		          		buffIn.close();
-	                 }
-	               }else{
-	            	   /*DEBUG*///System.out.println("breakpoint4");
-	                  System.out.println("Failed to create a valid File. \n"+
-	                         "Reading from File in current working directory: inFileD.txt");
-	                  fileIn = new FileReader("inFileD.txt");         
-	               }
-	            }else{
-	            	/*DEBUG*///System.out.println("breakpoint5");
-	            	buffIn = new BufferedReader(fileIn = new FileReader(inFile));
-	            	buffIn.mark(100);
-	            	int lineNum = Integer.valueOf(Long.toString(buffIn.lines().count()));
-	                  Edge[] fedges = new Edge[lineNum];
-	                  Node[] fnodes = new Node[lineNum*2];
-	                  buffIn.reset();
-	              try{ 
-	            	 
-	            	  /*DEBUG*///System.out.println("breakpoint1.2: ");//+ buffIn.lines().count());
-	                  
-	                  do {
-	                	  
-	                	  token = new StringTokenizer(buffIn.readLine());
-	                	  /*DEBUG*///System.out.println("breakpoint2.2");
-		  	              if(token != null){
-		                	  if(token.countTokens() == 2){
-			  	            	  numOfTokens[0] = token.countTokens();
-			  	              }else if(token.countTokens() == 3){
-			  	            	  numOfTokens[1] = token.countTokens();
-			  	              }else{
-			  	            	  numOfTokens[0] = 0;
-			  	            	  numOfTokens[1] = 0;
-			  	            	  difference = true;
-			  	              }
-		                	  
-			  	              if((difference != true) && (numOfTokens[0] == 2) && (numOfTokens[1] == 0)){
-			  	            	  Node nodei = new Node(Integer.parseInt(token.nextToken()));
-			  	            	  Node nodej = new Node(Integer.parseInt(token.nextToken()));
-			  	            	  Edge edge = new Edge(nodei, nodej);
-			  	            	  fnodes[nodeNum] = nodei;
-			  	            	  nodeNum++;
-			  	            	  fnodes[nodeNum] = nodej;
-			  	            	  nodeNum++;
-			  	            	  fedges[edgeNum] = edge;
-			  	            	  edgeNum++;
-			  	            	  weighted = false;
-			  	              }else if((difference != true) && (numOfTokens[1] == 3) && (numOfTokens[0] == 0)){
-			  	            	  Node nodei = new Node(Integer.parseInt(token.nextToken()));
-			  	            	  Node nodej = new Node(Integer.parseInt(token.nextToken()));
-			  	            	  Edge edge = new Edge(nodei, nodej, Integer.parseInt(token.nextToken()));
-			  	            	  fnodes[nodeNum] = nodei;
-			  	            	  nodeNum++;
-			  	            	  fnodes[nodeNum] = nodej;
-			  	            	  nodeNum++;
-			  	            	  fedges[edgeNum] = edge;
-			  	            	  edgeNum++;
-			  	            	  weighted = true;
-			  	              }else if(((numOfTokens[0] == 2) && (numOfTokens[1] == 3))||((numOfTokens[0] == 0) && (numOfTokens[1] == 0))){
-		              			  difference = true;
-	              		      }
-		  	              }
-		  	            /*DEBUG*///System.out.println("breakpoint2.5.2");
-	                  }while((token != null) && (difference != true));//((!(token = new StringTokenizer(buffIn.readLine())).equals(""))&&(token != null)){
-	                  
-		                  if(difference == true){
-		                	  System.out.println("Erroneous input");
-		                  }
-		                  
-	                 }catch(NullPointerException np){
-	                	 /*DEBUG*///System.out.println("breakpoint3");
-		          		if((!difference)&&(weighted)&&(lineNum != 0)){
-		          			ALWDG alwdg = new ALWDG(weighted, inFile, lineNum, fedges, fnodes);
-		          			AMWDG amwdg = new AMWDG(weighted, inFile, lineNum, fedges, fnodes);
-		          		}else if((!difference)&&(!weighted)&&(lineNum != 0)){
-		          			ALDG aldg = new ALDG(weighted, inFile, lineNum, fedges, fnodes);
-		          			AMDG amdg = new AMDG(weighted, inFile, lineNum, fedges, fnodes);
-		          		}else{
-		          			System.out.println("Erroneous input");
-		          		}
-		          		buffIn.close();
-	                 }
-	            }
-	         }catch(FileNotFoundException f){
-	        	 /*DEBUG*///System.out.println("breakpoint6");
-	            System.out.println("Failed to create a valid File. "+
-	                               "Reading from File in current working directory: inFileD.txt");
-	                  fileIn = new FileReader("inFileD.txt");
-	         }
-	      }catch(IOException io){
-	         io.printStackTrace(); 
-	      }
-	}
-}

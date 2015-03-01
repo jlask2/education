@@ -12,7 +12,6 @@ package poset;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 
@@ -41,26 +40,10 @@ areAdjacent(int i, int j): returns true if the nodes i and j are adjacent else r
 abstract class G {
 	
 	/**private data members*/
+	BufferedReader br;
+	private int type;
 	private int numOfEdges;
 	private int numOfNodes;
-	private int inodes;
-	private int iedges;
-	private int iinDegs;
-	private int ioutDegs;
-	private int idegrees;
-	private int aiv;
-	
-	private Node[] cnodes;
-	private Node[] nodes;
-	private Edge[] edges;
-	private Edge[] inDegs;
-	private Edge[] outDegs;
-	private Edge[] degrees;
-		
-	private BufferedReader br;
-	private BufferedWriter bw;
-	private FileReader fr;
-	private FileWriter fw;
 	
 	/**Constructor G*/
 	/*public G(Edge edge, Node nodei, Node nodej, int i, int j){
@@ -82,126 +65,36 @@ abstract class G {
 		adjacentVertices(i);
 		areAdjacent(nodei, nodej);
 		areAdjacent(i, j);
-	}*/
+	}*
 	
-	/**Default constructor G initializes empty arrays of nodes and edges*/
-	public G(){
-		numOfNodes = 0;
-		numOfEdges = 0;
-		
-		inodes = 0;
-		iedges = 0;
-		iinDegs = 0;
-		ioutDegs = 0; 
-		idegrees = 0;
-		
-		nodes = new Node[0];
-		edges = new Edge[0];
-		inDegs = new Edge[0];
-		outDegs = new Edge[0];
-		degrees = new Edge[0];
-	}
-	
-	/**Constructor G accepts a file with graph data*/
-	public G(boolean weighted, File inFile, int numOfLines, Edge[] fedges, Node[] fnodes){
-		//numOfNodes = 0;
-		numOfEdges = numOfLines;
-		//System.out.println("Number of Edges: "+numOfEdges);
-		//System.out.println("Number of Nodes: "+numOfNodes);
-		
-		inodes = 0;
-		iedges = 0;
-		iinDegs = 0;
-		ioutDegs = 0; 
-		idegrees = 0;
-		
-		nodes = fnodes;
-		edges = fedges;
-		
-		if(weighted == true){
-			printRawWeightedData(fnodes, fedges);
-		}else if(weighted == false){
-			printRawUnWeightedData(fnodes, fedges);
-		}else{
-			System.out.println("No Raw Data To Print");
-		}
-		
-		consolidateNodes(fnodes);
-		System.out.println("\nNumber of Nodes: "+numOfNodes);
-		printNodeArray(cnodes);
-		
-		System.out.println("\nNumber of Edges: "+numOfEdges);
-		printEdgeArray(edges);
+	/**Constructor G accepts a file with graph data */
+	public G(BufferedReader br, int type, int numOfNodes, int numOfEdges){
+		this.br = br;
+		this.type = type;
+		this.numOfNodes = numOfNodes;
+		this.numOfEdges = numOfEdges;
+		System.out.println("Number of Edges: "+numOfEdges);
+		System.out.println("Number of Nodes: "+numOfNodes);
 		
 		constructAD();
-		print();
-		
-		inDegs = new Edge[0];
-		outDegs = new Edge[0];
-		degrees = new Edge[0];
+		//toString();
+		System.out.println(toString());
 	}
-
-	abstract protected void print();
 	
 	abstract protected void constructAD();
 	
-	private Node[] consolidateNodes(Node[] fnodes){
-		/*DEBUG*///System.out.println("breakpoint");
-		boolean duplicate = false;
-		Node[] tempNodes = new Node[fnodes.length];
-		for(int p = 0; p < tempNodes.length; p++){
-			/*DEBUG*///System.out.println("breakpoint");
-			tempNodes[p] = new Node(0);
-		}
-		/*DEBUG*///System.out.println("breakpoint");
-		for(int k = 0; k < fnodes.length; k++){
-			duplicate = false;
-			/*DEBUG*///System.out.println("breakpoint");
-			for(int t = 0; t < tempNodes.length; t++){
-				if(fnodes[k].getVLabel() == tempNodes[t].getVLabel()){
-					duplicate = true;
-				}
-			}
-			if(duplicate == false){
-				tempNodes[numOfNodes] = fnodes[k];
-				numOfNodes++;
-			}
-		}
-		cnodes = new Node[numOfNodes];
-		for(int n = 0; n < numOfNodes; n++){
-			cnodes[n] = tempNodes[n];
-		}
-		//printNodeArray(cnodes);
-		return cnodes;
-	}
+	abstract public String toString();
 	
-	private void printNodeArray(Node[] array){
+	private void printNodeArray(Object[] array){
+		Node[] nodeArray = (Node[])array;
 		for(int i = 0; i < array.length; i++){
-			System.out.println("index"+i+": "+array[i].getVLabel());
+			System.out.println("index"+i+": "+nodeArray[i].getVLabel());
 		}
 	}
 	
 	private void printEdgeArray(Edge[] array){
 		for(int i = 0; i < array.length; i++){
 			System.out.println("index: "+i+" | adji: "+array[i].getAdjNodei().getVLabel()+" | adji: "+array[i].getAdjNodej().getVLabel()+" " );
-		}
-	}
-	
-	protected Node[] getCnodes(){
-		return cnodes;
-	}
-	
-	protected Node[] getNodes(){
-		return nodes;
-	}
-	
-	protected Edge[] getEdges(){
-		return edges;
-	}
-	
-	protected void associateIndexWithVLabel(){
-		for(aiv = 0; aiv < cnodes.length; aiv++){
-			cnodes[aiv].setIndex(aiv); 
 		}
 	}
 	
@@ -219,15 +112,11 @@ abstract class G {
 	private boolean existsEdge(Edge e){
 		boolean found = false;
 		for(int i = 0; i < numOfEdges; i++){
-			if(e.equals(edges[i])){
+			/*if(e.equals(edges[i])){
 				found = true;
-			}
+			}*/
 		}
-		if(found == true){
-			return true;
-		}else{
-			return false;
-		}
+		return found;
 	}
 	
 	/**existsEdge(int i, int j): returns true if there exists an edge between i and j else returns false*/
@@ -235,34 +124,30 @@ abstract class G {
 		boolean found = false;
 		Edge e = new Edge(i, j);
 		for(int k = 0; k < numOfEdges; k++){
-			if(e.equals(edges[k])){
+			/*if(e.equals(edges[k])){
 				found = true;
-			}
+			}*/
 		}
-		if(found == true){
-			return true;
-		}else{
-			return false;
-		}
+		return found;
 	}
 	
 	/**putEdge( Edge: e) : adds the edge e to the graph*/
 	private void putEdge(Edge e){
-		edges[iedges] = e;
-		iedges++;
+		/*edges[iedges] = e;
+		iedges++;*/
 		numOfEdges++;
 	}
 	
 	/**putEdge( int i, int j) : adds the edge from i to j to the graph*/
 	private void putEdge(int i, int j){
 		Edge edge = new Edge(i, j);
-		edges[iedges] = edge;
-		iedges++;
+		/*edges[iedges] = edge;
+		iedges++;*/
 		numOfEdges++;
 	}
 	
 	/**removeEdge(Edge: e): deletes the edge e from the graph*/
-	private void removeEdge(Edge e){
+	/*private void removeEdge(Edge e){
 		boolean found = false;
 		for(int i = 0; i <= edges.length - 1; i++){
 			if((e.equals(edges[i]))&&(i != (edges.length - 1))){
@@ -286,10 +171,10 @@ abstract class G {
 				System.out.println("There are currently no edges");
 			}
 		}
-	}
+	}*/
 	
 	/**removeEdge(int i, int j): deletes the edge from i to j from the graph*/
-	private void removeEdge(int i, int j){
+	/*private void removeEdge(int i, int j){
 		boolean found = false;
 		for(int k = 0; k <= edges.length - 1; k++){
 			if((i == edges[k].getAdjNodei().getVLabel())&&(j == edges[k].getAdjNodej().getVLabel())&&(k != (edges.length - 1))){
@@ -313,7 +198,7 @@ abstract class G {
 				System.out.println("There are currently no edges");
 			}
 		}
-	}
+	}*/
 	
 	/**degree(Node: i): returns the degree of node i. this method is defined for undirected graphs only.*/
 	private int degree(Node i){
@@ -360,7 +245,7 @@ abstract class G {
 	}
 	
 	/**areAdjacent(Node i, Node j): returns true if the nodes i and j are adjacent else returns false.*/
-	private boolean areAdjacent(Node i, Node j){
+	/*private boolean areAdjacent(Node i, Node j){
 		Edge e = new Edge(i, j);
 		boolean found = false;
 		for(int k = 0; k < numOfEdges; k++){
@@ -373,7 +258,7 @@ abstract class G {
 		}else{
 			return false;
 		}
-	}
+	}*/
 	
 	/**areAdjacent(int i, int j): returns true if the nodes i and j are adjacent else returns false.*/
 	private boolean areAdjacent(int i, int j){

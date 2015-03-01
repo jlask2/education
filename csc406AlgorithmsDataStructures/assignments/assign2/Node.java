@@ -25,20 +25,39 @@ public class Node {
 		inDegOfNode = 0;
 		outDegOfNode = 0;
 		vLabel = 0;
+		index = 0;
 	}
 	
 	/**Constructor Node with parameters */
-	public Node(int degOfNode, int inDegOfNode, int outDegOfNode, int vlabel){
+	public Node(int degOfNode, int inDegOfNode, int outDegOfNode, int vLabel, int index){
 		this.degOfNode = degOfNode;
 		this.inDegOfNode = inDegOfNode;
 		this.outDegOfNode = outDegOfNode;
 		this.vLabel = vLabel;
+		this.index = index;
 	}
 	
+	/**Constructor Node with 1 parameter */
 	public Node(int vLabel){
 		this.vLabel = vLabel;
 	}
 	
+	/**Equal method compares data members of two Node objects*/
+	@Override
+	public boolean equals(Object node){      //note the type of the parameter
+        Node n1 = (Node)node;               // cast the parameter before use
+        return Node.compare(this.vLabel, n1.vLabel)  == 0;
+    } 
+
+	/**Compare method compares two Node data members for integer equality, returns 0 if equal else a 1 if not*/
+	private static int compare(int nodeMember1, int nodeMember2) {
+		if(nodeMember1 == nodeMember2){
+			return 0;
+		}else{
+			return 1;
+		}
+	}
+
 	/**Mutator Methods*/
 	protected void setDegOfNode(int degOfNode){
 		this.degOfNode = degOfNode;
