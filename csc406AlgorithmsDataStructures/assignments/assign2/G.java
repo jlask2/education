@@ -40,45 +40,12 @@ areAdjacent(int i, int j): returns true if the nodes i and j are adjacent else r
 abstract class G {
 	
 	/**private data members*/
-	BufferedReader br;
-	private int type;
 	private int numOfEdges;
 	private int numOfNodes;
 	
-	/**Constructor G*/
-	/*public G(Edge edge, Node nodei, Node nodej, int i, int j){
-		numNodes();
-		numEdges();
-		putEdge(edge);
-		putEdge(i, j);
-		existsEdge(edge);
-		existsEdge(i, j);
-		removeEdge(edge);
-		removeEdge(i, j);
-		degree(nodei);
-		degree(i);
-		inDegree(nodei);
-		inDegree(i);
-		outDegree(nodei);
-		outDegree(i);
-		adjacentVertices(nodei);
-		adjacentVertices(i);
-		areAdjacent(nodei, nodej);
-		areAdjacent(i, j);
-	}*
-	
-	/**Constructor G accepts a file with graph data */
-	public G(BufferedReader br, int type, int numOfNodes, int numOfEdges){
-		this.br = br;
-		this.type = type;
-		this.numOfNodes = numOfNodes;
-		this.numOfEdges = numOfEdges;
-		System.out.println("Number of Edges: "+numOfEdges);
-		System.out.println("Number of Nodes: "+numOfNodes);
-		
-		constructAD();
-		//toString();
-		System.out.println(toString());
+	/**Constructor G */
+	public G(BufferedReader br, int numOfNodes, int numOfEdges){
+
 	}
 	
 	abstract protected void constructAD();
@@ -201,37 +168,37 @@ abstract class G {
 	}*/
 	
 	/**degree(Node: i): returns the degree of node i. this method is defined for undirected graphs only.*/
-	private int degree(Node i){
+	/*private int degree(Node i){
 		return i.getDegOfNode();
-	}
+	}*/
 	
 	/**degree(int i): returns the degree of node i. this method is defined for undirected graphs only.*/
-	private int degree(int i){
+	/*private int degree(int i){
 		Node node = new Node(i);
 		return node.getDegOfNode();
-	}
+	}*/
 	
 	/**inDegree(Node: i): returns the in-degree of node i. this method is defined for directed graphs only.*/
-	private int inDegree(Node i){
+	/*private int inDegree(Node i){
 		return i.getInDegOfNode();
-	}
+	}*/
 	
 	/**inDegree(int: i): returns the in-degree of node i. this method is defined for directed graphs only.*/
-	private int inDegree(int i){
+	/*private int inDegree(int i){
 		Node node = new Node(i);
 		return node.getInDegOfNode();
-	}
+	}*/
 	
 	/**outDegree(Node: i): returns the out-degree of node i. this method is defined for directed graphs only.*/
-	private int outDegree(Node i){
+	/*private int outDegree(Node i){
 		return i.getOutDegOfNode();
-	}
+	}*/
 	
 	/**outDegree(int: i): returns the out-degree of node i. this method is defined for directed graphs only.*/
-	private int outDegree(int i){
+	/*private int outDegree(int i){
 		Node node = new Node(i);
 		return node.getOutDegOfNode();
-	}
+	}*/
 	
 	/**adjacentVertices(Node: i): returns the nodes that are adjacent to i*/
 	private Node adjacentVertices(Node i){		
