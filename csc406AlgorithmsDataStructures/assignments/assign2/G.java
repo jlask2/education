@@ -14,58 +14,30 @@ import java.io.BufferedReader;
 import java.util.ArrayList;
 import java.util.List;
 
-/*
-numNodes( ) – returns the number of nodes
-numEdges( ) : returns the number of edges
-existsEdge( Edge e): returns true if e is an edge else returns false
-existsEdge(int i, int j): returns true if there exists an edge between i and j else returns false
-putEdge( Edge: e) : adds the edge e to the graph
-putEdge( int i, int j) : adds the edge from i to j to the graph
-removeEdge(Edge: e): deletes the edge e from the graph
-removeEdge(int i, int j): deletes the edge from i to j from the graph
-degree(Node: i): returns the degree of node i. this method is defined for undirected graphs only.
-degree(int i): returns the degree of node i. this method is defined for undirected graphs only.
-inDegree(Node: i): returns the in-degree of node i. this method is defined for directed graphs only.
-inDegree(int: i): returns the in-degree of node i. this method is defined for directed graphs only.
-outDegree(Node: i): returns the out-degree of node i. this method is defined for directed graphs only.
-outDegree(int: i): returns the out-degree of node i. this method is defined for directed graphs only.
-adjacentVertices(Node: i): returns the nodes that are adjacent to i
-adjacentVertices(int: i):  returns the nodes that are adjacent to i
-areAdjacent(Node i, Node j): returns true if the nodes i and j are adjacent else returns false.
-areAdjacent(int i, int j): returns true if the nodes i and j are adjacent else returns false.
-*/
-
 /**Root Class - Graph*/
 abstract class G {
 	
 	/**private data members*/
 	private int numOfEdges;
 	private int numOfNodes;
-	private ArrayList<Node> inNodes;
-	private ArrayList<Node> outNodes;
-	private ArrayList<Node> degNodes;
+	protected ArrayList<Node> inNodes;
+	protected ArrayList<Node> outNodes;
+	protected ArrayList<Node> degNodes;
 	
 	/**Constructor G */
 	public G(BufferedReader br, int numOfNodes, int numOfEdges){
-
+		inNodes = new ArrayList<Node>();
+		outNodes = new ArrayList<Node>();
+		degNodes = new ArrayList<Node>();
 	}
 	
 	abstract protected void constructAD();
-	
 	abstract public String toString();
 	
-	/**existsEdge(int i, int j): returns true if there exists an edge between i and j else returns false*/
-	abstract protected boolean existsEdge(int i, int j);
-	
-	/**existEdge( Edge e): returns true if e is an edge else returns false*/
-	abstract protected boolean existsEdge(Edge e);
-	
-	/**putEdge( Edge: e) : adds the edge e to the graph*/
-	abstract protected void putEdge(Edge e);
-	
-	/**putEdge( int i, int j) : adds the edge from i to j to the graph*/
-	abstract protected void putEdge(int i, int j);
-	
+	abstract protected boolean existsEdge(int i, int j); //returns true if there exists an edge between i and j else returns false
+	abstract protected boolean existsEdge(Edge e); //returns true if e is an edge else returns false
+	abstract protected void putEdge(Edge e); //adds the edge e to the graph
+	abstract protected void putEdge(int i, int j); //adds the edge from i to j to the graph
 	abstract protected void removeEdge(Edge e); //deletes the edge e from the graph
 	abstract protected void removeEdge(int i, int j); //deletes the edge from i to j from the graph
 	abstract protected int degree(Node i); //returns the degree of node i. this method is defined for undirected graphs only.
@@ -79,7 +51,6 @@ abstract class G {
 	abstract protected boolean areAdjacent(Node i, Node j); //returns true if the nodes i and j are adjacent else returns false.
 	abstract protected boolean areAdjacent(int i, int j); //returns true if the nodes i and j are adjacent else returns false.
 
-	
 	/**numNodes( ) – returns the number of nodes*/
 	protected int numNodes(){
 		return numOfNodes;

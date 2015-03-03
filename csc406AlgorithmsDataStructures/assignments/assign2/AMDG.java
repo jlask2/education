@@ -25,6 +25,18 @@ public class AMDG extends G{
 	private int[][] AM;
 	private String line;
 	
+	/**Forwarded declarations of abstract methods from the abstract class G
+	 * These are not implemented in this child class*/
+	protected boolean existsEdge(Edge e){return false;} //returns true if e is an edge else returns false
+	protected void putEdge(Edge e){} //adds the edge e to the graph
+	protected void removeEdge(Edge e){} //deletes the edge e from the graph
+	protected int inDegree(Node i){return 0;} //returns the in-degree of node i. this method is defined for directed graphs only.
+	protected int outDegree(Node i){return 0;} //returns the out-degree of node i. this method is defined for directed graphs only.
+	protected Node adjacentVertices(Node i){Node node = new Node(0); return node;} //returns the nodes that are adjacent to i
+	protected boolean areAdjacent(Node i, Node j){return false;} //returns true if the nodes i and j are adjacent else returns false.
+	protected int degree(Node i){return 0;} //returns the degree of node i. this method is defined for undirected graphs only.
+	protected int degree(int i){return 0;} //returns the degree of node i. this method is defined for undirected graphs only.
+	
 	/**Constructor calls the super constructor and passes a file with graph data*/
 	public AMDG(BufferedReader br, int numOfNodes, int numOfEdges){
 		super(br, numOfNodes, numOfEdges);
@@ -102,27 +114,24 @@ public class AMDG extends G{
 		return found;
 	}
 	
-	/**existEdge( Edge e): returns true if e is an edge else returns false*/
-	protected boolean existsEdge(Edge e){
-		boolean found = false;
-		for(int i = 0; i < numOfEdges; i++){
-			/*if(e.equals(edges[i])){
-				found = true;
-			}*/
-		}
-		return found;
-	}
-	
-	/**putEdge( Edge: e) : adds the edge e to the graph*/
-	protected void putEdge(Edge e){
-		/*edges[iedges] = e;
-		iedges++;*/
-		numOfEdges++;
-	}
-	
 	/**putEdge( int i, int j) : adds the edge from i to j to the graph*/
 	protected void putEdge(int i, int j){
 		Edge edge = new Edge(i, j);
 		numOfEdges++;
 	}
+	
+	/**removeEdge(int i, int j): deletes the edge from i to j from the graph*/
+	protected void removeEdge(int i, int j){} //deletes the edge from i to j from the graph
+	
+	/**inDegree(int: i): returns the in-degree of node i. this method is defined for directed graphs only.*/
+	protected int inDegree(int i){return 0;} //returns the in-degree of node i. this method is defined for directed graphs only.
+	
+	/**outDegree(int: i): returns the out-degree of node i. this method is defined for directed graphs only.*/
+	protected int outDegree(int i){return 0;} //returns the out-degree of node i. this method is defined for directed graphs only.
+	
+	/**adjacentVertices(int: i):  returns the nodes that are adjacent to i*/
+	protected Node adjacentVertices(int i){Node node = new Node(0); return node;} // returns the nodes that are adjacent to i
+	
+	/**areAdjacent(int i, int j): returns true if the nodes i and j are adjacent else returns false.*/
+	protected boolean areAdjacent(int i, int j){return false;} //returns true if the nodes i and j are adjacent else returns false.
 }

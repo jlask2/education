@@ -30,6 +30,18 @@ public class ALWDG extends G{
 	private Queue<Integer> pq; 
 	private String line;
 	
+	/**Forwarded declarations of abstract methods from the abstract class G
+	 * These are not implemented in this child class*/
+	protected boolean existsEdge(int i, int j){return false;} //returns true if there exists an edge between i and j else returns false
+	protected void putEdge(int i, int j){} //adds the edge from i to j to the graph
+	protected void removeEdge(int i, int j){} //deletes the edge from i to j from the graph
+	protected int inDegree(int i){return 0;} //returns the in-degree of node i. this method is defined for directed graphs only.
+	protected int outDegree(int i){return 0;} //returns the out-degree of node i. this method is defined for directed graphs only.
+	protected Node adjacentVertices(int i){Node node = new Node(0); return node;} // returns the nodes that are adjacent to i
+	protected boolean areAdjacent(int i, int j){return false;} //returns true if the nodes i and j are adjacent else returns false.
+	protected int degree(Node i){return 0;} //returns the degree of node i. this method is defined for undirected graphs only.
+	protected int degree(int i){return 0;} //returns the degree of node i. this method is defined for undirected graphs only.
+	
 	/**Constructor calls the super constructor and passes a file with graph data*/
 	public ALWDG(BufferedReader br, int numOfNodes, int numOfEdges){
 		super(br, numOfNodes, numOfEdges);
@@ -102,18 +114,6 @@ public class ALWDG extends G{
 		return p;
 	}
 	
-	/**existsEdge(int i, int j): returns true if there exists an edge between i and j else returns false*/
-	protected boolean existsEdge(int i, int j){
-		boolean found = false;
-		Edge e = new Edge(i, j);
-		for(int k = 0; k < numOfEdges; k++){
-			/*if(e.equals(edges[k])){
-				found = true;
-			}*/
-		}
-		return found;
-	}
-	
 	/**existEdge( Edge e): returns true if e is an edge else returns false*/
 	protected boolean existsEdge(Edge e){
 		boolean found = false;
@@ -132,9 +132,18 @@ public class ALWDG extends G{
 		numOfEdges++;
 	}
 	
-	/**putEdge( int i, int j) : adds the edge from i to j to the graph*/
-	protected void putEdge(int i, int j){
-		Edge edge = new Edge(i, j);
-		numOfEdges++;
-	}
+	/**removeEdge(Edge: e): deletes the edge e from the graph*/
+	protected void removeEdge(Edge e){} //deletes the edge e from the graph
+	
+	/**inDegree(Node: i): returns the in-degree of node i. this method is defined for directed graphs only.*/
+	protected int inDegree(Node i){return 0;} //returns the in-degree of node i. this method is defined for directed graphs only.
+	
+	/**outDegree(Node: i): returns the out-degree of node i. this method is defined for directed graphs only.*/
+	protected int outDegree(Node i){return 0;} //returns the out-degree of node i. this method is defined for directed graphs only.
+	
+	/**adjacentVertices(Node: i): returns the nodes that are adjacent to i*/
+	protected Node adjacentVertices(Node i){Node node = new Node(0); return node;} //returns the nodes that are adjacent to i
+	
+	/**areAdjacent(Node i, Node j): returns true if the nodes i and j are adjacent else returns false.*/
+	protected boolean areAdjacent(Node i, Node j){return false;} //returns true if the nodes i and j are adjacent else returns false.
 }

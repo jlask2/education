@@ -51,7 +51,10 @@ public class Node {
 			return 1;
 		}
 	}
-
+	
+	protected void addInDegree(Node node){
+	}
+	
 	/**Mutator Methods*/
 	protected void setVLabel(int vLabel){
 		this.vLabel = vLabel;
