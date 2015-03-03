@@ -11,14 +11,13 @@
 package poset;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 /*
 numNodes( ) – returns the number of nodes
 numEdges( ) : returns the number of edges
-existEdge( Edge e): returns true if e is an edge else returns false
+existsEdge( Edge e): returns true if e is an edge else returns false
 existsEdge(int i, int j): returns true if there exists an edge between i and j else returns false
 putEdge( Edge: e) : adds the edge e to the graph
 putEdge( int i, int j) : adds the edge from i to j to the graph
@@ -42,6 +41,9 @@ abstract class G {
 	/**private data members*/
 	private int numOfEdges;
 	private int numOfNodes;
+	private ArrayList<Node> inNodes;
+	private ArrayList<Node> outNodes;
+	private ArrayList<Node> degNodes;
 	
 	/**Constructor G */
 	public G(BufferedReader br, int numOfNodes, int numOfEdges){
@@ -52,18 +54,31 @@ abstract class G {
 	
 	abstract public String toString();
 	
-	private void printNodeArray(Object[] array){
-		Node[] nodeArray = (Node[])array;
-		for(int i = 0; i < array.length; i++){
-			System.out.println("index"+i+": "+nodeArray[i].getVLabel());
-		}
-	}
+	/**existsEdge(int i, int j): returns true if there exists an edge between i and j else returns false*/
+	abstract protected boolean existsEdge(int i, int j);
 	
-	private void printEdgeArray(Edge[] array){
-		for(int i = 0; i < array.length; i++){
-			System.out.println("index: "+i+" | adji: "+array[i].getAdjNodei().getVLabel()+" | adji: "+array[i].getAdjNodej().getVLabel()+" " );
-		}
-	}
+	/**existEdge( Edge e): returns true if e is an edge else returns false*/
+	abstract protected boolean existsEdge(Edge e);
+	
+	/**putEdge( Edge: e) : adds the edge e to the graph*/
+	abstract protected void putEdge(Edge e);
+	
+	/**putEdge( int i, int j) : adds the edge from i to j to the graph*/
+	abstract protected void putEdge(int i, int j);
+	
+	abstract protected void removeEdge(Edge e); //deletes the edge e from the graph
+	abstract protected void removeEdge(int i, int j); //deletes the edge from i to j from the graph
+	abstract protected int degree(Node i); //returns the degree of node i. this method is defined for undirected graphs only.
+	abstract protected int degree(int i); //returns the degree of node i. this method is defined for undirected graphs only.
+	abstract protected int inDegree(Node i); //returns the in-degree of node i. this method is defined for directed graphs only.
+	abstract protected int inDegree(int i); //returns the in-degree of node i. this method is defined for directed graphs only.
+	abstract protected int outDegree(Node i); //returns the out-degree of node i. this method is defined for directed graphs only.
+	abstract protected int outDegree(int i); //returns the out-degree of node i. this method is defined for directed graphs only.
+	abstract protected Node adjacentVertices(Node i); //returns the nodes that are adjacent to i
+	abstract protected Node adjacentVertices(int i); // returns the nodes that are adjacent to i
+	abstract protected boolean areAdjacent(Node i, Node j); //returns true if the nodes i and j are adjacent else returns false.
+	abstract protected boolean areAdjacent(int i, int j); //returns true if the nodes i and j are adjacent else returns false.
+
 	
 	/**numNodes( ) – returns the number of nodes*/
 	protected int numNodes(){
@@ -75,42 +90,8 @@ abstract class G {
 		return numOfEdges;
 	}
 	
-	/**existEdge( Edge e): returns true if e is an edge else returns false*/
-	private boolean existsEdge(Edge e){
-		boolean found = false;
-		for(int i = 0; i < numOfEdges; i++){
-			/*if(e.equals(edges[i])){
-				found = true;
-			}*/
-		}
-		return found;
-	}
-	
-	/**existsEdge(int i, int j): returns true if there exists an edge between i and j else returns false*/
-	private boolean existsEdge(int i, int j){
-		boolean found = false;
-		Edge e = new Edge(i, j);
-		for(int k = 0; k < numOfEdges; k++){
-			/*if(e.equals(edges[k])){
-				found = true;
-			}*/
-		}
-		return found;
-	}
-	
-	/**putEdge( Edge: e) : adds the edge e to the graph*/
-	private void putEdge(Edge e){
-		/*edges[iedges] = e;
-		iedges++;*/
-		numOfEdges++;
-	}
-	
-	/**putEdge( int i, int j) : adds the edge from i to j to the graph*/
-	private void putEdge(int i, int j){
-		Edge edge = new Edge(i, j);
-		/*edges[iedges] = edge;
-		iedges++;*/
-		numOfEdges++;
+	protected boolean rangeCheck(Object list){
+		return true;
 	}
 	
 	/**removeEdge(Edge: e): deletes the edge e from the graph*/
@@ -180,7 +161,8 @@ abstract class G {
 	
 	/**inDegree(Node: i): returns the in-degree of node i. this method is defined for directed graphs only.*/
 	/*private int inDegree(Node i){
-		return i.getInDegOfNode();
+		iNodes[] = i;
+		return ;
 	}*/
 	
 	/**inDegree(int: i): returns the in-degree of node i. this method is defined for directed graphs only.*/
@@ -201,15 +183,15 @@ abstract class G {
 	}*/
 	
 	/**adjacentVertices(Node: i): returns the nodes that are adjacent to i*/
-	private Node adjacentVertices(Node i){		
+	/*private Node adjacentVertices(Node i){		
 		return i;
-	}
+	}*/
 	
 	/**adjacentVertices(int: i):  returns the nodes that are adjacent to i*/
-	private Node adjacentVertices(int i){
+	/*private Node adjacentVertices(int i){
 		Node adjNodes = new Node();
 		return adjNodes;
-	}
+	}*/
 	
 	/**areAdjacent(Node i, Node j): returns true if the nodes i and j are adjacent else returns false.*/
 	/*private boolean areAdjacent(Node i, Node j){
@@ -228,25 +210,7 @@ abstract class G {
 	}*/
 	
 	/**areAdjacent(int i, int j): returns true if the nodes i and j are adjacent else returns false.*/
-	private boolean areAdjacent(int i, int j){
+	/*private boolean areAdjacent(int i, int j){
 		return existsEdge(i, j);
-	}
-	
-	private void printRawUnWeightedData(Node[] fnodes, Edge[] fedges) {
-		System.out.println("\nUn-Weighted");
-		int k = 0;
-		for(int i = 0; i < numOfEdges; i++){
-			System.out.println(fnodes[k].getVLabel() +" "+fnodes[k+1].getVLabel());
-			k = k + 2;
-		}
-	}
-
-	private void printRawWeightedData(Node[] fnodes, Edge[] fedges) {
-		System.out.println("\nWeighted");
-		int k = 0;
-		for(int i = 0; i < numOfEdges; i++){
-			System.out.println(fnodes[k].getVLabel() +" "+fnodes[k+1].getVLabel()+" "+fedges[i].getWeight());
-			k = k + 2;
-		}
-	}
+	}*/
 }

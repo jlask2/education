@@ -15,6 +15,9 @@ public class Node {
 	/**private data members*/
 	private int vLabel;
 	private int index;
+	private int degOfNode;
+	private int inDegOfNode;
+	private int outDegOfNode;
 	
 	/**Constructor Node */
 	public Node(){
@@ -58,6 +61,18 @@ public class Node {
 		this.index = index;
 	}
 	
+	protected void setDegOfNode(int degOfNode){
+		this.degOfNode = degOfNode;
+	}
+	
+	protected void setInDegOfNode(int inDegOfNode){
+		this.inDegOfNode = inDegOfNode;
+	}
+	
+	protected void setOutDegOfNode(int outDegOfNode){
+		this.outDegOfNode = outDegOfNode;
+	}
+	
 	/**Accessor Methods*/
 	protected int getVLabel(){
 		return vLabel;
@@ -65,6 +80,18 @@ public class Node {
 	
 	protected int getIndex(){
 		return index;
+	}
+	
+	protected int getDegOfNode(){
+		return degOfNode;
+	}
+	
+	protected int getInDegOfNode(){
+		return inDegOfNode;
+	}
+	
+	protected int getOutDegOfNode(){
+		return outDegOfNode;
 	}
 
 }

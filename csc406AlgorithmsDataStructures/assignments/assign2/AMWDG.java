@@ -93,4 +93,40 @@ public class AMWDG extends G{
 		}
 		return n;
 	}
+	
+	/**existsEdge(int i, int j): returns true if there exists an edge between i and j else returns false*/
+	protected boolean existsEdge(int i, int j){
+		boolean found = false;
+		Edge e = new Edge(i, j);
+		for(int k = 0; k < numOfEdges; k++){
+			/*if(e.equals(edges[k])){
+				found = true;
+			}*/
+		}
+		return found;
+	}
+	
+	/**existEdge( Edge e): returns true if e is an edge else returns false*/
+	protected boolean existsEdge(Edge e){
+		boolean found = false;
+		for(int i = 0; i < numOfEdges; i++){
+			/*if(e.equals(edges[i])){
+				found = true;
+			}*/
+		}
+		return found;
+	}
+	
+	/**putEdge( Edge: e) : adds the edge e to the graph*/
+	protected void putEdge(Edge e){
+		/*edges[iedges] = e;
+		iedges++;*/
+		numOfEdges++;
+	}
+	
+	/**putEdge( int i, int j) : adds the edge from i to j to the graph*/
+	protected void putEdge(int i, int j){
+		Edge edge = new Edge(i, j);
+		numOfEdges++;
+	}
 }

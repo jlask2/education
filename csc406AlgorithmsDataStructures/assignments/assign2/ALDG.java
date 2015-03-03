@@ -54,6 +54,8 @@ public class ALDG extends G{
 				String[] lineArray = line.split(" ");
 				Node node1 = new Node(Integer.parseInt(lineArray[0]));
 				Node node2 = new Node(Integer.parseInt(lineArray[1]));
+				putEdge(node1.getVLabel(), node2.getVLabel());
+				
 				for(int k = 0; k < AL.length; k++){
 					if((!(AL[k].isEmpty()))&&(AL[k].get(0).equals(node1))&&(assigned == false)){
 						AL[k].add(node2);
@@ -91,5 +93,41 @@ public class ALDG extends G{
 			p += "\n";
 		}
 		return p;
+	}
+	
+	/**existsEdge(int i, int j): returns true if there exists an edge between i and j else returns false*/
+	protected boolean existsEdge(int i, int j){
+		boolean found = false;
+		Edge e = new Edge(i, j);
+		for(int k = 0; k < numOfEdges; k++){
+			/*if(e.equals(edges[k])){
+				found = true;
+			}*/
+		}
+		return found;
+	}
+	
+	/**existEdge( Edge e): returns true if e is an edge else returns false*/
+	protected boolean existsEdge(Edge e){
+		boolean found = false;
+		for(int i = 0; i < numOfEdges; i++){
+			/*if(e.equals(edges[i])){
+				found = true;
+			}*/
+		}
+		return found;
+	}
+	
+	/**putEdge( Edge: e) : adds the edge e to the graph*/
+	protected void putEdge(Edge e){
+		/*edges[iedges] = e;
+		iedges++;*/
+		numOfEdges++;
+	}
+	
+	/**putEdge( int i, int j) : adds the edge from i to j to the graph*/
+	protected void putEdge(int i, int j){
+		Edge edge = new Edge(i, j);
+		numOfEdges++;
 	}
 }
