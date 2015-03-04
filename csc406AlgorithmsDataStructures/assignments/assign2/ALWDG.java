@@ -28,19 +28,8 @@ public class ALWDG extends G{
 	private ArrayList<Node>[] AL;
 	private Iterator<Node> ite;
 	private Queue<Integer> pq; 
+	private Queue<Edge> pqe;
 	private String line;
-	
-	/**Forwarded declarations of abstract methods from the abstract class G
-	 * These are not implemented in this child class*/
-	protected boolean existsEdge(int i, int j){return false;} //returns true if there exists an edge between i and j else returns false
-	protected void putEdge(int i, int j){} //adds the edge from i to j to the graph
-	protected void removeEdge(int i, int j){} //deletes the edge from i to j from the graph
-	protected int inDegree(int i){return 0;} //returns the in-degree of node i. this method is defined for directed graphs only.
-	protected int outDegree(int i){return 0;} //returns the out-degree of node i. this method is defined for directed graphs only.
-	protected ArrayList<Node> adjacentVertices(int i){ArrayList<Node> node = new ArrayList<Node>(); return node;} // returns the nodes that are adjacent to i
-	protected boolean areAdjacent(int i, int j){return false;} //returns true if the nodes i and j are adjacent else returns false.
-	protected int degree(Node i){return 0;} //returns the degree of node i. this method is defined for undirected graphs only.
-	protected int degree(int i){return 0;} //returns the degree of node i. this method is defined for undirected graphs only.
 	
 	/**Constructor*/
 	public ALWDG(BufferedReader br, int numOfNodes, int numOfEdges){
@@ -58,39 +47,35 @@ public class ALWDG extends G{
 	/**constructAD method constructs the given adjacency data structure and populates it from the file input stream*/
 	protected void constructAD(){
 		try {
-			int i = 0;
 			AL = (ArrayList<Node>[])new ArrayList[numOfNodes];
+			pqe = new PriorityQueue<Edge>();
 			pq = new PriorityQueue<Integer>();
-			for(int e = 0; e < AL.length; e ++){
+			for(int e = 0; e < AL.length; e++){
 				AL[e] = new ArrayList<Node>(numOfNodes);
-				AL[e].ensureCapacity(numOfEdges-1);
+				AL[e].add(new Node(e+1));
 			}
 			br.mark(100);
 		    while((line = br.readLine()) != null){	
 		    	boolean assigned = false;
-		    	boolean nodeExists = false;
 				String[] lineArray = line.split(" ");
 				Node node1 = new Node(Integer.parseInt(lineArray[0]));
 				Node node2 = new Node(Integer.parseInt(lineArray[1]));
-				pq.add(Integer.parseInt(lineArray[2]));		
+				pq.add(Integer.parseInt(lineArray[2]));
 				
 				for(int k = 0; k < AL.length; k++){
-					if((!(AL[k].isEmpty()))&&(AL[k].get(0).equals(node1))&&(assigned == false)){
+					if((AL[k].get(0).equals(node1))&&(assigned == false)){
 						AL[k].add(node2);
-						nodeExists = true;
-						assigned = true;
-					}else if(assigned == false){
-						AL[i].add(0, node1);
-						AL[i].add(node2);
+						if(!outNodes.contains(node1)){
+					    	outNodes.add(node1);
+					    }
+					    if(!inNodes.contains(node2)){
+					    	inNodes.add(node2);
+					    }
+					    inNodes.get(inNodes.indexOf(node2)).incrementInDegree();
+					    outNodes.get(outNodes.indexOf(node1)).incrementOutDegree();
 						assigned = true;
 					}
 				}
-				if(!nodeExists){
-					i++;
-				}
-		    }
-		    for(int t = 0; t < numOfNodes; t++){
-		    	AL[t].trimToSize();
 		    }
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -242,6 +227,17 @@ public class ALWDG extends G{
 		}else{
 			throw new ArrayIndexOutOfBoundsException("There is no index pertaining to this node");
 		}
-		
 	} //returns true if the nodes i and j are adjacent else returns false.
+	
+	/**Forwarded declarations of abstract methods from the abstract class G
+	 * These are not implemented in this child class*/
+	protected boolean existsEdge(int i, int j){return false;} //returns true if there exists an edge between i and j else returns false
+	protected void putEdge(int i, int j){} //adds the edge from i to j to the graph
+	protected void removeEdge(int i, int j){} //deletes the edge from i to j from the graph
+	protected int inDegree(int i){return 0;} //returns the in-degree of node i. this method is defined for directed graphs only.
+	protected int outDegree(int i){return 0;} //returns the out-degree of node i. this method is defined for directed graphs only.
+	protected ArrayList<Node> adjacentVertices(int i){ArrayList<Node> node = new ArrayList<Node>(); return node;} // returns the nodes that are adjacent to i
+	protected boolean areAdjacent(int i, int j){return false;} //returns true if the nodes i and j are adjacent else returns false.
+	protected int degree(Node i){return 0;} //returns the degree of node i. this method is defined for undirected graphs only.
+	protected int degree(int i){return 0;} //returns the degree of node i. this method is defined for undirected graphs only.
 }
