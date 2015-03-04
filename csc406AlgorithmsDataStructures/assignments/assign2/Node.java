@@ -13,11 +13,11 @@ package poset;
 public class Node {
 
 	/**private data members*/
-	private int vLabel;
+	private int vLabel = 0;
 	private int index;
-	private int degOfNode;
-	private int inDegOfNode;
-	private int outDegOfNode;
+	private int degOfNode = 0;
+	private int inDegOfNode = 0;
+	private int outDegOfNode = 0;
 	
 	/**Constructor Node */
 	public Node(){
@@ -44,18 +44,51 @@ public class Node {
     } 
 
 	/**Compare method compares two Node data members for integer equality, returns 0 if equal else a 1 if not*/
-	private static int compare(int nodeMember1, int nodeMember2) {
-		if(nodeMember1 == nodeMember2){
+	private static int compare(int dataMember1, int dataMember2) {
+		if(dataMember1 == dataMember2){
 			return 0;
 		}else{
 			return 1;
 		}
 	}
 	
-	protected void addInDegree(Node node){
+	/**Mutator Methods*/
+	protected void incrementInDegree(){
+		this.inDegOfNode++;
 	}
 	
-	/**Mutator Methods*/
+	protected void decrementInDegree(){
+		this.inDegOfNode--;
+		if(this.inDegOfNode < 0){
+			this.inDegOfNode = 0;
+			throw new IllegalArgumentException("Can't have an inDegree of less than 0");
+		}
+	}
+	
+	protected void incrementOutDegree(){
+		this.outDegOfNode++;
+	}
+	
+	protected void decrementOutDegree(){
+		this.outDegOfNode--;
+		if(this.outDegOfNode < 0){
+			this.outDegOfNode = 0;
+			throw new IllegalArgumentException("Can't have an outDegree of less than 0");
+		}
+	}
+	
+	protected void incrementDegree(){
+		this.degOfNode++;
+	}
+	
+	protected void decrementDegree(){
+		this.degOfNode--;
+		if(this.degOfNode < 0){
+			this.degOfNode = 0;
+			throw new IllegalArgumentException("Can't have an Degree of less than 0");
+		}
+	}
+	
 	protected void setVLabel(int vLabel){
 		this.vLabel = vLabel;
 	}

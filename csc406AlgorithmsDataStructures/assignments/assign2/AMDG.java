@@ -13,13 +13,13 @@ package poset;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**Adjacecy Matrix Directed Graph*/
 public class AMDG extends G{
 	
 	/**private data members*/
 	private BufferedReader br;
-	private int type;
 	private int numOfEdges;
 	private int numOfNodes;
 	private int[][] AM;
@@ -32,12 +32,12 @@ public class AMDG extends G{
 	protected void removeEdge(Edge e){} //deletes the edge e from the graph
 	protected int inDegree(Node i){return 0;} //returns the in-degree of node i. this method is defined for directed graphs only.
 	protected int outDegree(Node i){return 0;} //returns the out-degree of node i. this method is defined for directed graphs only.
-	protected Node adjacentVertices(Node i){Node node = new Node(0); return node;} //returns the nodes that are adjacent to i
+	protected ArrayList<Node> adjacentVertices(Node i){ArrayList<Node> node = new ArrayList<Node>(); return node;} //returns the nodes that are adjacent to i
 	protected boolean areAdjacent(Node i, Node j){return false;} //returns true if the nodes i and j are adjacent else returns false.
 	protected int degree(Node i){return 0;} //returns the degree of node i. this method is defined for undirected graphs only.
 	protected int degree(int i){return 0;} //returns the degree of node i. this method is defined for undirected graphs only.
 	
-	/**Constructor calls the super constructor and passes a file with graph data*/
+	/**Constructor*/
 	public AMDG(BufferedReader br, int numOfNodes, int numOfEdges){
 		super(br, numOfNodes, numOfEdges);
 		System.out.println("Inside AMDG Constructor\n");
@@ -50,6 +50,7 @@ public class AMDG extends G{
 		System.out.println(toString());
 	}
 	
+	/**constructAD method constructs the given adjacency data structure and populates it from the file input stream*/
 	protected void constructAD(){
 		/*DEBUG*///System.out.println("breakpoint: inside constructAM");
 		AM = new int[numOfNodes][numOfNodes];
@@ -78,6 +79,7 @@ public class AMDG extends G{
 	}
 	
 	@Override
+	/**toString method converts the data structure to a readable string*/
 	public String toString(){
 		String n = "";
 		n += "\nIndex     |";
@@ -100,6 +102,33 @@ public class AMDG extends G{
 			
 		}
 		return n;
+	}
+	
+	/**Equal method compares data members of two objects*/
+	@Override
+	public boolean equals(Object child){      //note the type of the parameter
+        AMDG c = (AMDG)child;               // cast the parameter before use
+        return AMDG.compare(this.AM, c.AM)  == 0;
+    } 
+
+	/**Compare method compares two Objects data members for integer equality, returns 0 if equal else a 1 if not*/
+	private static int compare(int[][] dataMember1, int[][] dataMember2) {
+		if(dataMember1 == dataMember2){
+			return 0;
+		}else{
+			return 1;
+		}
+	}
+	
+	/**rangeCheck( ) : compares the length of the array with the 
+	 * incoming node label returns false if the their is not enough 
+	 * room in the array*/
+	protected boolean rangeCheck(Object list, int vLabel){
+	    int[][] am = (int[][])list;
+	    if(am.length < vLabel){
+	    	return false;
+	    }
+		return true;
 	}
 	
 	/**existsEdge(int i, int j): returns true if there exists an edge between i and j else returns false*/
@@ -130,7 +159,7 @@ public class AMDG extends G{
 	protected int outDegree(int i){return 0;} //returns the out-degree of node i. this method is defined for directed graphs only.
 	
 	/**adjacentVertices(int: i):  returns the nodes that are adjacent to i*/
-	protected Node adjacentVertices(int i){Node node = new Node(0); return node;} // returns the nodes that are adjacent to i
+	protected ArrayList<Node> adjacentVertices(int i){ArrayList<Node> node = new ArrayList<Node>(); return node;} // returns the nodes that are adjacent to i
 	
 	/**areAdjacent(int i, int j): returns true if the nodes i and j are adjacent else returns false.*/
 	protected boolean areAdjacent(int i, int j){return false;} //returns true if the nodes i and j are adjacent else returns false.

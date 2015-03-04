@@ -66,6 +66,22 @@ public class Edge {
 		this.adjNodej = adjNodej;
 	}
 	
+	/**Equal method compares data members of two Node objects*/
+	@Override
+	public boolean equals(Object edge){      //note the type of the parameter
+        Edge e = (Edge)edge;               // cast the parameter before use
+        return Edge.compare(this.eLabel, e.eLabel)  == 0;
+    } 
+
+	/**Compare method compares two Edge data members for integer equality, returns 0 if equal else a 1 if not*/
+	private static int compare(int dataMember1, int dataMember2) {
+		if(dataMember1 == dataMember2){
+			return 0;
+		}else{
+			return 1;
+		}
+	}
+	
 	/**Mutator Methods*/
 	protected void seteLabel(int eLabel){
 		this.eLabel = eLabel;
