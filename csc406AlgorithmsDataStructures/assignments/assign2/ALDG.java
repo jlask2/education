@@ -28,6 +28,8 @@ public class ALDG extends G{
 	private Iterator<Node> ite;
 	private Queue<Edge> pqe;
 	private String line;
+	private String fileInput;
+	
 	
 	/**Constructor*/
 	public ALDG(BufferedReader br, int numOfNodes, int numOfEdges){
@@ -36,10 +38,11 @@ public class ALDG extends G{
 		this.br = br;
 		this.numOfNodes = numOfNodes;
 		this.numOfEdges = numOfEdges;
-		System.out.println("Number of Edges: "+this.numOfEdges);
-		System.out.println("Number of Nodes: "+this.numOfNodes);
+		fileInput = "This is the file input data:\n\n0 "+numOfNodes+" "+numOfEdges+"\n";
 		constructAD();
+		System.out.println(fileInput);
 		System.out.println(toString());
+		topoSort(this.listNodes);
 	}
 	
 	/**constructAD method constructs the given adjacency data structure and populates it from the file input stream*/
@@ -48,30 +51,24 @@ public class ALDG extends G{
 			AL = (ArrayList<Node>[])new ArrayList[numOfNodes];
 			pqe = new PriorityQueue<Edge>();
 			for(int e = 0; e < AL.length; e++){
+				//Node node = new Node(e+1);
+				//node.setInDegOfNode(0);
+				//node.setOutDegOfNode(0);
+				//node.setDegOfNode(0);
 				AL[e] = new ArrayList<Node>(numOfNodes);
-				AL[e].add(new Node(e+1));
+				//AL[e].add(node);
 			}
 			br.mark(100);
 		    while((line = br.readLine()) != null){	
-		    	boolean assigned = false;
 				String[] lineArray = line.split(" ");
 				Node node1 = new Node(Integer.parseInt(lineArray[0]));
 				Node node2 = new Node(Integer.parseInt(lineArray[1]));
-				
-				for(int k = 0; k < AL.length; k++){
-					if((AL[k].get(0).equals(node1))&&(assigned == false)){
-						AL[k].add(node2);
-						if(!outNodes.contains(node1)){
-					    	outNodes.add(node1);
-					    }
-					    if(!inNodes.contains(node2)){
-					    	inNodes.add(node2);
-					    }
-					    inNodes.get(inNodes.indexOf(node2)).incrementInDegree();
-					    outNodes.get(outNodes.indexOf(node1)).incrementOutDegree();
-						assigned = true;
-					}
-				}
+				AL[node1.getVLabel()-1].add(node2);
+			    listNodes[1][node1.getVLabel()-1]++; 
+			    listNodes[0][node2.getVLabel()-1]++;
+			    listNodes[2][node1.getVLabel()-1]++;
+			    listNodes[2][node2.getVLabel()-1]++;
+			    fileInput += line+"\n";
 		    }
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -81,25 +78,22 @@ public class ALDG extends G{
 	@Override
 	/**toString method converts the data structure to a readable string*/
 	public String toString(){
-		Node nodei = new Node(3);
-	    Node nodej = new Node(4);
+		/*Node nodei = new Node(3);
+	    Node nodej = new Node(2);
 		Edge edge = new Edge(nodei, nodej);
 		System.out.println("Does Edge "+nodei.getVLabel()+" "+nodej.getVLabel()+" exist?: "+existsEdge(edge));
 		putEdge(edge);
 		System.out.println("After putEdge(), does Edge "+nodei.getVLabel()+" "+nodej.getVLabel()+" exist?: "+existsEdge(edge));
 		Node nodeo = new Node(3);
 		System.out.println("Are Nodes "+nodeo.getVLabel()+" and "+nodej.getVLabel()+" adjacent?: "+areAdjacent(nodeo, nodej));
-		ArrayList<Node> adjNodes = adjacentVertices(nodeo);
-		ite = adjNodes.iterator(); //note the case for i in iterator
+		int[] adjNodes = adjacentVertices(3);
+		//ite = adjNodes.iterator(); //note the case for i in iterator
 		System.out.print("The Adjacent Nodes to "+nodeo.getVLabel()+" are: ");
-		while(ite.hasNext()){
-			Node node = ite.next();
-			if(node != null){
-				System.out.print(node.getVLabel()+", ");
-			}
-		}
+		for(int i = 0; i < adjNodes.length; i++){
+			System.out.print(" "+adjNodes[i]+",");
+		}*/
 		System.out.print("\n");
-		System.out.println("Node "+nodeo.getVLabel()+" has a inDegree of "+inDegree(nodeo)+" and a outDegree of "+outDegree(nodeo));
+		//System.out.println("Node "+nodeo.getVLabel()+" has a inDegree of "+inDegree(nodeo)+" and a outDegree of "+outDegree(nodeo));
 		
 		
 		String p = "";
@@ -107,10 +101,11 @@ public class ALDG extends G{
 		for(int i = 0; i < AL.length; i++){
 			ite = ((ArrayList<Node>) AL[i]).iterator(); //note the case for i in iterator
 			// repeat if there are more elements in the collection
+			p += (i+1)+" --> ";
 			while (ite.hasNext())  {                    
 	            p += ite.next().getVLabel();	//get the next element from the collection
 	            if(ite.hasNext()){					
-					p += ", ";
+					p += " ";
 				}    	   							
 			}
 			p += "\n";
@@ -146,44 +141,39 @@ public class ALDG extends G{
 	}
 	
 	/**existEdge( Edge e): returns true if e is an edge else returns false*/
-	protected boolean existsEdge(Edge e){
-		Node nodei = e.getAdjNodei();
-	    Node nodej = e.getAdjNodej();
+	protected boolean existsEdge(int i, int j){
 		boolean found = false;
-	    if(AL[nodei.getVLabel()-1].contains(nodei) && AL[nodei.getVLabel()-1].contains(nodej)){
+	    if(AL[i-1].contains(j)){
 	    	found = true;
 	    }
 		return found;
 	}
 	
 	/**putEdge( Edge: e) : adds the edge e to the graph*/
-	protected void putEdge(Edge e){
-	    Node nodei = e.getAdjNodei();
-	    Node nodej = e.getAdjNodej();
-	    if(AL[nodei.getVLabel()-1].contains(nodej)){
+	protected void putEdge(int i, int j){
+	    Node nodej = new Node(j);
+	    if(AL[i-1].contains(nodej)){
 	    }else{
-	    	if(!(rangeCheck(AL, nodei.getVLabel()))){
+	    	if(!(rangeCheck(AL, i))){
 	    		throw new ArrayIndexOutOfBoundsException("The index is out of bounds");
 	    	}else{
-	    		AL[nodei.getVLabel()-1].add(nodej);
-	    		outNodes.add(nodei);
-				if(!inNodes.contains(nodej)){
-			    	inNodes.add(nodej);
-			    }
-			    inNodes.get(inNodes.indexOf(nodej)).incrementInDegree();
-			    outNodes.get(outNodes.indexOf(nodei)).incrementOutDegree();
+	    		AL[i-1].add(nodej);
+	    		listNodes[1][i-1]++;
+	    		listNodes[0][j-1]++;
+	    		listNodes[2][i-1]++;
+	    		listNodes[2][j-1]++;
 	    	}
 	    }
 	}
 	
 	/**removeEdge(Edge: e): deletes the edge e from the graph*/
-	protected void removeEdge(Edge e){
-		if(existsEdge(e)){
-			Node nodei = e.getAdjNodei();
-		    Node nodej = e.getAdjNodej();
-		    AL[nodei.getVLabel()-1].remove(nodej);
-		    if(AL[nodei.getVLabel()-1].size() == 1){
-		    	AL[nodei.getVLabel()-1].remove(nodei);
+	protected void removeEdge(int i, int j){
+		if(existsEdge(i, j)){
+			Node nodei = new Node(i);
+		    Node nodej = new Node(j);
+		    AL[i-1].remove(nodej);
+		    if(AL[i-1].size() == 1){
+		    	AL[i-1].remove(nodei);
 		    }
 		}else{
 			throw new NullPointerException("This edge does not exist");
@@ -191,52 +181,36 @@ public class ALDG extends G{
 	} //deletes the edge e from the graph
 	
 	/**inDegree(Node: i): returns the in-degree of node i. this method is defined for directed graphs only.*/
-	protected int inDegree(Node i){
-		if(inNodes.contains(i)){
-			return inNodes.get(inNodes.indexOf(i)).getInDegOfNode();
-		}else{
-			return 0;
-		}
+	protected int inDegree(int i){
+		return listNodes[i-1][0];
 	} //returns the in-degree of node i. this method is defined for directed graphs only.
 	
 	/**outDegree(Node: i): returns the out-degree of node i. this method is defined for directed graphs only.*/
-	protected int outDegree(Node i){
-		if(outNodes.contains(i)){
-			return outNodes.get(outNodes.indexOf(i)).getOutDegOfNode();
-		}else{
-			return 0;
-		}
+	protected int outDegree(int i){
+		return listNodes[i-1][1];
 	} //returns the out-degree of node i. this method is defined for directed graphs only.
 	
+	protected int degree(int i){
+		return listNodes[i-1][2];
+	} //returns the degree of node i. this method is defined for undirected graphs only.
+	
 	/**adjacentVertices(Node: i): returns the nodes that are adjacent to i*/
-	protected ArrayList<Node> adjacentVertices(Node i){
-		//AL[i.getVLabel()].
-		//int numOfAdjNodes = i.getInDegOfNode() + i.getOutDegOfNode();
-		ArrayList<Node> adjNodes = new ArrayList<Node>();
-		for(int k = 0; k < AL.length; k++){
-			if(AL[k].contains(i)){
-				if(k == (i.getVLabel()-1)){
-					ite = ((ArrayList<Node>) AL[k]).iterator(); //note the case for i in iterator
-					ite.next();
-					while(ite.hasNext()){
-						Node node = ite.next();
-						if(!(adjNodes.contains(node))){
-							adjNodes.add(node);
-						}		
-					}
-				}else{
-					adjNodes.add(AL[k].get(0));
-				}
-			}
+	protected int[] adjacentVertices(int i){
+		int[] adjNodes = new int[AL[i-1].size()];
+		int m = 0;
+		ite = AL[i-1].iterator();
+		while(ite.hasNext()){
+			adjNodes[m] = ite.next().getVLabel();
+			m++;
 		}
 		return adjNodes;
 	} //returns the nodes that are adjacent to i
 	
 	/**areAdjacent(Node i, Node j): returns true if the nodes i and j are adjacent else returns false.*/
-	protected boolean areAdjacent(Node i, Node j){
+	protected boolean areAdjacent(int i, int j){
 		/*DEBUG*///System.out.println("AL.length = "+AL.length+" | i.getVLabel() = "+i.getVLabel());
-		if(AL.length > (i.getVLabel()-1)){
-			if(AL[i.getVLabel()-1].contains(j)&&(AL[i.getVLabel()-1].get(0).getVLabel() != i.getVLabel())){
+		if(AL.length > (i-1)){
+			if(AL[i-1].contains(j)&&(AL[i-1].get(0).getVLabel() != j)){
 				return true;
 			}else{
 				return false;
@@ -244,18 +218,5 @@ public class ALDG extends G{
 		}else{
 			throw new ArrayIndexOutOfBoundsException("There is no index pertaining to this node");
 		}
-		
 	} //returns true if the nodes i and j are adjacent else returns false.
-	
-	/**Forwarded declarations of abstract methods from the abstract class G
-	 * These are not implemented in this child class*/
-	protected boolean existsEdge(int i, int j){return false;} //returns true if there exists an edge between i and j else returns false
-	protected void putEdge(int i, int j){} //adds the edge from i to j to the graph
-	protected void removeEdge(int i, int j){} //deletes the edge from i to j from the graph
-	protected int inDegree(int i){return 0;} //returns the in-degree of node i. this method is defined for directed graphs only.
-	protected int outDegree(int i){return 0;} //returns the out-degree of node i. this method is defined for directed graphs only.
-	protected ArrayList<Node> adjacentVertices(int i){ArrayList<Node> node = new ArrayList<Node>(); return node;} // returns the nodes that are adjacent to i
-	protected boolean areAdjacent(int i, int j){return false;} //returns true if the nodes i and j are adjacent else returns false.
-	protected int degree(Node i){return 0;} //returns the degree of node i. this method is defined for undirected graphs only.
-	protected int degree(int i){return 0;} //returns the degree of node i. this method is defined for undirected graphs only.
 }

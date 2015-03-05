@@ -13,10 +13,26 @@ package poset;
 import java.util.Stack;
 
 public class TopoSort{
-	Stack<Node> st;
+	
+	private Stack<Integer> st;
 	
 	TopoSort(){
-		st = new Stack<Node>();
+		st = new Stack<Integer>();
 	}
 	
+	protected Integer push(Integer node){
+	    return st.push(node);
+	}
+	
+	protected Integer peek(){
+		return st.peek();
+	}
+	
+	protected Integer pop(){
+		return st.pop();
+	}
+	
+	protected boolean isEmpty(){
+		return st.isEmpty();
+	}
 }

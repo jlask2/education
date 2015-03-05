@@ -13,9 +13,34 @@ package poset;
 import java.util.PriorityQueue;
 
 public class MST{
-	PriorityQueue<Edge> prq;
+	PriorityQueue<Edge> pqe;
+	int[] A;
 	
-	MST(){
-		prq = new PriorityQueue<Edge>();
+	MST(PriorityQueue<Edge> pqe){
+		this.pqe = pqe;
+		A = new int[0];//numNodes()];
 	}
+	
+	protected void makeSet(int x){
+		A[x] = x;
+	}
+	
+	protected int find(int x){
+		return A[x];
+	}
+	
+	protected int findRoot(int x){
+		while(A[x]>0){
+			int temp = A[x];
+			A[x] = A[A[x]];
+			x = temp;
+		}
+		return x;
+	}
+	
+	protected void union(int x, int y){
+		find(x);
+		A[y] = A[x];
+	}
+	
 }

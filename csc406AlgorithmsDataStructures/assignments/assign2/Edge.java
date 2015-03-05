@@ -10,7 +10,7 @@
 
 package poset;
 
-public class Edge {
+public class Edge implements Comparable{
 
 	/**private data members*/
 	private int eLabel = 0;
@@ -114,5 +114,11 @@ public class Edge {
 	
 	protected Node getAdjNodej(){
 		return adjNodej;
+	}
+
+	@Override
+	public int compareTo(Object obj) {
+		Edge e = (Edge)obj;
+		return Edge.compare(this.weight, e.weight);
 	}
 }
