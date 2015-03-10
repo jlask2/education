@@ -34,7 +34,7 @@ abstract class G {
 	abstract protected void constructAD();
 	abstract public String toString();
 	abstract public boolean equals(Object graph);      //note the type of the parameter // cast the parameter before use
-	abstract protected boolean rangeCheck(Object list, int vLabel);
+	abstract protected boolean rangeCheck(int i, int j);
 	
 	abstract protected boolean existsEdge(int i, int j); //returns true if there exists an edge between i and j else returns false
 	abstract protected void putEdge(int i, int j); //adds the edge from i to j to the graph
@@ -91,6 +91,10 @@ abstract class G {
 		return areAdjacent(i.getVLabel(), j.getVLabel());
 	}//returns true if the nodes i and j are adjacent else returns false.
 
+	protected boolean rangeCheck(Edge e){
+		return rangeCheck(e.getAdjNodei().getVLabel(), e.getAdjNodej().getVLabel());
+	}
+	
 	/**numNodes( ) – returns the number of nodes*/
 	protected int numNodes(){
 		return numOfNodes;
@@ -143,17 +147,15 @@ abstract class G {
 			for(int h = 0; h < output.length; h++){
 				System.out.print(" "+output[h]+" ");
 			}
+			System.out.println("\n");
 		}else{
-			System.out.println("This graph contains a cycle. Topological Sort not possible");
+			System.out.println("This graph contains a cycle. Topological Sort not possible \n");
 		}
 	}
 	
-	protected void findMST(PriorityQueue<Edge> pqe){
-		MST mst = new MST(pqe);
-		for(int x = 0; x < numOfNodes; x++){
-			mst.makeSet(x+1);
-		}
-		TreeSet tree = new TreeSet();
-		
+	public void findMST(PriorityQueue<Edge> pqe, int numOfNodes){
+		System.out.println("\nPerforming Kruskals Minimum Spanning Tree");
+		MST kruskal = new MST(pqe, numOfNodes);
+		System.out.println(kruskal.toString());
 	}
 }

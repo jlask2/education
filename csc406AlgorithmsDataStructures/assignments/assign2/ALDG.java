@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.PriorityQueue;
-import java.util.Queue;
 
 /**Adjacecy List Directed Graph*/
 public class ALDG extends G{
@@ -26,7 +25,7 @@ public class ALDG extends G{
 	private int numOfNodes;
 	private ArrayList<Node>[] AL;
 	private Iterator<Node> ite;
-	private Queue<Edge> pqe;
+	private PriorityQueue<Edge> pqe;
 	private String line;
 	private String fileInput;
 	
@@ -129,15 +128,9 @@ public class ALDG extends G{
 		}
 	}
 
-	/**rangeCheck( ) : compares the length of the array with the 
-	 * incoming node label returns false if the their is not enough 
-	 * room in the array*/
-	protected boolean rangeCheck(Object list, int vLabel){
-	    ArrayList<Node>[] al = (ArrayList<Node>[])list;
-	    if(al.length < vLabel){
-	    	return false;
-	    }
-		return true;
+	/**rangeCheck( ) : Checks to see if the node labeling is outside the range of 1 -> numOfNodes*/
+	protected boolean rangeCheck(int i, int j){
+		return i > 0 && i <= numOfNodes && j > 0 && i <= numOfNodes;
 	}
 	
 	/**existEdge( Edge e): returns true if e is an edge else returns false*/
@@ -154,7 +147,7 @@ public class ALDG extends G{
 	    Node nodej = new Node(j);
 	    if(AL[i-1].contains(nodej)){
 	    }else{
-	    	if(!(rangeCheck(AL, i))){
+	    	if(!(rangeCheck(i, j))){
 	    		throw new ArrayIndexOutOfBoundsException("The index is out of bounds");
 	    	}else{
 	    		AL[i-1].add(nodej);

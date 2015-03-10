@@ -10,37 +10,48 @@
 
 package poset;
 
+import java.util.ArrayList;
 import java.util.PriorityQueue;
 
 public class MST{
-	PriorityQueue<Edge> pqe;
-	int[] A;
+	UnionFind uf;
+	ArrayList<Edge> resultTree;
+	int i;
+	int j;
+	int n;
+	int resultMinWeight;
 	
-	MST(PriorityQueue<Edge> pqe){
-		this.pqe = pqe;
-		A = new int[0];//numNodes()];
-	}
-	
-	protected void makeSet(int x){
-		A[x] = x;
-	}
-	
-	protected int find(int x){
-		return A[x];
-	}
-	
-	protected int findRoot(int x){
-		while(A[x]>0){
-			int temp = A[x];
-			A[x] = A[A[x]];
-			x = temp;
+	MST(PriorityQueue<Edge> pqe, int numOfNodes){
+		//this.pqe = pqe;
+		//A = new int[0];//numNodes()];
+		uf = new UnionFind(pqe, numOfNodes);
+	    resultTree = new ArrayList<Edge>();
+	    n = numOfNodes - 1;
+		
+		while ((resultTree.size() < n)&&(!pqe.isEmpty())){
+			Edge e;
+				e = (Edge)pqe.poll();
+				System.out.println(e.toString());
+				i = e.getAdjNodei().getVLabel()-1;
+				j = e.getAdjNodej().getVLabel()-1;
+				System.out.println("i: "+i+"j: "+j);
+			
+			if(uf.findRoot(i) != uf.findRoot(j)){
+				resultTree.add(e);
+				uf.union(i, j);
+				resultMinWeight += e.getWeight();
+				System.out.println(uf.toString());
+			}
 		}
-		return x;
 	}
 	
-	protected void union(int x, int y){
-		find(x);
-		A[y] = A[x];
+	@Override
+	/**toString method converts the data structure to a readable string*/
+	public String toString(){
+		String resultString = "\nThe MST is: "+ resultMinWeight;
+		for(int i  = 0; i < resultTree.size(); i++){
+			resultString += "\n"+ resultTree.get(i).toString();
+		}
+		return resultString;
 	}
-	
 }

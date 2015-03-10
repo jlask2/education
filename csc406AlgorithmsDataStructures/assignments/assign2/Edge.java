@@ -10,11 +10,11 @@
 
 package poset;
 
-public class Edge implements Comparable{
+public class Edge implements Comparable<Edge>{
 
 	/**private data members*/
 	private int eLabel = 0;
-	private int weight;
+	private int weight = 1;
 	private Node adjNodei;
 	private Node adjNodej;
 	
@@ -116,9 +116,24 @@ public class Edge implements Comparable{
 		return adjNodej;
 	}
 
+	//@Override
+	public int compareTo(Edge e) {
+		//Edge e = (Edge)edge;
+		if(this.getWeight() < e.getWeight()){
+			System.out.println("compareTo <");
+			return -1;
+		}else if(this.getWeight() > e.getWeight()){
+			System.out.println("compareTo >");
+			return 1;
+		}else{
+			System.out.println("compareTo equal");
+			return 0;
+			
+		}
+	}
+	
 	@Override
-	public int compareTo(Object obj) {
-		Edge e = (Edge)obj;
-		return Edge.compare(this.weight, e.weight);
+	public String toString(){
+		return "Edge --> Node i("+getAdjNodei().getVLabel()+") weight-"+getWeight()+"-> Node j("+getAdjNodej().getVLabel()+")";
 	}
 }

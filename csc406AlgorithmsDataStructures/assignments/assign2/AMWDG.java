@@ -42,7 +42,7 @@ public class AMWDG extends G{
 		//System.out.println(fileInput);
 		System.out.println(toString());
 		topoSort(this.listNodes);
-		//findMST(pqe);
+		findMST(pqe, numOfNodes);
 	}
 	
 	/**constructAD method constructs the given adjacency data structure and populates it from the file input stream*/
@@ -71,9 +71,9 @@ public class AMWDG extends G{
 	    		listNodes[2][nodej-1]++;
 	    		fileInput += line+"\n";
 			}
-			for(int p = 0; p < pqe.size(); p++){
+			/*for(int p = 0; p < pqe.size(); p++){
 				System.out.println("Priority Queue: "+ pqe.remove().getWeight()+" ");
-			}
+			}*/
 			br.close();
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
@@ -139,15 +139,9 @@ public class AMWDG extends G{
 		}
 	}
 	
-	/**rangeCheck( ) : compares the length of the array with the 
-	 * incoming node label returns false if the their is not enough 
-	 * room in the array*/
-	protected boolean rangeCheck(Object list, int vLabel){
-	    int[][] am = (int[][])list;
-	    if(am.length < vLabel){
-	    	return false;
-	    }
-		return true;
+	/**rangeCheck( ) : Checks to see if the node labeling is outside the range of 1 -> numOfNodes*/
+	protected boolean rangeCheck(int i, int j){
+		return i > 0 && i <= numOfNodes && j > 0 && i <= numOfNodes;
 	}
 	
 	/**existsEdge(int i, int j): returns true if there exists an edge between i and j else returns false*/
@@ -162,7 +156,7 @@ public class AMWDG extends G{
 	/**putEdge( int i, int j) : adds the edge from i to j to the graph*/
 	protected void putEdge(int i, int j){
 		if(!(AM[i-1][j-1] == 1)){
-			if(!(rangeCheck(AM, i))){
+			if(!(rangeCheck(i, j))){
 	    		throw new ArrayIndexOutOfBoundsException("The index is out of bounds");
 	    	}else{
 	    		AM[i-1][j-1] = 1;

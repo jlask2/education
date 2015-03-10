@@ -43,7 +43,7 @@ public class ALWDG extends G{
 		System.out.println(fileInput);
 		System.out.println(toString());
 		topoSort(listNodes);
-		//findMST(pqe);
+		findMST(pqe, numOfNodes);
 	}
 	
 	/**constructAD method constructs the given adjacency data structure and populates it from the file input stream*/
@@ -140,15 +140,9 @@ public class ALWDG extends G{
 		}
 	}
 	
-	/**rangeCheck( ) : compares the length of the array with the 
-	 * incoming node label returns false if the their is not enough 
-	 * room in the array*/
-	protected boolean rangeCheck(Object list, int vLabel){
-	    ArrayList<Node>[] al = (ArrayList<Node>[])list;
-	    if(al.length < vLabel){
-	    	return false;
-	    }
-		return true;
+	/**rangeCheck( ) : Checks to see if the node labeling is outside the range of 1 -> numOfNodes*/
+	protected boolean rangeCheck(int i, int j){
+		return i > 0 && i <= numOfNodes && j > 0 && i <= numOfNodes;
 	}
 	
 	/**existEdge( Edge e): returns true if e is an edge else returns false*/
@@ -165,7 +159,7 @@ public class ALWDG extends G{
 	    Node nodej = new Node(j);
 	    if(AL[i-1].contains(nodej)){
 	    }else{
-	    	if(!(rangeCheck(AL, i))){
+	    	if(!(rangeCheck(i, j))){
 	    		throw new ArrayIndexOutOfBoundsException("The index is out of bounds");
 	    	}else{
 	    		AL[i-1].add(nodej);

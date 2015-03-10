@@ -123,15 +123,9 @@ public class AMDG extends G{
 		}
 	}
 	
-	/**rangeCheck( ) : compares the length of the array with the 
-	 * incoming node label returns false if the their is not enough 
-	 * room in the array*/
-	protected boolean rangeCheck(Object list, int vLabel){
-	    int[][] am = (int[][])list;
-	    if(am.length < vLabel){
-	    	return false;
-	    }
-		return true;
+	/**rangeCheck( ) : Checks to see if the node labeling is outside the range of 1 -> numOfNodes*/
+	protected boolean rangeCheck(int i, int j){
+		return i > 0 && i <= numOfNodes && j > 0 && i <= numOfNodes;
 	}
 	
 	/**existsEdge(int i, int j): returns true if there exists an edge between i and j else returns false*/
@@ -146,7 +140,7 @@ public class AMDG extends G{
 	/**putEdge( int i, int j) : adds the edge from i to j to the graph*/
 	protected void putEdge(int i, int j){
 		if(!(AM[i-1][j-1] == 1)){
-			if(!(rangeCheck(AM, i))){
+			if(!(rangeCheck(i, j))){
 	    		throw new ArrayIndexOutOfBoundsException("The index is out of bounds");
 	    	}else{
 	    		AM[i-1][j-1] = 1;
