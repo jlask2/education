@@ -29,10 +29,8 @@ public class ALDG extends DAG{
 	private String line;
 	private String fileInput;
 	
-	
 	/**Constructor*/
 	public ALDG(BufferedReader br, int numOfNodes, int numOfEdges){
-		//super(br, numOfNodes, numOfEdges);
 		System.out.println("Inside ALDG Constructor\n");
 		this.br = br;
 		this.numOfNodes = numOfNodes;
@@ -51,12 +49,7 @@ public class ALDG extends DAG{
 			AL = (ArrayList<Node>[])new ArrayList[numOfNodes];
 			pqe = new PriorityQueue<Edge>();
 			for(int e = 0; e < AL.length; e++){
-				//Node node = new Node(e+1);
-				//node.setInDegOfNode(0);
-				//node.setOutDegOfNode(0);
-				//node.setDegOfNode(0);
 				AL[e] = new ArrayList<Node>(numOfNodes);
-				//AL[e].add(node);
 			}
 			br.mark(100);
 		    while((line = br.readLine()) != null){	

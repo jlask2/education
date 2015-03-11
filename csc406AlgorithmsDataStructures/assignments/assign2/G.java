@@ -23,13 +23,6 @@ abstract class G {
 	protected int[][] listNodes;
 	protected TopoSort ts;
 	
-	/**Constructor G */
-	//public G(BufferedReader br, int numOfNodes, int numOfEdges){
-		//this.numOfNodes = numOfNodes;
-		//this.numOfEdges = numOfEdges;
-		//listNodes = new int[3][numOfNodes];
-	//}
-	
 	/**Forwarded abstract methods to be implemented by the child classes*/
 	abstract protected void constructAD();
 	abstract public String toString();

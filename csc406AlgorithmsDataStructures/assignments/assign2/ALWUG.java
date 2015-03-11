@@ -42,7 +42,7 @@ public class ALWUG extends UAG{
 		constructAD();
 		System.out.println(fileInput);
 		System.out.println(toString());
-		findMST(pqe, numOfNodes);
+		//findMST(pqe, numOfNodes);
 	}
 	
 	/**constructAD method constructs the given adjacency data structure and populates it from the file input stream*/

@@ -14,16 +14,18 @@ import java.util.ArrayList;
 import java.util.PriorityQueue;
 
 public class MST{
-	UnionFind uf;
-	ArrayList<Edge> resultTree;
-	int i;
-	int j;
-	int n;
-	int resultMinWeight;
+	
+	/**private data members*/
+	private UnionFind uf;
+	private ArrayList<Edge> resultTree;
+	private int i;
+	private int j;
+	private int n;
+	private int rooti;
+	private int rootj;
+	private int resultMinWeight;
 	
 	MST(PriorityQueue<Edge> pqe, int numOfNodes){
-		//this.pqe = pqe;
-		//A = new int[0];//numNodes()];
 		uf = new UnionFind(pqe, numOfNodes);
 	    resultTree = new ArrayList<Edge>();
 	    n = numOfNodes - 1;
@@ -34,17 +36,12 @@ public class MST{
 				System.out.println(e.toString());
 				i = e.getAdjNodei().getVLabel()-1;
 				j = e.getAdjNodej().getVLabel()-1;
-				//System.out.println("i: "+i+" | j: "+j);
-				
-				int rooti = uf.findRoot(i);
-				int rootj = uf.findRoot(j);
-			//System.out.println("uf.findRoot(i): "+rooti+" | uf.findRoot(j): "+rootj);
-			
+				rooti = uf.findRoot(i);
+				rootj = uf.findRoot(j);
+	
 			if(rooti != rootj){
-			//if(uf.findRoot(i) != uf.findRoot(j)){
 				resultTree.add(e);
-				//uf.union(rooti, rootj);
-				uf.union(i, j);
+				uf.union(rooti, rootj);
 				resultMinWeight += e.getWeight();
 				System.out.println(uf.toString());
 			}
