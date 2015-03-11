@@ -10,12 +10,10 @@
 
 package poset;
 
-import java.io.BufferedReader;
 import java.util.PriorityQueue;
-import java.util.TreeSet;
 
-/**Root Class - Graph*/
-abstract class G {
+/**Abstract Class Extends G - Directed Adjacency Graph*/
+abstract class DAG extends G{
 	
 	/**private data members*/
 	private int numOfEdges;
@@ -103,5 +101,53 @@ abstract class G {
 	/**numEdges( ) : returns the number of edges*/
 	protected int numEdges(){
 		return numOfEdges;
+	}
+	
+	public void topoSort(int[][] listN, int numOfNodes){
+		int[] output = new int[numOfNodes];
+		int i = 1;
+		int t = 0;
+		ts = new TopoSort();
+		//System.out.println("listN[0].length;: "+listN[0].length);
+		for(int j = 0; j < listN[0].length; j++){
+			if(listN[0][j] == 0){
+				//System.out.println("j: "+j);
+				ts.push(j+1);
+			}
+		}
+		
+		while(!ts.isEmpty()){
+			output[t] = ts.pop();
+			Node node = new Node(output[t]);
+			i++;
+			int[] adjNodes = adjacentVertices(node);
+			//System.out.println(""+node.getVLabel());
+			/*for(int k = 0; k < adjNodes.length; k++){
+				System.out.println("adjNodes[k] r"+adjNodes[k]);
+			}*/
+			for(int k = 0; k < adjNodes.length; k++){
+				
+				//System.out.println("adjNodes.length "+adjNodes.length+" "+k);
+				//System.out.println("listN[0][adjNodes[k]-1] "+listN[0][adjNodes[k]-1]);
+				
+				listN[0][adjNodes[k]-1]--;
+				//System.out.println("adjNodes[k] "+adjNodes[k]);
+				if(listN[0][adjNodes[k]-1] == 0){
+					//System.out.println("adjNodes[k] "+adjNodes[k]);
+					 ts.push(adjNodes[k]);
+					 
+				}
+			}	
+			t++;
+		}	
+		if(i > numOfNodes){
+			System.out.print("The Topological Sorting of this graph results in");
+			for(int h = 0; h < output.length; h++){
+				System.out.print(" "+output[h]+" ");
+			}
+			System.out.println("\n");
+		}else{
+			System.out.println("This graph contains a cycle. Topological Sort not possible \n");
+		}
 	}
 }

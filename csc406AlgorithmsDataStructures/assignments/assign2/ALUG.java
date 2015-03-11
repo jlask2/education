@@ -17,7 +17,7 @@ import java.util.Iterator;
 import java.util.PriorityQueue;
 
 /**Adjacecy List Directed Graph*/
-public class ALDG extends DAG{
+public class ALUG extends UAG{
 	
 	/**private data members*/
 	private BufferedReader br;
@@ -31,17 +31,16 @@ public class ALDG extends DAG{
 	
 	
 	/**Constructor*/
-	public ALDG(BufferedReader br, int numOfNodes, int numOfEdges){
+	public ALUG(BufferedReader br, int numOfNodes, int numOfEdges){
 		//super(br, numOfNodes, numOfEdges);
-		System.out.println("Inside ALDG Constructor\n");
+		System.out.println("Inside ALUG Constructor\n");
 		this.br = br;
 		this.numOfNodes = numOfNodes;
 		this.numOfEdges = numOfEdges;
-		fileInput = "This is the file input data:\n\n0 "+numOfNodes+" "+numOfEdges+"\n";
+		fileInput = "This is the file input data:\n\n2 "+numOfNodes+" "+numOfEdges+"\n";
 		constructAD();
 		System.out.println(fileInput);
 		System.out.println(toString());
-		topoSort(this.listNodes, numOfNodes);
 	}
 	
 	/**constructAD method constructs the given adjacency data structure and populates it from the file input stream*/
@@ -64,8 +63,9 @@ public class ALDG extends DAG{
 				Node node1 = new Node(Integer.parseInt(lineArray[0]));
 				Node node2 = new Node(Integer.parseInt(lineArray[1]));
 				AL[node1.getVLabel()-1].add(node2);
-			    listNodes[1][node1.getVLabel()-1]++; 
-			    listNodes[0][node2.getVLabel()-1]++;
+				AL[node2.getVLabel()-1].add(node1);
+			    //listNodes[1][node1.getVLabel()-1]++; 
+			    //listNodes[0][node2.getVLabel()-1]++;
 			    listNodes[2][node1.getVLabel()-1]++;
 			    listNodes[2][node2.getVLabel()-1]++;
 			    fileInput += line+"\n";
@@ -116,8 +116,8 @@ public class ALDG extends DAG{
 	/**Equal method compares data members of two objects*/
 	@Override
 	public boolean equals(Object child){      //note the type of the parameter
-        ALDG c = (ALDG)child;               // cast the parameter before use
-        return ALDG.compare(this.AL, c.AL)  == 0;
+        ALUG c = (ALUG)child;               // cast the parameter before use
+        return ALUG.compare(this.AL, c.AL)  == 0;
     } 
 
 	/**Compare method compares two data members for integer equality, returns 0 if equal else a 1 if not*/
@@ -145,7 +145,8 @@ public class ALDG extends DAG{
 	
 	/**putEdge( Edge: e) : adds the edge e to the graph*/
 	protected void putEdge(int i, int j){
-	    Node nodej = new Node(j);
+		Node nodei = new Node(i);
+		Node nodej = new Node(j);
 	    if(AL[i-1].contains(nodej)){
 	    	throw new IllegalArgumentException("The edge "+i+" --> "+j+" cannot be added because it already exists");
 	    }else{
@@ -153,8 +154,9 @@ public class ALDG extends DAG{
 	    		throw new ArrayIndexOutOfBoundsException("The index is out of bounds");
 	    	}else{
 	    		AL[i-1].add(nodej);
-	    		listNodes[1][i-1]++;
-	    		listNodes[0][j-1]++;
+	    		AL[j-1].add(nodei);
+	    		//listNodes[1][i-1]++;
+	    		//listNodes[0][j-1]++;
 	    		listNodes[2][i-1]++;
 	    		listNodes[2][j-1]++;
 	    		fileInput += line+"\n";
@@ -168,11 +170,13 @@ public class ALDG extends DAG{
 			Node nodei = new Node(i);
 		    Node nodej = new Node(j);
 		    AL[i-1].remove(nodej);
+		    AL[j-1].remove(nodei);
 		    if(AL[i-1].size() == 1){
 		    	AL[i-1].remove(nodei);
 		    }
-		    listNodes[1][i-1]--;
-			listNodes[0][j-1]--;
+		    if(AL[j-1].size() == 1){
+		    	AL[j-1].remove(nodej);
+		    }
 		}else{
 			throw new NullPointerException("The edge "+i+" --> "+j+" cannot be removed because it does not exist");
 		}

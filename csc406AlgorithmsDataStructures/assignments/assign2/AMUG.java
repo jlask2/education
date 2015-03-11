@@ -12,68 +12,51 @@ package poset;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.Comparator;
-import java.util.PriorityQueue;
-import java.util.Queue;
 
-/**Adjacecy Matrix Weighted Directed Graph*/
-public class AMWDG extends DAG{
+/**Adjacecy Matrix Directed Graph*/
+public class AMUG extends UAG{
 	
 	/**private data members*/
 	private BufferedReader br;
 	private int numOfEdges;
 	private int numOfNodes;
 	private int[][] AM;
-	private Queue<Integer> pqw; 
-	private PriorityQueue<Edge> pqe;
-	
 	private String line;
 	private String fileInput;
 	
 	/**Constructor*/
-	public AMWDG(BufferedReader br, int numOfNodes, int numOfEdges){
+	public AMUG(BufferedReader br, int numOfNodes, int numOfEdges){
 		//super(br, numOfNodes, numOfEdges);
-		System.out.println("\n\nInside AMWDG Constructor\n");
+		System.out.println("\n\nInside AMUG Constructor\n");
 		this.br = br;
 		this.numOfNodes = numOfNodes;
 		this.numOfEdges = numOfEdges;
-		fileInput = "This is the file input data:\n\n1 "+numOfNodes+" "+numOfEdges+"\n";
+		fileInput = "This is the file input data:\n\n2 "+numOfNodes+" "+numOfEdges+"\n";
 		constructAD();
-		//System.out.println(fileInput);
 		System.out.println(toString());
-		topoSort(this.listNodes, numOfNodes);
 	}
 	
 	/**constructAD method constructs the given adjacency data structure and populates it from the file input stream*/
 	protected void constructAD(){
 		/*DEBUG*///System.out.println("breakpoint: inside constructAM");
 		listNodes = new int[3][numOfNodes];
-		//Comparator<Edge> byWeight = Comparator.comparing(Edge::getWeight);
 		AM = new int[numOfNodes][numOfNodes];
-		//pqw = new PriorityQueue<Integer>();
-		pqe = new PriorityQueue<Edge>();//byWeight);
+		
 		try {
 			br.reset();
 			while((line = br.readLine()) != null){	
 				String[] lineArray = line.split(" ");
 				int nodei = Integer.parseInt(lineArray[0]);
 				int nodej = Integer.parseInt(lineArray[1]);
-				int weight = Integer.parseInt(lineArray[2]);
-				Node node1 = new Node(nodei);
-				Node node2 = new Node(nodej);
-				Edge e = new Edge(node1, node2, weight);
-				pqe.add(e);
-				//pqw.add(weight);
-				AM[(nodei-1)][(nodej-1)] = weight;
-				listNodes[1][nodei-1]++;
-	    		listNodes[0][nodej-1]++;
+			
+				AM[(nodei-1)][(nodej-1)] = 1;
+				AM[(nodej-1)][(nodei-1)] = 1;
+				//listNodes[1][nodei-1]++;
+	    		//listNodes[0][nodej-1]++;
 	    		listNodes[2][nodei-1]++;
 	    		listNodes[2][nodej-1]++;
 	    		fileInput += line+"\n";
 			}
-			/*for(int p = 0; p < pqe.size(); p++){
-				System.out.println("Priority Queue: "+ pqe.remove().getWeight()+" ");
-			}*/
 			br.close();
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
@@ -90,12 +73,12 @@ public class AMWDG extends DAG{
 		System.out.println("Does Edge "+nodei.getVLabel()+" "+nodej.getVLabel()+" exist?: "+existsEdge(3, 1));
 		putEdge(3, 1);
 		System.out.println("After putEdge(), does Edge "+nodei.getVLabel()+" "+nodej.getVLabel()+" exist?: "+existsEdge(3, 1));
-		Node nodeo = new Node(3);
+		Node nodeo = new Node(1);
 		System.out.println("Are Nodes 2 and 1 adjacent?: "+areAdjacent(2, 1));
-		int[] adjNodes = adjacentVertices(3);
+		int[] adjNodes = adjacentVertices(1);
 		System.out.print("The Adjacent Nodes to "+nodeo.getVLabel()+" are: ");
 		for(int i = 0; i < adjNodes.length; i++){
-			System.out.print(" "+adjNodes[i]+",");
+			System.out.print(" "+adjNodes[i]+" ");
 		}
 		System.out.print("\n");
 		System.out.println("Node "+nodeo.getVLabel()+" has a inDegree of "+inDegree(3)+" and a outDegree of "+outDegree(3));
@@ -118,16 +101,17 @@ public class AMWDG extends DAG{
 			for(int j = 0; j < numOfNodes; j++){
 				n += " "+ AM[i][j];
 			}
+			
 		}
-		n += "\n";
+		n +="\n";
 		return n;
 	}
 	
 	/**Equal method compares data members of two objects*/
 	@Override
 	public boolean equals(Object child){      //note the type of the parameter
-        AMWDG c = (AMWDG)child;               // cast the parameter before use
-        return AMWDG.compare(this.AM, c.AM)  == 0;
+        AMUG c = (AMUG)child;               // cast the parameter before use
+        return AMUG.compare(this.AM, c.AM)  == 0;
     } 
 
 	/**Compare method compares two Objects data members for integer equality, returns 0 if equal else a 1 if not*/
@@ -160,8 +144,9 @@ public class AMWDG extends DAG{
 	    		throw new ArrayIndexOutOfBoundsException("The index is out of bounds");
 	    	}else{
 	    		AM[i-1][j-1] = 1;
-	    		listNodes[1][i-1]++;
-	    		listNodes[0][j-1]++;
+	    		AM[j-1][i-1] = 1;
+	    		//listNodes[1][i-1]++;
+	    		//listNodes[0][j-1]++;
 	    		listNodes[2][i-1]++;
 	    		listNodes[2][j-1]++;
 	    		fileInput += line+"\n";
@@ -175,8 +160,8 @@ public class AMWDG extends DAG{
 	protected void removeEdge(int i, int j){
 		if(existsEdge(i, j)){
 			AM[i-1][j-1] = 0;
-			listNodes[1][i-1]--;
-			listNodes[0][j-1]--;
+			listNodes[2][i-1]--;
+			listNodes[2][j-1]--;
 		}else{
 			throw new NullPointerException("The edge "+i+" --> "+j+" cannot be removed because it does not exist");
 		}
@@ -198,24 +183,24 @@ public class AMWDG extends DAG{
 	
 	/**adjacentVertices(int: i):  returns the nodes that are adjacent to i*/
 	protected int[] adjacentVertices(int i){
-		int n = 0;
-		int[] temp = new int[numOfNodes];
-		for(int j = 0; j < numOfNodes; j++){
-			if(AM[i-1][j] >= 1){
-				temp[j] = j+1;
-				n++;
+		   	int n = 0;
+			int[] temp = new int[numOfNodes];
+			for(int j = 0; j < numOfNodes; j++){
+				if(AM[i-1][j] == 1){
+					temp[j] = j+1;
+					
+					n++;
+				}
 			}
-		}
-		int m = 0;
-		int[] adjNodes = new int[n];
-		for(int k = 0; k < temp.length; k++){
-			if(temp[k] > 0){
-				adjNodes[m] = temp[k];
-				m++;
+			int m = 0;
+			int[] adjNodes = new int[n];
+			for(int k = 0; k < temp.length; k++){
+				if(temp[k] > 0){
+					adjNodes[m] = temp[k];
+					m++;
+				}
 			}
-		}
-		//System.out.println("Size of adjNodes "+adjNodes.length);
-	return adjNodes;
+		return adjNodes;
 	} // returns the nodes that are adjacent to i
 	
 	/**areAdjacent(int i, int j): returns true if the nodes i and j are adjacent else returns false.*/
@@ -224,5 +209,5 @@ public class AMWDG extends DAG{
 			return true;
 		}
 		return false;
-	} //returns true if the nodes i and j are adjacent else returns false.
+	} //returns true if the nodes i and j are adjacent else returns false.	
 }

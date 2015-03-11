@@ -120,13 +120,13 @@ public class Edge implements Comparable<Edge>{
 	public int compareTo(Edge e) {
 		//Edge e = (Edge)edge;
 		if(this.getWeight() < e.getWeight()){
-			System.out.println("compareTo <");
+			//System.out.println("compareTo <");
 			return -1;
 		}else if(this.getWeight() > e.getWeight()){
-			System.out.println("compareTo >");
+			//System.out.println("compareTo >");
 			return 1;
 		}else{
-			System.out.println("compareTo equal");
+			//System.out.println("compareTo equal");
 			return 0;
 			
 		}

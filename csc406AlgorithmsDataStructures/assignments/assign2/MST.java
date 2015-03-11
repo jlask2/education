@@ -34,10 +34,16 @@ public class MST{
 				System.out.println(e.toString());
 				i = e.getAdjNodei().getVLabel()-1;
 				j = e.getAdjNodej().getVLabel()-1;
-				System.out.println("i: "+i+"j: "+j);
+				//System.out.println("i: "+i+" | j: "+j);
+				
+				int rooti = uf.findRoot(i);
+				int rootj = uf.findRoot(j);
+			//System.out.println("uf.findRoot(i): "+rooti+" | uf.findRoot(j): "+rootj);
 			
-			if(uf.findRoot(i) != uf.findRoot(j)){
+			if(rooti != rootj){
+			//if(uf.findRoot(i) != uf.findRoot(j)){
 				resultTree.add(e);
+				//uf.union(rooti, rootj);
 				uf.union(i, j);
 				resultMinWeight += e.getWeight();
 				System.out.println(uf.toString());

@@ -17,7 +17,7 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 
 /**Adjacecy Matrix Weighted Directed Graph*/
-public class AMWDG extends DAG{
+public class AMWUG extends UAG{
 	
 	/**private data members*/
 	private BufferedReader br;
@@ -31,26 +31,25 @@ public class AMWDG extends DAG{
 	private String fileInput;
 	
 	/**Constructor*/
-	public AMWDG(BufferedReader br, int numOfNodes, int numOfEdges){
+	public AMWUG(BufferedReader br, int numOfNodes, int numOfEdges){
 		//super(br, numOfNodes, numOfEdges);
-		System.out.println("\n\nInside AMWDG Constructor\n");
+		System.out.println("\n\nInside AMWUG Constructor\n");
 		this.br = br;
 		this.numOfNodes = numOfNodes;
 		this.numOfEdges = numOfEdges;
-		fileInput = "This is the file input data:\n\n1 "+numOfNodes+" "+numOfEdges+"\n";
+		fileInput = "This is the file input data:\n\n3 "+numOfNodes+" "+numOfEdges+"\n";
 		constructAD();
-		//System.out.println(fileInput);
 		System.out.println(toString());
-		topoSort(this.listNodes, numOfNodes);
+		findMST(pqe, numOfNodes);
 	}
 	
 	/**constructAD method constructs the given adjacency data structure and populates it from the file input stream*/
 	protected void constructAD(){
 		/*DEBUG*///System.out.println("breakpoint: inside constructAM");
-		listNodes = new int[3][numOfNodes];
 		//Comparator<Edge> byWeight = Comparator.comparing(Edge::getWeight);
+		listNodes = new int[3][numOfNodes];
 		AM = new int[numOfNodes][numOfNodes];
-		//pqw = new PriorityQueue<Integer>();
+		pqw = new PriorityQueue<Integer>();
 		pqe = new PriorityQueue<Edge>();//byWeight);
 		try {
 			br.reset();
@@ -63,10 +62,11 @@ public class AMWDG extends DAG{
 				Node node2 = new Node(nodej);
 				Edge e = new Edge(node1, node2, weight);
 				pqe.add(e);
-				//pqw.add(weight);
+				pqw.add(weight);
 				AM[(nodei-1)][(nodej-1)] = weight;
-				listNodes[1][nodei-1]++;
-	    		listNodes[0][nodej-1]++;
+				AM[(nodej-1)][(nodei-1)] = weight;
+				//listNodes[1][nodei-1]++;
+	    		//listNodes[0][nodej-1]++;
 	    		listNodes[2][nodei-1]++;
 	    		listNodes[2][nodej-1]++;
 	    		fileInput += line+"\n";
@@ -126,8 +126,8 @@ public class AMWDG extends DAG{
 	/**Equal method compares data members of two objects*/
 	@Override
 	public boolean equals(Object child){      //note the type of the parameter
-        AMWDG c = (AMWDG)child;               // cast the parameter before use
-        return AMWDG.compare(this.AM, c.AM)  == 0;
+        AMWUG c = (AMWUG)child;               // cast the parameter before use
+        return AMWUG.compare(this.AM, c.AM)  == 0;
     } 
 
 	/**Compare method compares two Objects data members for integer equality, returns 0 if equal else a 1 if not*/
@@ -160,8 +160,9 @@ public class AMWDG extends DAG{
 	    		throw new ArrayIndexOutOfBoundsException("The index is out of bounds");
 	    	}else{
 	    		AM[i-1][j-1] = 1;
-	    		listNodes[1][i-1]++;
-	    		listNodes[0][j-1]++;
+	    		AM[j-1][i-1] = 1;
+	    		//listNodes[1][i-1]++;
+	    		//listNodes[0][j-1]++;
 	    		listNodes[2][i-1]++;
 	    		listNodes[2][j-1]++;
 	    		fileInput += line+"\n";
@@ -175,8 +176,8 @@ public class AMWDG extends DAG{
 	protected void removeEdge(int i, int j){
 		if(existsEdge(i, j)){
 			AM[i-1][j-1] = 0;
-			listNodes[1][i-1]--;
-			listNodes[0][j-1]--;
+			listNodes[2][i-1]--;
+			listNodes[2][j-1]--;
 		}else{
 			throw new NullPointerException("The edge "+i+" --> "+j+" cannot be removed because it does not exist");
 		}
@@ -184,16 +185,16 @@ public class AMWDG extends DAG{
 	
 	/**inDegree(int: i): returns the in-degree of node i. this method is defined for directed graphs only.*/
 	protected int inDegree(int i){
-		return listNodes[i-1][0];
+		return listNodes[0][i-1];
 	} //returns the in-degree of node i. this method is defined for directed graphs only.
 	
 	/**outDegree(int: i): returns the out-degree of node i. this method is defined for directed graphs only.*/
 	protected int outDegree(int i){
-		return listNodes[i-1][1];
+		return listNodes[1][i-1];
 	} //returns the out-degree of node i. this method is defined for directed graphs only.
 	
 	protected int degree(int i){
-		return listNodes[i-1][2];
+		return listNodes[2][i-1];
 	} //returns the degree of node i. this method is defined for undirected graphs only.
 	
 	/**adjacentVertices(int: i):  returns the nodes that are adjacent to i*/

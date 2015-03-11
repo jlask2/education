@@ -17,7 +17,7 @@ import java.util.Iterator;
 import java.util.PriorityQueue;
 
 /**Adjacecy List Weighted Directed Graph*/
-public class ALWDG extends G{
+public class ALWDG extends DAG{
 	
 	/**private data members*/
 	private BufferedReader br;
@@ -33,7 +33,7 @@ public class ALWDG extends G{
 	
 	/**Constructor*/
 	public ALWDG(BufferedReader br, int numOfNodes, int numOfEdges){
-		super(br, numOfNodes, numOfEdges);
+		//super(br, numOfNodes, numOfEdges);
 		System.out.println("Inside ALWDG Constructor\n");
 		this.br = br;
 		this.numOfNodes = numOfNodes;
@@ -42,13 +42,13 @@ public class ALWDG extends G{
 		constructAD();
 		System.out.println(fileInput);
 		System.out.println(toString());
-		topoSort(listNodes);
-		findMST(pqe, numOfNodes);
+		topoSort(this.listNodes, numOfNodes);
 	}
 	
 	/**constructAD method constructs the given adjacency data structure and populates it from the file input stream*/
 	protected void constructAD(){
 		try {
+			listNodes = new int[3][numOfNodes];
 			AL = (ArrayList<Node>[])new ArrayList[numOfNodes];
 			//pqw = new ArrayBlockingQueue<Integer>(numOfEdges);
 			pqe = new PriorityQueue<Edge>();
@@ -158,6 +158,7 @@ public class ALWDG extends G{
 	protected void putEdge(int i, int j){
 	    Node nodej = new Node(j);
 	    if(AL[i-1].contains(nodej)){
+	    	throw new IllegalArgumentException("The edge "+i+" --> "+j+" cannot be added because it already exists");
 	    }else{
 	    	if(!(rangeCheck(i, j))){
 	    		throw new ArrayIndexOutOfBoundsException("The index is out of bounds");
@@ -167,6 +168,7 @@ public class ALWDG extends G{
 	    		listNodes[0][j-1]++;
 	    		listNodes[2][i-1]++;
 	    		listNodes[2][j-1]++;
+	    		fileInput += line+"\n";
 	    	}
 	    }
 	}
@@ -180,8 +182,10 @@ public class ALWDG extends G{
 		    if(AL[i-1].size() == 1){
 		    	AL[i-1].remove(nodei);
 		    }
+		    listNodes[1][i-1]--;
+			listNodes[0][j-1]--;
 		}else{
-			throw new NullPointerException("This edge does not exist");
+			throw new NullPointerException("The edge "+i+" --> "+j+" cannot be removed because it does not exist");
 		}
 	} //deletes the edge e from the graph
 	

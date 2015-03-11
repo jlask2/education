@@ -14,7 +14,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 
 /**Adjacecy Matrix Directed Graph*/
-public class AMDG extends G{
+public class AMDG extends DAG{
 	
 	/**private data members*/
 	private BufferedReader br;
@@ -26,7 +26,7 @@ public class AMDG extends G{
 	
 	/**Constructor*/
 	public AMDG(BufferedReader br, int numOfNodes, int numOfEdges){
-		super(br, numOfNodes, numOfEdges);
+		//super(br, numOfNodes, numOfEdges);
 		System.out.println("\n\nInside AMDG Constructor\n");
 		this.br = br;
 		this.numOfNodes = numOfNodes;
@@ -35,12 +35,13 @@ public class AMDG extends G{
 		constructAD();
 		//System.out.println(fileInput);
 		System.out.println(toString());
-		topoSort(listNodes);
+		topoSort(this.listNodes, numOfNodes);
 	}
 	
 	/**constructAD method constructs the given adjacency data structure and populates it from the file input stream*/
 	protected void constructAD(){
 		/*DEBUG*///System.out.println("breakpoint: inside constructAM");
+		listNodes = new int[3][numOfNodes];
 		AM = new int[numOfNodes][numOfNodes];
 		
 		try {
@@ -148,16 +149,22 @@ public class AMDG extends G{
 	    		listNodes[0][j-1]++;
 	    		listNodes[2][i-1]++;
 	    		listNodes[2][j-1]++;
-	    		fileInput += "line";
+	    		fileInput += line+"\n";
 	    	}
 		}else{
-			
+			throw new IllegalArgumentException("The edge "+i+" --> "+j+" cannot be added because it already exists");
 		}
 	}
 	
 	/**removeEdge(int i, int j): deletes the edge from i to j from the graph*/
 	protected void removeEdge(int i, int j){
-		AM[i-1][j-1] = 0;
+		if(existsEdge(i, j)){
+			AM[i-1][j-1] = 0;
+			listNodes[1][i-1]--;
+			listNodes[0][j-1]--;
+		}else{
+			throw new NullPointerException("The edge "+i+" --> "+j+" cannot be removed because it does not exist");
+		}
 	} //deletes the edge from i to j from the graph
 	
 	/**inDegree(int: i): returns the in-degree of node i. this method is defined for directed graphs only.*/

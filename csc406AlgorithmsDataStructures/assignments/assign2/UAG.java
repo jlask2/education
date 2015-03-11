@@ -10,12 +10,10 @@
 
 package poset;
 
-import java.io.BufferedReader;
 import java.util.PriorityQueue;
-import java.util.TreeSet;
 
-/**Root Class - Graph*/
-abstract class G {
+/**Abstract Class Extends G - Undirected Adjacency Graph*/
+abstract class UAG extends G{
 	
 	/**private data members*/
 	private int numOfEdges;
@@ -103,5 +101,11 @@ abstract class G {
 	/**numEdges( ) : returns the number of edges*/
 	protected int numEdges(){
 		return numOfEdges;
+	}
+	
+	public void findMST(PriorityQueue<Edge> pqe, int numOfNodes){
+		System.out.println("\nPerforming Kruskals Minimum Spanning Tree");
+		MST kruskal = new MST(pqe, numOfNodes);
+		System.out.println(kruskal.toString());
 	}
 }

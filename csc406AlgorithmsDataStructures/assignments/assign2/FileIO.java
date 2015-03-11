@@ -80,9 +80,17 @@ class FileIO{
 	            		  if(type == 0){
 	            			   new ALDG(buffIn, numOfNodes, numOfEdges);
 		          			   new AMDG(buffIn, numOfNodes, numOfEdges);
-	            		  }else{
+	            		  }else if(type == 1){
 	            			  new ALWDG(buffIn, numOfNodes, numOfEdges);
 		          			  new AMWDG(buffIn, numOfNodes, numOfEdges);
+	            		  }else if(type == 2){
+	            			  new ALUG(buffIn, numOfNodes, numOfEdges);
+		          			  new AMUG(buffIn, numOfNodes, numOfEdges);
+	            		  }else if(type == 3){
+	            			  new ALWUG(buffIn, numOfNodes, numOfEdges);
+		          			  new AMWUG(buffIn, numOfNodes, numOfEdges);
+	            		  }else{
+	            			  throw new IllegalArgumentException("The type "+type+", is an illegal graph type - Usage: 0-UDAG, 1-WDAG, 2-UUAG, 3-WUAG");
 	            		  }
 	                 }catch(NullPointerException np){
 	                	np.printStackTrace();
@@ -113,12 +121,20 @@ class FileIO{
 	            			  System.out.println("Invalid arguments given");
 	            			  ie.printStackTrace();
 	            		  }
-	            		  if(type == 0){
+            		  	  if(type == 0){
 	            			   new ALDG(buffIn, numOfNodes, numOfEdges);
 		          			   new AMDG(buffIn, numOfNodes, numOfEdges);
-	            		  }else{
+	            		  }else if(type == 1){
 	            			  new ALWDG(buffIn, numOfNodes, numOfEdges);
 		          			  new AMWDG(buffIn, numOfNodes, numOfEdges);
+	            		  }else if(type == 2){
+	            			  new ALUG(buffIn, numOfNodes, numOfEdges);
+		          			  new AMUG(buffIn, numOfNodes, numOfEdges);
+	            		  }else if(type == 3){
+	            			  new ALWUG(buffIn, numOfNodes, numOfEdges);
+		          			  new AMWUG(buffIn, numOfNodes, numOfEdges);
+	            		  }else{
+	            			  throw new IllegalArgumentException("The type "+type+", is an illegal graph type - Usage: 0-UDAG, 1-WDAG, 2-UUAG, 3-WUAG");
 	            		  }
 	                 }catch(NullPointerException np){
 	                	np.printStackTrace();
