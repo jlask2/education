@@ -2,13 +2,13 @@
  * Jason Laske
  * Professor Rajasethupathy
  * CSC 406 01 Spring 2015
- * Assignment 2
- * Date Assigned: 2/12/2015
- * Date Due: 3/4/2015
- * Date Submitted: 3/11/2015 
+ * Assignment 3
+ * Date Assigned: 3/4/2015
+ * Date Due: 3/25/2015
+ * Date Submitted: 3/25/2015 
  ***********************************/
 
-package poset;
+package graph;
 
 import java.io.BufferedReader;
 import java.io.IOException;
