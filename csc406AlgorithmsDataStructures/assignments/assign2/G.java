@@ -5,14 +5,10 @@
  * Assignment 2
  * Date Assigned: 2/12/2015
  * Date Due: 3/4/2015
- * Date Submitted: 3/4/2015 
+ * Date Submitted: 3/11/2015 
  ***********************************/
 
 package poset;
-
-import java.io.BufferedReader;
-import java.util.PriorityQueue;
-import java.util.TreeSet;
 
 /**Root Class - Graph*/
 abstract class G {
@@ -24,10 +20,10 @@ abstract class G {
 	protected TopoSort ts;
 	
 	/**Forwarded abstract methods to be implemented by the child classes*/
-	abstract protected void constructAD();
-	abstract public String toString();
+	abstract protected void constructAD();              //constructs the given data structure
+	abstract public String toString();					//converts the object to a readable string
 	abstract public boolean equals(Object graph);      //note the type of the parameter // cast the parameter before use
-	abstract protected boolean rangeCheck(int i, int j);
+	abstract protected boolean rangeCheck(int i, int j); //check the range to see if it is less than 0 or greater than the number of nodes
 	
 	abstract protected boolean existsEdge(int i, int j); //returns true if there exists an edge between i and j else returns false
 	abstract protected void putEdge(int i, int j); //adds the edge from i to j to the graph
@@ -84,6 +80,7 @@ abstract class G {
 		return areAdjacent(i.getVLabel(), j.getVLabel());
 	}//returns true if the nodes i and j are adjacent else returns false.
 
+	/**rangeCheck( ) : Checks to see if the node labeling is outside the range of 1 -> numOfNodes*/
 	protected boolean rangeCheck(Edge e){
 		return rangeCheck(e.getAdjNodei().getVLabel(), e.getAdjNodej().getVLabel());
 	}

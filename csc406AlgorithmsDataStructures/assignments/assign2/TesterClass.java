@@ -5,15 +5,35 @@
  * Assignment 2
  * Date Assigned: 2/12/2015
  * Date Due: 3/4/2015
- * Date Submitted: 3/4/2015 
+ * Date Submitted: 3/11/2015 
  ***********************************/
 
 package poset;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+
 import javax.swing.SwingUtilities;
 
+/**TesterClass: class to test out the package poset with its graph utilities*/
 class TesterClass {
     
+	/**private data members*/
+	private static ALDG aldg;
+	private static ALWDG alwdg;
+	private static AMDG amdg;
+	private static AMWDG amwdg;
+	private static ALUG alug;
+	private static ALWUG alwug;
+	private static AMUG amug;
+	private static AMWUG amwug;
+	private static FileIO fileIO;
+	private static BufferedReader br;
+	private static int type;
+	private static int numOfNodes;
+	private static int numOfEdges;
+	
+	/**main method: runs the main program*/
 	public static void main(String[] args) {
 	  SwingUtilities.invokeLater(new Runnable()
 	  {
@@ -23,8 +43,80 @@ class TesterClass {
 	  });
 	}
 
+	/**start method: starts the program*/
 	protected static void start() {
-		new FileIO();
+		while(1 == 1){ // indefinite loop until user exits through the menu method
+			menu();
+		}
+	}
+	
+	/**menu method: navigates the user to the correct implementation after creating or reading the file*/
+	protected static void menu(){
+		System.out.println("Welcome to my Graph program! "
+				+ "\n0). Enter a 0 as the type for an Unweigthed-DAG implementation"
+				+ "\n1). Enter a 1 as the type for an Weigthed-DAG implementation"
+				+ "\n2). Enter a 2 as the type for an Unweigthed-UAG implementation"
+				+ "\n3). Enter a 3 as the type for an Weigthed-UAG implemetation"
+				+ "\n4). Enter infileD or a 4 as the type (The number of Nodes and Edges still need to be input) to exit the program\n");
+		fileIO = new FileIO(); // new FileIO object to create or read from a file 
+		br = fileIO.getBuffIn();
+		type = fileIO.getType();
+		numOfNodes = fileIO.getNumNodes();
+		numOfEdges = fileIO.getNumEdges();
+		try {
+			br.mark(100);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		switch(type){
+		case 0:
+			aldg = new ALDG(br, numOfNodes, numOfEdges);
+			amdg = new AMDG(br, numOfNodes, numOfEdges);
+			aldg.topoSort(aldg.listNodes, numOfNodes);
+			try {
+				br.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			break;
+		case 1:
+			alwdg = new ALWDG(br, numOfNodes, numOfEdges); 
+			amwdg = new AMWDG(br, numOfNodes, numOfEdges);
+			alwdg.topoSort(alwdg.listNodes, numOfNodes);
+			try {
+				br.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			break;
+		case 2:
+			alug = new ALUG(br, numOfNodes, numOfEdges); 
+			amug = new AMUG(br, numOfNodes, numOfEdges);
+			try {
+				br.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			break;
+		case 3:
+			alwug = new ALWUG(br, numOfNodes, numOfEdges); 
+			amwug = new AMWUG(br, numOfNodes, numOfEdges);
+			alwug.findMST(alwug.pqe, numOfNodes);
+			try {
+				br.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			break;
+		case 4:
+			System.out.println("All Finished. Thanks for using this program. Exiting the program.");
+			System.exit(0);
+			break;
+		default:
+			System.out.println("Something went wrong, exiting the program!");
+			System.exit(0);
+			break;
+		}
 	}
 }
 

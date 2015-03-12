@@ -14,8 +14,11 @@ import java.util.PriorityQueue;
 
 /**Abstract Class UAG Extends G - Undirected Adjacency Graph*/
 abstract class UAG extends G{
+
+	/**protected data members*/
+	protected PriorityQueue<Edge> pqe;
 	
-    /**findMST method is used only for weighted implementations of UAG*/
+    /**findMST method: is used only for weighted implementations of UAG*/
 	public void findMST(PriorityQueue<Edge> pqe, int numOfNodes){
 		System.out.println("\nPerforming Kruskals Minimum Spanning Tree");
 		MST kruskal = new MST(pqe, numOfNodes);

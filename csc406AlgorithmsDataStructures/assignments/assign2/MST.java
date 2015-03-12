@@ -5,7 +5,7 @@
  * Assignment 2
  * Date Assigned: 2/12/2015
  * Date Due: 3/4/2015
- * Date Submitted: 3/4/2015 
+ * Date Submitted: 3/11/2015 
  ***********************************/
 
 package poset;
@@ -25,6 +25,7 @@ public class MST{
 	private int rootj;
 	private int resultMinWeight;
 	
+	/**MST Constructor: accepts a priority queue and the number of nodes*/
 	MST(PriorityQueue<Edge> pqe, int numOfNodes){
 		uf = new UnionFind(pqe, numOfNodes);
 	    resultTree = new ArrayList<Edge>();
@@ -51,10 +52,11 @@ public class MST{
 	@Override
 	/**toString method converts the data structure to a readable string*/
 	public String toString(){
-		String resultString = "\nThe MST is: "+ resultMinWeight;
+		String resultString = "\nThe MST's minimum weight is: "+ resultMinWeight;
 		for(int i  = 0; i < resultTree.size(); i++){
 			resultString += "\n"+ resultTree.get(i).toString();
 		}
+		resultString +="\n";
 		return resultString;
 	}
 }

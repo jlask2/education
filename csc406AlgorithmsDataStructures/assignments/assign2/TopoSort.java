@@ -5,17 +5,20 @@
  * Assignment 2
  * Date Assigned: 2/12/2015
  * Date Due: 3/4/2015
- * Date Submitted: 3/4/2015 
+ * Date Submitted: 3/11/2015 
  ***********************************/
 
 package poset;
 
 import java.util.Stack;
 
+/**TopoSort Class: This classes objects perform a topological sort on a given DAG*/
 public class TopoSort{
 	
+	/**private data members*/
 	private Stack<Integer> st;
 	
+	/**TopoSort Constructor: accepts the number of nodes, the indegree list of nodes and a DAG*/
 	TopoSort(int[][] listN, int numOfNodes, DAG dag){
 		st = new Stack<Integer>();
 		int[] output = new int[numOfNodes];
@@ -50,21 +53,5 @@ public class TopoSort{
 		}else{
 			System.out.println("This graph contains a cycle. Topological Sort not possible \n");
 		}
-	}
-	
-	protected Integer push(Integer node){
-	    return st.push(node);
-	}
-	
-	protected Integer peek(){
-		return st.peek();
-	}
-	
-	protected Integer pop(){
-		return st.pop();
-	}
-	
-	protected boolean isEmpty(){
-		return st.isEmpty();
 	}
 }

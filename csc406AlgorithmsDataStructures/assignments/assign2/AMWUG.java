@@ -5,7 +5,7 @@
  * Assignment 2
  * Date Assigned: 2/12/2015
  * Date Due: 3/4/2015
- * Date Submitted: 3/4/2015 
+ * Date Submitted: 3/11/2015 
  ***********************************/
 
 package poset;
@@ -16,7 +16,7 @@ import java.util.Comparator;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
-/**Adjacecy Matrix Weighted Directed Graph*/
+/**Adjacecy Matrix Weighted Undirected Graph*/
 public class AMWUG extends UAG{
 	
 	/**private data members*/
@@ -24,15 +24,11 @@ public class AMWUG extends UAG{
 	private int numOfEdges;
 	private int numOfNodes;
 	private int[][] AM;
-	private Queue<Integer> pqw; 
-	private PriorityQueue<Edge> pqe;
-	
 	private String line;
 	private String fileInput;
 	
 	/**Constructor*/
 	public AMWUG(BufferedReader br, int numOfNodes, int numOfEdges){
-		//super(br, numOfNodes, numOfEdges);
 		System.out.println("\n\nInside AMWUG Constructor\n");
 		this.br = br;
 		this.numOfNodes = numOfNodes;
@@ -40,19 +36,17 @@ public class AMWUG extends UAG{
 		fileInput = "This is the file input data:\n\n3 "+numOfNodes+" "+numOfEdges+"\n";
 		constructAD();
 		System.out.println(toString());
-		findMST(pqe, numOfNodes);
 	}
 	
 	/**constructAD method constructs the given adjacency data structure and populates it from the file input stream*/
 	protected void constructAD(){
 		/*DEBUG*///System.out.println("breakpoint: inside constructAM");
-		//Comparator<Edge> byWeight = Comparator.comparing(Edge::getWeight);
 		listNodes = new int[3][numOfNodes];
 		AM = new int[numOfNodes][numOfNodes];
-		pqw = new PriorityQueue<Integer>();
-		pqe = new PriorityQueue<Edge>();//byWeight);
+		pqe = new PriorityQueue<Edge>(); //byWeight
 		try {
 			br.reset();
+			br.mark(100);
 			while((line = br.readLine()) != null){	
 				String[] lineArray = line.split(" ");
 				int nodei = Integer.parseInt(lineArray[0]);
@@ -62,19 +56,12 @@ public class AMWUG extends UAG{
 				Node node2 = new Node(nodej);
 				Edge e = new Edge(node1, node2, weight);
 				pqe.add(e);
-				pqw.add(weight);
 				AM[(nodei-1)][(nodej-1)] = weight;
 				AM[(nodej-1)][(nodei-1)] = weight;
-				//listNodes[1][nodei-1]++;
-	    		//listNodes[0][nodej-1]++;
-	    		listNodes[2][nodei-1]++;
+				listNodes[2][nodei-1]++;
 	    		listNodes[2][nodej-1]++;
 	    		fileInput += line+"\n";
 			}
-			/*for(int p = 0; p < pqe.size(); p++){
-				System.out.println("Priority Queue: "+ pqe.remove().getWeight()+" ");
-			}*/
-			br.close();
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -85,22 +72,8 @@ public class AMWUG extends UAG{
 	@Override
 	/**toString method converts the data structure to a readable string*/
 	public String toString(){
-		/*Node nodei = new Node(3);
-	    Node nodej = new Node(1);
-		System.out.println("Does Edge "+nodei.getVLabel()+" "+nodej.getVLabel()+" exist?: "+existsEdge(3, 1));
-		putEdge(3, 1);
-		System.out.println("After putEdge(), does Edge "+nodei.getVLabel()+" "+nodej.getVLabel()+" exist?: "+existsEdge(3, 1));
-		Node nodeo = new Node(3);
-		System.out.println("Are Nodes 2 and 1 adjacent?: "+areAdjacent(2, 1));
-		int[] adjNodes = adjacentVertices(3);
-		System.out.print("The Adjacent Nodes to "+nodeo.getVLabel()+" are: ");
-		for(int i = 0; i < adjNodes.length; i++){
-			System.out.print(" "+adjNodes[i]+",");
-		}
-		System.out.print("\n");
-		System.out.println("Node "+nodeo.getVLabel()+" has a inDegree of "+inDegree(3)+" and a outDegree of "+outDegree(3));
-		*/
 		String n = "";
+		n += "\nContents of the Adjcency Matrix Data Structure\n";
 		n += "\nIndex     |";
 		for(int k = 0; k < numOfNodes; k++){
 			int c = k;
@@ -141,89 +114,99 @@ public class AMWUG extends UAG{
 	
 	/**rangeCheck( ) : Checks to see if the node labeling is outside the range of 1 -> numOfNodes*/
 	protected boolean rangeCheck(int i, int j){
-		return i > 0 && i <= numOfNodes && j > 0 && i <= numOfNodes;
+		return i > 0 && i <= numOfNodes && j > 0 && j <= numOfNodes;
 	}
 	
 	/**existsEdge(int i, int j): returns true if there exists an edge between i and j else returns false*/
 	protected boolean existsEdge(int i, int j){
 		boolean found = false;
-		if(AM[i-1][j-1] == 1){
-			found = true;
+		if(rangeCheck(i, j)){
+			if(AM[i-1][j-1] == 1){
+				found = true;
+			}
+			return found;
+		}else{
+			throw new ArrayIndexOutOfBoundsException("The indexes i = "+i+" and j = "+j+" are out of bounds");
 		}
-		return found;
 	}
 	
 	/**putEdge( int i, int j) : adds the edge from i to j to the graph*/
 	protected void putEdge(int i, int j){
-		if(!(AM[i-1][j-1] == 1)){
-			if(!(rangeCheck(i, j))){
-	    		throw new ArrayIndexOutOfBoundsException("The index is out of bounds");
-	    	}else{
-	    		AM[i-1][j-1] = 1;
-	    		AM[j-1][i-1] = 1;
-	    		//listNodes[1][i-1]++;
-	    		//listNodes[0][j-1]++;
-	    		listNodes[2][i-1]++;
+		if(rangeCheck(i, j)){
+			if(!(existsEdge(i, j))){
+				AM[i-1][j-1] = 1;
+				AM[j-1][i-1] = 1;
+				listNodes[2][i-1]++;
 	    		listNodes[2][j-1]++;
 	    		fileInput += line+"\n";
+	    	}else{
+	    		throw new IllegalArgumentException("The edge "+i+" --> "+j+" cannot be added because it already exists");
 	    	}
 		}else{
-			throw new IllegalArgumentException("The edge "+i+" --> "+j+" cannot be added because it already exists");
+			throw new ArrayIndexOutOfBoundsException("The indexes i = "+i+" and j = "+j+" are out of bounds");
 		}
 	}
 	
 	/**removeEdge(int i, int j): deletes the edge from i to j from the graph*/
 	protected void removeEdge(int i, int j){
-		if(existsEdge(i, j)){
-			AM[i-1][j-1] = 0;
-			listNodes[2][i-1]--;
-			listNodes[2][j-1]--;
+		if(rangeCheck(i, j)){
+			if(existsEdge(i, j)){
+				AM[i-1][j-1] = 0;
+				AM[j-1][i-1] = 0;
+				listNodes[2][i-1]--;
+				listNodes[2][j-1]--;
+			}else{
+				throw new NullPointerException("The edge "+i+" --> "+j+" cannot be removed because it does not exist");
+			}
 		}else{
-			throw new NullPointerException("The edge "+i+" --> "+j+" cannot be removed because it does not exist");
+			throw new ArrayIndexOutOfBoundsException("The indexes i = "+i+" and j = "+j+" are out of bounds");
 		}
 	} //deletes the edge from i to j from the graph
 	
 	/**inDegree(int: i): returns the in-degree of node i. this method is defined for directed graphs only.*/
 	protected int inDegree(int i){
-		return listNodes[0][i-1];
+		return listNodes[i-1][0];
 	} //returns the in-degree of node i. this method is defined for directed graphs only.
 	
 	/**outDegree(int: i): returns the out-degree of node i. this method is defined for directed graphs only.*/
 	protected int outDegree(int i){
-		return listNodes[1][i-1];
+		return listNodes[i-1][1];
 	} //returns the out-degree of node i. this method is defined for directed graphs only.
 	
 	protected int degree(int i){
-		return listNodes[2][i-1];
+		return listNodes[i-1][2];
 	} //returns the degree of node i. this method is defined for undirected graphs only.
 	
 	/**adjacentVertices(int: i):  returns the nodes that are adjacent to i*/
 	protected int[] adjacentVertices(int i){
-		int n = 0;
-		int[] temp = new int[numOfNodes];
-		for(int j = 0; j < numOfNodes; j++){
-			if(AM[i-1][j] >= 1){
-				temp[j] = j+1;
-				n++;
+		   	int n = 0;
+			int[] temp = new int[numOfNodes];
+			for(int j = 0; j < numOfNodes; j++){
+				if(AM[i-1][j] == 1){
+					temp[j] = j+1;
+					n++;
+				}
 			}
-		}
-		int m = 0;
-		int[] adjNodes = new int[n];
-		for(int k = 0; k < temp.length; k++){
-			if(temp[k] > 0){
-				adjNodes[m] = temp[k];
-				m++;
+			int m = 0;
+			int[] adjNodes = new int[n];
+			for(int k = 0; k < temp.length; k++){
+				if(temp[k] > 0){
+					adjNodes[m] = temp[k];
+					m++;
+				}
 			}
-		}
-		//System.out.println("Size of adjNodes "+adjNodes.length);
-	return adjNodes;
+		return adjNodes;
 	} // returns the nodes that are adjacent to i
 	
 	/**areAdjacent(int i, int j): returns true if the nodes i and j are adjacent else returns false.*/
 	protected boolean areAdjacent(int i, int j){
-		if(existsEdge(i, j)){
-			return true;
+		if(rangeCheck(i, j)){
+			if(existsEdge(i, j)){
+				return true;
+			}
+			return false;
+		}else{
+			throw new ArrayIndexOutOfBoundsException("The indexes i = "+i+" and j = "+j+" are out of bounds");
 		}
-		return false;
-	} //returns true if the nodes i and j are adjacent else returns false.
+	} //returns true if the nodes i and j are adjacent else returns false.	
 }

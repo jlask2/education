@@ -5,7 +5,7 @@
  * Assignment 2
  * Date Assigned: 2/12/2015
  * Date Due: 3/4/2015
- * Date Submitted: 3/4/2015 
+ * Date Submitted: 3/11/2015 
  ***********************************/
 
 package poset;
@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.PriorityQueue;
 
-/**Adjacecy List Directed Graph*/
+/**Adjacecy List Undirected Graph*/
 public class ALUG extends UAG{
 	
 	/**private data members*/
@@ -50,13 +50,9 @@ public class ALUG extends UAG{
 			AL = (ArrayList<Node>[])new ArrayList[numOfNodes];
 			pqe = new PriorityQueue<Edge>();
 			for(int e = 0; e < AL.length; e++){
-				//Node node = new Node(e+1);
-				//node.setInDegOfNode(0);
-				//node.setOutDegOfNode(0);
-				//node.setDegOfNode(0);
 				AL[e] = new ArrayList<Node>(numOfNodes);
-				//AL[e].add(node);
 			}
+			br.reset();
 			br.mark(100);
 		    while((line = br.readLine()) != null){	
 				String[] lineArray = line.split(" ");
@@ -64,8 +60,6 @@ public class ALUG extends UAG{
 				Node node2 = new Node(Integer.parseInt(lineArray[1]));
 				AL[node1.getVLabel()-1].add(node2);
 				AL[node2.getVLabel()-1].add(node1);
-			    //listNodes[1][node1.getVLabel()-1]++; 
-			    //listNodes[0][node2.getVLabel()-1]++;
 			    listNodes[2][node1.getVLabel()-1]++;
 			    listNodes[2][node2.getVLabel()-1]++;
 			    fileInput += line+"\n";
@@ -78,24 +72,6 @@ public class ALUG extends UAG{
 	@Override
 	/**toString method converts the data structure to a readable string*/
 	public String toString(){
-		/*Node nodei = new Node(3);
-	    Node nodej = new Node(2);
-		Edge edge = new Edge(nodei, nodej);
-		System.out.println("Does Edge "+nodei.getVLabel()+" "+nodej.getVLabel()+" exist?: "+existsEdge(edge));
-		putEdge(edge);
-		System.out.println("After putEdge(), does Edge "+nodei.getVLabel()+" "+nodej.getVLabel()+" exist?: "+existsEdge(edge));
-		Node nodeo = new Node(3);
-		System.out.println("Are Nodes "+nodeo.getVLabel()+" and "+nodej.getVLabel()+" adjacent?: "+areAdjacent(nodeo, nodej));
-		int[] adjNodes = adjacentVertices(3);
-		//ite = adjNodes.iterator(); //note the case for i in iterator
-		System.out.print("The Adjacent Nodes to "+nodeo.getVLabel()+" are: ");
-		for(int i = 0; i < adjNodes.length; i++){
-			System.out.print(" "+adjNodes[i]+",");
-		}*/
-		System.out.print("\n");
-		//System.out.println("Node "+nodeo.getVLabel()+" has a inDegree of "+inDegree(nodeo)+" and a outDegree of "+outDegree(nodeo));
-		
-		
 		String p = "";
 		p += "\nContents of the Adjcency List Data Structure\n";
 		for(int i = 0; i < AL.length; i++){
@@ -131,16 +107,20 @@ public class ALUG extends UAG{
 
 	/**rangeCheck( ) : Checks to see if the node labeling is outside the range of 1 -> numOfNodes*/
 	protected boolean rangeCheck(int i, int j){
-		return i > 0 && i <= numOfNodes && j > 0 && i <= numOfNodes;
+		return i > 0 && i <= numOfNodes && j > 0 && j <= numOfNodes;
 	}
 	
 	/**existEdge( Edge e): returns true if e is an edge else returns false*/
 	protected boolean existsEdge(int i, int j){
 		boolean found = false;
-	    if(AL[i-1].contains(j)){
-	    	found = true;
+	    if(rangeCheck(i, j)){
+			if(AL[i-1].contains(j)){
+		    	found = true;
+		    }
+			return found;
+	    }else{
+	    	throw new ArrayIndexOutOfBoundsException("The indexes i = "+i+" and j = "+j+" are out of bounds"); 
 	    }
-		return found;
 	}
 	
 	/**putEdge( Edge: e) : adds the edge e to the graph*/
