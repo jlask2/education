@@ -44,8 +44,10 @@ public class ALDG extends DAG{
 	/**constructAD method constructs the given adjacency data structure and populates it from the file input stream*/
 	protected void constructAD(){
 		try {
+			System.out.println("numOfNodes: "+numOfNodes);
 			listNodes = new int[3][numOfNodes];
 			AL = (ArrayList<Node>[])new ArrayList[numOfNodes];
+			System.out.println("AL.length: "+AL.length);
 			pqe = new PriorityQueue<Edge>();
 			for(int e = 0; e < AL.length; e++){
 				AL[e] = new ArrayList<Node>(numOfNodes);

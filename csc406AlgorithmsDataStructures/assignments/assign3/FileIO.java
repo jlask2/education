@@ -126,11 +126,11 @@ class FileIO{
 	}
 	
 	protected int getNumNodes(){
-		return numOfEdges;
+		return numOfNodes;
 	}
 	
 	protected int getNumEdges(){
-		return numOfNodes;
+		return numOfEdges;
 	}
 	
 	protected int getType(){

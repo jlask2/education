@@ -53,11 +53,16 @@ class TesterClass {
 	/**menu method: navigates the user to the correct implementation after creating or reading the file*/
 	protected static void menu(){
 		System.out.println("Welcome to my Graph program! "
-				+ "\n0). Enter a 0 as the type for an Unweigthed-DAG implementation"
-				+ "\n1). Enter a 1 as the type for an Weigthed-DAG implementation"
-				+ "\n2). Enter a 2 as the type for an Unweigthed-UAG implementation"
-				+ "\n3). Enter a 3 as the type for an Weigthed-UAG implemetation"
-				+ "\n4). Enter infileD or a 4 as the type (The number of Nodes and Edges still need to be input) to exit the program\n");
+				+ "\n0) Enter infileD or a 0 as the type (The number of Nodes and Edges still need to be input) to exit the program" 
+				+ "\n1) Weigthed-DAG implementation"
+				+ "\n2) Unweigthed-UAG implementation"
+				+ "\n3) Weigthed-UAG implemetation"
+				+ "\n4) Unweigthed-DAG implementation"
+				+ "\n5) Warshall's implementation"
+				+ "\n6) Floyd's implemetation"
+				+ "\n7) Knapsack 0-1"
+				+ "\n8) MCM"
+				+ "\n"); 
 		fileIO = new FileIO(); // new FileIO object to create or read from a file 
 		br = fileIO.getBuffIn();
 		type = fileIO.getType();
@@ -70,6 +75,10 @@ class TesterClass {
 		}
 		switch(type){
 		case 0:
+			System.out.println("All Finished. Thanks for using this program. Exiting the program.");
+			System.exit(0);
+			break;
+		case 1:
 			aldg = new ALDG(br, numOfNodes, numOfEdges);
 			amdg = new AMDG(br, numOfNodes, numOfEdges);
 			aldg.topoSort(aldg.listNodes, numOfNodes);
@@ -79,7 +88,7 @@ class TesterClass {
 				e.printStackTrace();
 			}
 			break;
-		case 1:
+		case 2:
 			alwdg = new ALWDG(br, numOfNodes, numOfEdges); 
 			amwdg = new AMWDG(br, numOfNodes, numOfEdges);
 			alwdg.topoSort(alwdg.listNodes, numOfNodes);
@@ -89,7 +98,7 @@ class TesterClass {
 				e.printStackTrace();
 			}
 			break;
-		case 2:
+		case 3:
 			alug = new ALUG(br, numOfNodes, numOfEdges); 
 			amug = new AMUG(br, numOfNodes, numOfEdges);
 			try {
@@ -98,7 +107,7 @@ class TesterClass {
 				e.printStackTrace();
 			}
 			break;
-		case 3:
+		case 4:
 			alwug = new ALWUG(br, numOfNodes, numOfEdges); 
 			amwug = new AMWUG(br, numOfNodes, numOfEdges);
 			alwug.findMST(alwug.pqe, numOfNodes);
@@ -108,8 +117,22 @@ class TesterClass {
 				e.printStackTrace();
 			}
 			break;
-		case 4:
-			System.out.println("All Finished. Thanks for using this program. Exiting the program.");
+		case 5:
+			System.exit(0);
+			break;
+		case 6:
+			System.exit(0);
+			break;
+		case 7:
+			int[] n = {1, 2, 3, 4};
+			int[] w = {2, 1, 3, 2};
+			int[] v = {12, 10, 20, 15};
+			int W = 5;
+			KnapSack kp = new KnapSack(n, w, v, W);
+			System.out.println(kp.getKnapSack());
+			System.out.println(kp.toString());
+			break;
+		case 8:
 			System.exit(0);
 			break;
 		default:

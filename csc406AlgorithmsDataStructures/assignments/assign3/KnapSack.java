@@ -16,42 +16,60 @@ import java.util.Stack;
 public class KnapSack{
 	
 	/**private data members*/
-	private Stack<Integer> st;
+	private int[][] ks;
+	private int[] n;
+	private int[] w;
+	private int[] v;
+	private int W;
 	
-	/**KnapSack Constructor: accepts the number of nodes, the indegree list of nodes and a DAG*/
-	KnapSack(int[][] listN, int numOfNodes, DAG dag){
-		st = new Stack<Integer>();
-		int[] output = new int[numOfNodes];
-		int i = 1;
-		int t = 0;
-		for(int j = 0; j < listN[0].length; j++){
-			if(listN[0][j] == 0){
-				st.push(j+1);
-			}
-		}
-		
-		while(!st.isEmpty()){
-			output[t] = st.pop();
-			Node node = new Node(output[t]);
-			i++;
-			int[] adjNodes = dag.adjacentVertices(node);
-			for(int k = 0; k < adjNodes.length; k++){
-				listN[0][adjNodes[k]-1]--;
-				if(listN[0][adjNodes[k]-1] == 0){
-					 st.push(adjNodes[k]);
-					 
-				}
-			}	
-			t++;
-		}	
-		if(i > numOfNodes){
-			System.out.print("The Topological Sorting of this graph results in");
-			for(int h = 0; h < output.length; h++){
-				System.out.print(" "+output[h]+" ");
-			}
-			System.out.println("\n");
+	public KnapSack(int[] n, int[] w, int[] v, int W){
+		this.n = n;
+		this.w = w;
+		this.v = v;
+		this.W = W;
+		ks = new int[n.length+1][W + 1];
+	}
+	
+	/**KnapSack Constructor: accepts 
+	 * @return */
+	protected int getKnapSack(){
+	      for(int j = 0; j < W+1; j++){ 
+	    	  ks[0][j] = 0;
+	             for (int i = 1; i < n.length + 1; i++){ 
+	                   for (int h = 0; h < W+1; h++){
+	                         if ((h-w[i-1]) >= 0){
+	                        	 ks[i][h] = max(ks[i-1][h], v[i-1] + ks[i-1][h-w[i-1]]);
+	                        	 //System.out.println("v[i-1] + ks[i-1][h-w[i-1]] = "+(v[i-1] + ks[i-1][h-w[i-1]])+" where v[i-1] = "+v[i-1]+", and ks[i-1][h-w[i-1]] = "+ks[i-1][h-w[i-1]]);
+	                        	 //System.out.println("ks[i][h] = "+ks[i][h]+" where i = "+i+", and h = "+h);
+	                         }else{
+	                        	 ks[i][h] = ks[i-1][h];
+	                        	 //System.out.println("else ks[i][h] = "+ks[i][h]+" where i = "+i+", and h = "+h);
+	                         }
+	                   }
+	             }
+	      }
+	      return ks[n.length][W];
+	}
+	      
+	private int max(int value1, int value2){
+		if(value1 >= value2){
+			return value1;
 		}else{
-			System.out.println("This graph contains a cycle. Topological Sort not possible \n");
+			return value2;
 		}
+	}
+	
+	@Override
+	/**toString method: */
+	public String toString(){
+		String resultString = "";
+		for(int i = 0; i < ks.length; i++){
+			resultString += "[";
+			for(int j = 0; j < ks[0].length; j++){
+				resultString += " "+ks[i][j];
+			}
+			resultString += " ]\n";
+		}
+		return resultString;
 	}
 }
