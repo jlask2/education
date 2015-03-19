@@ -19,7 +19,7 @@ import javax.swing.SwingUtilities;
 class TesterClass {
     
 	/**private data members*/
-	private static ALDG aldg;
+	/*private static ALDG aldg;
 	private static ALWDG alwdg;
 	private static AMDG amdg;
 	private static AMWDG amwdg;
@@ -31,7 +31,7 @@ class TesterClass {
 	private static BufferedReader br;
 	private static int type;
 	private static int numOfNodes;
-	private static int numOfEdges;
+	private static int numOfEdges;*/
 	
 	/**main method: runs the main program*/
 	public static void main(String[] args) {
@@ -52,6 +52,20 @@ class TesterClass {
 	
 	/**menu method: navigates the user to the correct implementation after creating or reading the file*/
 	protected static void menu(){
+		/**private data members*/
+		ALDG aldg;
+		ALWDG alwdg;
+		AMDG amdg;
+		AMWDG amwdg;
+		ALUG alug;
+		ALWUG alwug;
+		AMUG amug;
+		AMWUG amwug;
+		FileIO fileIO;
+		BufferedReader br;
+		int type;
+		int numOfNodes;
+		int numOfEdges;
 		System.out.println("Welcome to my Graph program! "
 				+ "\n0) Enter infileD or a 0 as the type (The number of Nodes and Edges still need to be input) to exit the program" 
 				+ "\n1) Weigthed-DAG implementation"
@@ -118,10 +132,18 @@ class TesterClass {
 			}
 			break;
 		case 5:
-			System.exit(0);
+			amdg = new AMDG(br, numOfNodes, numOfEdges);
+			TransitiveClosure tc = new TransitiveClosure(amdg.getAM());
+			tc.generateR();
+			System.out.println(tc.toString());
+			//System.exit(0);
 			break;
 		case 6:
-			System.exit(0);
+			amwdg = new AMWDG(br, numOfNodes, numOfEdges);
+			AllSourceSP sp = new AllSourceSP(amwdg.getAM());
+			sp.generateD();
+			System.out.println(sp.toString());
+			//System.exit(0);
 			break;
 		case 7:
 			int[] n = {1, 2, 3, 4};
@@ -133,7 +155,11 @@ class TesterClass {
 			System.out.println(kp.toString());
 			break;
 		case 8:
-			System.exit(0);
+			int[] dimArray = {10, 20, 50, 1, 100};
+			MCM mcm = new MCM(4, dimArray);
+			mcm.calculateMatrix();
+			System.out.println(mcm.toString());
+			//System.exit(0);
 			break;
 		default:
 			System.out.println("Something went wrong, exiting the program!");

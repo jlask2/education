@@ -35,6 +35,14 @@ public class AMDG extends DAG{
 		System.out.println(toString());
 	}
 	
+	protected int[][] getAM(){
+		if(AM != null){
+			return AM;
+		}else{
+			throw new NullPointerException("The Adjacency Matrix has not been created yet");
+		}
+	}
+	
 	/**constructAD method constructs the given adjacency data structure and populates it from the file input stream*/
 	protected void constructAD(){
 		/*DEBUG*///System.out.println("breakpoint: inside constructAM");
