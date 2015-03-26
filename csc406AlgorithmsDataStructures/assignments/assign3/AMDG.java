@@ -32,6 +32,7 @@ public class AMDG extends DAG{
 		this.numOfEdges = numOfEdges;
 		fileInput = "This is the file input data:\n\n0 "+numOfNodes+" "+numOfEdges+"\n";
 		constructAD();
+		System.out.println(fileInput);
 		System.out.println(toString());
 	}
 	

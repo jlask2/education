@@ -10,16 +10,12 @@
 
 package graph;
 
-import java.util.ArrayList;
-import java.util.PriorityQueue;
-
 /**MCM Class: Matrix Chain Multiplication determines the least number of matrix products needed*/
 public class MCM{
 	
 	/**private data members*/
 	private int[][] N;
 	private int[] d;
-	private int j;
 	private int n;
 	
 /*	
@@ -38,22 +34,23 @@ public class MCM{
 //Input:  d0, d1, .., dn   represent the dimensions of  matrices A0, A1, A2, .., An-1 where the dimension of the matrix Ak is dk X dk+1.
 //Output:  the minimal number of scalar multiplications to find the product of the matrices, A0, A1, A2, …, An-1.
 */
-	MCM(int n, int[] dimArray){
-		this.n = n;
+	MCM(int[] dimArray){
+		n = dimArray.length-1;
 		N = new int[n][n];
 		d = dimArray;
 		for(int i = 0; i < n; i++){
 			N[i][i] = 0;
 		}
 	}
-	
+
 	protected void calculateMatrix(){
 		for(int b = 1; b < n; b++){
 			for(int i = 0; i < (n-b); i++){
-					j = i + b; 
-					for(int k = i; k < (j); k++){ 
+					int j = i + b; 
+					for(int k = i; k < j; k++){ 
 							if((N[i][j] > N[i][k] + N[k+1][j] + d[i] * d[k+1] * d[j+1]) || (N[i][j] == 0)){
 								N[i][j] = N[i][k] + N[k+1][j] + d[i] * d[k+1] * d[j+1];
+								N[j][i] = k;
 							}
 					}
 			}
@@ -63,15 +60,46 @@ public class MCM{
 	@Override
 	/**toString method converts the data structure to a readable string*/
 	public String toString(){
-		String resultMatrixN = "\nThe resulting matrix N is: \n\n";
-		for(int i  = 0; i < N.length; i++){
+		String resultMatrixN = "\nThe dimensions of each matrix is as follows: \n";
+		for(int s = 0; s < n; s++){
+			resultMatrixN += "A"+s+" -> d"+s+":"+d[s]+" X d"+(s+1)+":"+d[s+1]+"\n";
+		}
+		resultMatrixN += "\nThe resulting matrix N is: \n\n";
+		for(int i  = 0; i < n; i++){
 			resultMatrixN += "[";
-			for(int j = 0; j < N[0].length; j++){
+			for(int j = 0; j < n; j++){
 				resultMatrixN += " "+N[i][j];
 			}
 			resultMatrixN += " ]\n";
 		}
-		resultMatrixN +="\n";
 		return resultMatrixN;
 	}
+	      
+		public String printParenthesizations(){
+	    	StringBuilder resultString = new StringBuilder("The optimal parenthesization of the matrices is: \n");
+	    	int fib = 0;
+	    	int nextfib = 0;
+	    	for(int n = 0; n < N.length; n++){
+	    		resultString.append("A"+n+" ");
+	    		if(n <= N.length - 3){
+	    			nextfib++;
+	    			fib = fib+nextfib;
+	    		}
+	    	}
+	    	int k = 0;
+	    	for(int j = 2; j < N.length; j++){
+	    		for(int i = 0; i < j-1; i++){
+	    			k++;
+	    			//System.out.print(k+" at "+N[j][i]+", ");
+	    			if(k <= fib/2){
+	    				resultString.insert(resultString.indexOf(""+N[j][i]+"")+2 , "(");
+	    			}else{
+	    				resultString.insert(resultString.indexOf(""+N[j][i]+"")+1 , ")");
+	    			}
+	    			
+	    		}
+	    	}
+	    	resultString.append("\n");
+	    	return resultString.toString();
+	    }
 }

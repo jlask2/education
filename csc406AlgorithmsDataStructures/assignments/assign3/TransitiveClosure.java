@@ -10,13 +10,12 @@
 
 package graph;
 
-import java.util.Stack;
-
 /**TransitiveClosure Class: Uses Warshall's Algorithm to show that a path exists between nodes*/
 public class TransitiveClosure{
 	
 	/**private data members*/
 	private int[][] R;
+	private int r;
 	/*
 	Algorithm Warshall(A)
 	//Input:  the adjacency matrix A of a digraph with n vertices
@@ -46,18 +45,9 @@ public class TransitiveClosure{
 	/**TransitiveClosure Constructor: */
 	TransitiveClosure(int[][] A){
 		R = A;
+		r = 0;
+		System.out.println("The initial Matrix "+toString());
 	}
-	
-	/*protected int[][] generateR(){
-		for(int k = 1; k < R.length; k++){
-			for(int i = 1; i < R.length; i++){
-				if(R[i][k] == 1){
-					R[i] = R[i] || R[k];
-				}
-			}
-		}
-		return R;
-	}*/
 	
 	protected int[][] generateR(){
 		for(int k = 0; k < R.length; k++){
@@ -68,6 +58,7 @@ public class TransitiveClosure{
 					}
 				}
 			}
+			System.out.println(" "+toString());
 		}
 		return R;
 	}
@@ -75,7 +66,7 @@ public class TransitiveClosure{
 	@Override
 	/**toString method converts the data structure to a readable string*/
 	public String toString(){
-		String resultMatrixN = "\nThe resulting matrix N is: \n\n";
+		String resultMatrixN = "\n R"+r+" is: \n\n";
 		for(int i  = 0; i < R.length; i++){
 			resultMatrixN += "[";
 			for(int j = 0; j < R[0].length; j++){
@@ -83,7 +74,12 @@ public class TransitiveClosure{
 			}
 			resultMatrixN += " ]\n";
 		}
-		resultMatrixN +="\n";
+		//resultMatrixN +="\n";
+		if(r >= R.length){
+			r = R.length;
+		}else{
+			r++;
+		}
 		return resultMatrixN;
 	}
 }

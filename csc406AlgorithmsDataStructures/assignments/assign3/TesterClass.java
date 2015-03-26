@@ -26,9 +26,9 @@ class TesterClass {
 	private static ALUG alug;
 	private static ALWUG alwug;
 	private static AMUG amug;
-	private static AMWUG amwug;
+	private static AMWUG amwug;*/
 	private static FileIO fileIO;
-	private static BufferedReader br;
+	/*private static BufferedReader br;
 	private static int type;
 	private static int numOfNodes;
 	private static int numOfEdges;*/
@@ -45,14 +45,14 @@ class TesterClass {
 
 	/**start method: starts the program*/
 	protected static void start() {
-		while(1 == 1){ // indefinite loop until user exits through the menu method
+		fileIO = new FileIO();
+		/*while(1 == 1){ // indefinite loop until user exits through the menu method
 			menu();
-		}
+		}*/
 	}
 	
 	/**menu method: navigates the user to the correct implementation after creating or reading the file*/
-	protected static void menu(){
-		/**private data members*/
+	/*protected static void menu(){
 		ALDG aldg;
 		ALWDG alwdg;
 		AMDG amdg;
@@ -146,7 +146,7 @@ class TesterClass {
 			//System.exit(0);
 			break;
 		case 7:
-			int[] n = {1, 2, 3, 4};
+			int n = 4;
 			int[] w = {2, 1, 3, 2};
 			int[] v = {12, 10, 20, 15};
 			int W = 5;
@@ -156,7 +156,7 @@ class TesterClass {
 			break;
 		case 8:
 			int[] dimArray = {10, 20, 50, 1, 100};
-			MCM mcm = new MCM(4, dimArray);
+			MCM mcm = new MCM(dimArray);
 			mcm.calculateMatrix();
 			System.out.println(mcm.toString());
 			//System.exit(0);
@@ -166,7 +166,7 @@ class TesterClass {
 			System.exit(0);
 			break;
 		}
-	}
+	}*/
 }
 
 /*
