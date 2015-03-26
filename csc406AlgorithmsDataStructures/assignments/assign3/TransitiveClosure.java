@@ -5,7 +5,7 @@
  * Assignment 3
  * Date Assigned: 3/4/2015
  * Date Due: 3/25/2015
- * Date Submitted: 3/25/2015 
+ * Date Submitted: 3/26/2015 
  ***********************************/
 
 package graph;
@@ -14,8 +14,8 @@ package graph;
 public class TransitiveClosure{
 	
 	/**private data members*/
-	private int[][] R;
-	private int r;
+	private int[][] R; //holds the transive closure between any pairs of veritices
+	private int r; //used to keep track of the number of transitional matrices created
 	/*
 	Algorithm Warshall(A)
 	//Input:  the adjacency matrix A of a digraph with n vertices
@@ -31,9 +31,11 @@ public class TransitiveClosure{
 	Analysis: Warshall’s Algorithm is O(n^3) time complexity.
 
 	Note:
-	1. We don’t have to write the last step elaborately as     if (rijk-1 = 1) or ( rikk-1 = 1 and rkjk-1 = 1) then rijk = 1.
+	1. We don’t have to write the last step elaborately as     
+		if (rijk-1 = 1) or ( rikk-1 = 1 and rkjk-1 = 1) then rijk = 1.
 	2. What is the space complexity of the algorithm?
-	3. Warshall’s algorithm when implemented on a bit matrix could be much more efficient with a better constant factor in O(n^3)  OR-operations 
+	3. Warshall’s algorithm when implemented on a bit matrix could be much 
+		more efficient with a better constant factor in O(n^3)  OR-operations 
 
 	Step 1: R = A		//O(n^2)
 	Step 2: for k = 1..n do	//  O(n^2)  OR-operations
@@ -42,13 +44,14 @@ public class TransitiveClosure{
 	step 3: return R.*/
 
 	
-	/**TransitiveClosure Constructor: */
+	/**TransitiveClosure Constructor: Set parameter to a local variable*/
 	TransitiveClosure(int[][] A){
 		R = A;
 		r = 0;
 		System.out.println("The initial Matrix "+toString());
 	}
 	
+	/**generateR method: Basic implementation of Warshall's algorithm*/
 	protected int[][] generateR(){
 		for(int k = 0; k < R.length; k++){
 			for(int i = 0; i < R.length; i++){
@@ -74,8 +77,7 @@ public class TransitiveClosure{
 			}
 			resultMatrixN += " ]\n";
 		}
-		//resultMatrixN +="\n";
-		if(r >= R.length){
+		if(r >= R.length){	//ensures the correct labeling of the R matrices 
 			r = R.length;
 		}else{
 			r++;
