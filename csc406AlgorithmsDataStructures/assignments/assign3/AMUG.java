@@ -30,7 +30,7 @@ public class AMUG extends UAG{
 		this.br = br;
 		this.numOfNodes = numOfNodes;
 		this.numOfEdges = numOfEdges;
-		fileInput = "This is the file input data:\n\n2 "+numOfNodes+" "+numOfEdges+"\n";
+		fileInput = "This is the file input data:\n\n3 "+numOfNodes+" "+numOfEdges+"\n";
 		constructAD();
 		System.out.println(toString());
 	}

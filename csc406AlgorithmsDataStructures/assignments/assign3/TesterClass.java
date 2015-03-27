@@ -5,34 +5,16 @@
  * Assignment 3
  * Date Assigned: 3/4/2015
  * Date Due: 3/25/2015
- * Date Submitted: 3/25/2015 
+ * Date Submitted: 3/26/2015 
  ***********************************/
 
 package graph;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-
 import javax.swing.SwingUtilities;
 
-/**TesterClass: class to test out the package poset with its graph utilities*/
+/**TesterClass: class creates the FileIO object*/
 class TesterClass {
     
-	/**private data members*/
-	/*private static ALDG aldg;
-	private static ALWDG alwdg;
-	private static AMDG amdg;
-	private static AMWDG amwdg;
-	private static ALUG alug;
-	private static ALWUG alwug;
-	private static AMUG amug;
-	private static AMWUG amwug;*/
-	private static FileIO fileIO;
-	/*private static BufferedReader br;
-	private static int type;
-	private static int numOfNodes;
-	private static int numOfEdges;*/
-	
 	/**main method: runs the main program*/
 	public static void main(String[] args) {
 	  SwingUtilities.invokeLater(new Runnable()
@@ -45,128 +27,8 @@ class TesterClass {
 
 	/**start method: starts the program*/
 	protected static void start() {
-		fileIO = new FileIO();
-		/*while(1 == 1){ // indefinite loop until user exits through the menu method
-			menu();
-		}*/
+		new FileIO();
 	}
-	
-	/**menu method: navigates the user to the correct implementation after creating or reading the file*/
-	/*protected static void menu(){
-		ALDG aldg;
-		ALWDG alwdg;
-		AMDG amdg;
-		AMWDG amwdg;
-		ALUG alug;
-		ALWUG alwug;
-		AMUG amug;
-		AMWUG amwug;
-		FileIO fileIO;
-		BufferedReader br;
-		int type;
-		int numOfNodes;
-		int numOfEdges;
-		System.out.println("Welcome to my Graph program! "
-				+ "\n0) Enter infileD or a 0 as the type (The number of Nodes and Edges still need to be input) to exit the program" 
-				+ "\n1) Weigthed-DAG implementation"
-				+ "\n2) Unweigthed-UAG implementation"
-				+ "\n3) Weigthed-UAG implemetation"
-				+ "\n4) Unweigthed-DAG implementation"
-				+ "\n5) Warshall's implementation"
-				+ "\n6) Floyd's implemetation"
-				+ "\n7) Knapsack 0-1"
-				+ "\n8) MCM"
-				+ "\n"); 
-		fileIO = new FileIO(); // new FileIO object to create or read from a file 
-		br = fileIO.getBuffIn();
-		type = fileIO.getType();
-		numOfNodes = fileIO.getNumNodes();
-		numOfEdges = fileIO.getNumEdges();
-		try {
-			br.mark(100);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		switch(type){
-		case 0:
-			System.out.println("All Finished. Thanks for using this program. Exiting the program.");
-			System.exit(0);
-			break;
-		case 1:
-			aldg = new ALDG(br, numOfNodes, numOfEdges);
-			amdg = new AMDG(br, numOfNodes, numOfEdges);
-			aldg.topoSort(aldg.listNodes, numOfNodes);
-			try {
-				br.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			break;
-		case 2:
-			alwdg = new ALWDG(br, numOfNodes, numOfEdges); 
-			amwdg = new AMWDG(br, numOfNodes, numOfEdges);
-			alwdg.topoSort(alwdg.listNodes, numOfNodes);
-			try {
-				br.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			break;
-		case 3:
-			alug = new ALUG(br, numOfNodes, numOfEdges); 
-			amug = new AMUG(br, numOfNodes, numOfEdges);
-			try {
-				br.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			break;
-		case 4:
-			alwug = new ALWUG(br, numOfNodes, numOfEdges); 
-			amwug = new AMWUG(br, numOfNodes, numOfEdges);
-			alwug.findMST(alwug.pqe, numOfNodes);
-			try {
-				br.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			break;
-		case 5:
-			amdg = new AMDG(br, numOfNodes, numOfEdges);
-			TransitiveClosure tc = new TransitiveClosure(amdg.getAM());
-			tc.generateR();
-			System.out.println(tc.toString());
-			//System.exit(0);
-			break;
-		case 6:
-			amwdg = new AMWDG(br, numOfNodes, numOfEdges);
-			AllSourceSP sp = new AllSourceSP(amwdg.getAM());
-			sp.generateD();
-			System.out.println(sp.toString());
-			//System.exit(0);
-			break;
-		case 7:
-			int n = 4;
-			int[] w = {2, 1, 3, 2};
-			int[] v = {12, 10, 20, 15};
-			int W = 5;
-			KnapSack kp = new KnapSack(n, w, v, W);
-			System.out.println(kp.getKnapSack());
-			System.out.println(kp.toString());
-			break;
-		case 8:
-			int[] dimArray = {10, 20, 50, 1, 100};
-			MCM mcm = new MCM(dimArray);
-			mcm.calculateMatrix();
-			System.out.println(mcm.toString());
-			//System.exit(0);
-			break;
-		default:
-			System.out.println("Something went wrong, exiting the program!");
-			System.exit(0);
-			break;
-		}
-	}*/
 }
 
 /*

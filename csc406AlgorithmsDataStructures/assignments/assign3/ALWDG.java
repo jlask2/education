@@ -35,7 +35,7 @@ public class ALWDG extends DAG{
 		this.br = br;
 		this.numOfNodes = numOfNodes;
 		this.numOfEdges = numOfEdges;
-		fileInput = "This is the file input data:\n\n1 "+numOfNodes+" "+numOfEdges+"\n";
+		fileInput = "This is the file input data:\n\n2 "+numOfNodes+" "+numOfEdges+"\n";
 		constructAD();
 		System.out.println(fileInput);
 		System.out.println(toString());
