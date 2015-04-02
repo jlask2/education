@@ -11,34 +11,29 @@
 package algoData;
 
 /** Class SplayTree: Extends Abstract Class Tree */
-public class SplayTree extends Tree{
+public class BPTree extends Tree{
 
 	/** protected data members */
-	private SNode root;
-    private SNode parent;
-    private SNode child;
-	
-	public SplayTree(){
+    private BPNode node;
+	private BPNode root;
+    
+	public BPTree(){
 		root = null;
 	}
 	
 	/** search method: */
-	protected void search(SNode node){
+	protected void search(BPNode node){
 		
 	}
 	
 	/** insert method: */
-	protected void insert(SNode node){
+	protected void insert(BPNode node){
 		search(node);
 	}
 	
 	/** delete method: */
-	protected void delete(SNode node){
+	protected void delete(BPNode node){
 		search(node);
-	}
-	
-	private void splay(){
-		
 	}
 	
 	/** zigRotation method: */
