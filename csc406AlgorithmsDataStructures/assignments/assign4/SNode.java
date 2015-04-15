@@ -14,14 +14,30 @@ package algoData;
 public class SNode extends TreeNode {
 
 	/** private data members */
-	private int nodeData;
-	private SNode left;
-	private SNode right;
- 	private SNode root;
+	protected int nodeData;
+	protected SNode left;
+	protected SNode right;
+ 	protected SNode parent;
 	
  	/**Constructor*/
 	public SNode(int nodeData){
 		setNodeData(nodeData);
+		setParent(null);
+		setLeft(null);
+		setRight(null);
+	}
+
+	/**Constructor*/
+	public SNode(int nodeData, SNode left, SNode right, SNode parent){
+		setNodeData(nodeData);
+		setParent(parent);
+		setLeft(left);
+		setRight(right);
+	}
+	
+	public SNode() {
+		setNodeData(0);
+		setParent(null);
 		setLeft(null);
 		setRight(null);
 	}
@@ -29,56 +45,56 @@ public class SNode extends TreeNode {
 	/**
 	 * @return the left
 	 */
-	public SNode getLeft() {
+	protected SNode getLeft() {
 		return left;
 	}
 
 	/**
 	 * @param left the left to set
 	 */
-	public void setLeft(SNode left) {
+	protected void setLeft(SNode left) {
 		this.left = left;
 	}
 
 	/**
 	 * @return the right
 	 */
-	public SNode getRight() {
+	protected SNode getRight() {
 		return right;
 	}
 
 	/**
 	 * @param right the right to set
 	 */
-	public void setRight(SNode right) {
+	protected void setRight(SNode right) {
 		this.right = right;
 	}
 
 	/**
-	 * @return the root
+	 * @return the parent
 	 */
-	public SNode getRoot() {
-		return root;
+	protected SNode getParent() {
+		return parent;
 	}
 
 	/**
-	 * @param root the root to set
+	 * @param parent the parent to set
 	 */
-	public void setRoot(SNode root) {
-		this.root = root;
+	protected void setParent(SNode parent) {
+		this.parent = parent;
 	}
 
 	/**
 	 * @return the nodeData
 	 */
-	public int getNodeData() {
+	protected int getNodeData() {
 		return nodeData;
 	}
 
 	/**
 	 * @param nodeData the nodeData to set
 	 */
-	public void setNodeData(int nodeData) {
+	protected void setNodeData(int nodeData) {
 		this.nodeData = nodeData;
 	}
 }

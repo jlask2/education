@@ -182,6 +182,7 @@ class FileIO {
 							buffOut.close();
 							break;
 						case 9:												// Splay Tree
+							buffOut.close();
 							break;
 						case 10:											// AVL Tree
 							break;
@@ -362,9 +363,66 @@ class FileIO {
 			break;
 		case 9:												// Splay Tree
 			try {
+				Scanner scan = new Scanner(System.in);
+			       /** Creating object of SplayTree **/
+			       SplayTree spt = new SplayTree(); 
+			       System.out.println("Splay Tree Test\n");          
+			       char ch;
+			       /**  Perform tree operations  **/
+			       do    
+			       {
+			           System.out.println("\nSplay Tree Operations\n");
+			           System.out.println("1. insert ");
+			           System.out.println("2. remove ");
+			           System.out.println("3. search");
+			           System.out.println("4. count nodes");
+			           System.out.println("5. check empty");
+			           System.out.println("6. clear tree");
+
+			           int option = scan.nextInt();            
+			           switch (option)
+			           {
+			           case 1 : 
+			               System.out.println("Enter integer nodeData to insert");
+			               spt.insert( scan.nextInt() );                     
+			               break;
+			           case 2 : 
+			               System.out.println("Enter integer nodeData to remove");
+			               spt.remove( scan.nextInt() );                     
+			               break;                          
+			           case 3 : 
+			               System.out.println("Enter integer nodeData to search");
+			               System.out.println("Search result : "+ spt.search( scan.nextInt() ));
+			               break;                                          
+			           case 4 : 
+			               System.out.println("Nodes = "+ spt.countNodes());
+			               break;     
+			           case 5 : 
+			               System.out.println("Empty status = "+ spt.isEmpty());
+			               break;     
+			           case 6 : 
+			               System.out.println("\nTree Cleared");
+			               spt.clear();
+			               break;        
+			           default : 
+			               System.out.println("Wrong Entry \n ");
+			               break;   
+			           }
+			           /**  Display tree  **/
+			           System.out.print("\nPost order : ");
+			           spt.postorder();
+			           System.out.print("\nPre order : ");
+			           spt.preorder();
+			           System.out.print("\nIn order : ");
+			           spt.inorder(); 
+
+			           System.out.println("\nDo you want to continue (Type y or n) \n");
+			           ch = scan.next().charAt(0);                        
+			       } while (ch == 'Y'|| ch == 'y');               
+			   
 				// buffIn.reset();
 				// buffIn.mark(100);
-				String line;
+				/*String line;
 				int[] dimArray = null;
 				if ((line = buffIn.readLine()) != null) {
 					System.out.println(line);
@@ -377,9 +435,7 @@ class FileIO {
 				final SplayTree st = new SplayTree();
 				//st.calculateMatrix();
 				System.out.println(st.toString());
-				buffIn.close();
-			} catch (final IOException io) {
-				io.printStackTrace();
+				buffIn.close();*/
 			} catch (final NumberFormatException nfe) {
 				nfe.printStackTrace();
 			}
@@ -450,29 +506,16 @@ class FileIO {
 				break;
 			case 7:
 			case 8:
-				//try {
-					if (inFileLineArray.length != 1) { // if the number of
-														// tokens is not 1 throw
-														// an exception
-						buffIn.close();
-						throw new IllegalArgumentException(
-								"Incorrect amount of inputs given");
-					} else { // mark the second line in the file
-					//	try {
-							buffIn.mark(100);
-					//	} catch (final IOException e) {
-					//		e.printStackTrace();
-					//	}
-					}
-				/*} catch (final NullPointerException np) {
-					System.out.println("Not enough arguments given");
-					np.printStackTrace();
-				} catch (final IllegalArgumentException ie) {
-					System.out.println("Invalid arguments given");
-					ie.printStackTrace();
-				}*/
-				break;
 			case 9:												// Splay Tree
+				if (inFileLineArray.length != 1) { // if the number of
+													// tokens is not 1 throw
+													// an exception
+					buffIn.close();
+					throw new IllegalArgumentException(
+							"Incorrect amount of inputs given");
+				} else { // mark the second line in the file
+						buffIn.mark(100);
+				}
 				break;
 			case 10:											// AVL Tree
 				break;
