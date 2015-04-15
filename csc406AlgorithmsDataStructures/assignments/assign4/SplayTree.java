@@ -18,13 +18,14 @@ public class SplayTree extends Tree{
     private SNode parent;
     private SNode child;
 	
+    /** Constructor*/
 	public SplayTree(){
 		root = null;
 	}
 	
 	/** search method: */
 	protected void search(SNode node){
-		
+		splay();
 	}
 	
 	/** insert method: */
@@ -37,6 +38,7 @@ public class SplayTree extends Tree{
 		search(node);
 	}
 	
+	/** splay method: */
 	private void splay(){
 		
 	}

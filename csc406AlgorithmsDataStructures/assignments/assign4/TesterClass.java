@@ -32,6 +32,8 @@ class TesterClass {
 }
 
 /*
+ ******************************************************************************* 
+ *
  * CSC406Assignment#1: Due on or before February 11, 2015 rajasethupathy
  * 
  * Project: Implement the weighted/unweighted directed graph data structures
@@ -39,7 +41,7 @@ class TesterClass {
  * 
  * Partial list of operations on a graph data structure:
  * 
- * numNodes( ) – returns the number of nodes numEdges( ) : returns the number of
+ * numNodes( ) â€“ returns the number of nodes numEdges( ) : returns the number of
  * edges existEdge( Edge e): returns true if e is an edge else returns false
  * existsEdge(int i, int j): returns true if there exists an edge between i and
  * j else returns false putEdge( Edge: e) : adds the edge e to the graph
@@ -69,7 +71,7 @@ class TesterClass {
  * and degree. 4. You may assume that nodes are labeled by natural numbers. 5.
  * Use an iterator to step thro elements of a collection. 6. Avoid repeating
  * code. 7. Include your name, course#, semester, assignment#, date assigned and
- * date due. 8. When using indices, don’t forget to do ‘range check’. A
+ * date due. 8. When using indices, donâ€™t forget to do â€˜range checkâ€™. A
  * protected method? 9. File I/O is required. 10. Validation of input is not a
  * requirement at this stage. However, it will be needed and required for future
  * assignments. 11. Including a root class and a tester class, you are expected
@@ -82,21 +84,21 @@ class TesterClass {
  * ******************************************************************************
  * ******************************************
  * 
- * CSC406Assignment#2 ¬¬¬ Due on or before March 4, 2015 raj
+ * CSC406Assignment#2 Â¬Â¬Â¬ Due on or before March 4, 2015 raj
  * 
  * Implement the following algorithms:
  * 
- * 1. Topological sort. 2. Kruskal’s algorithm for finding a MST.
+ * 1. Topological sort. 2. Kruskalâ€™s algorithm for finding a MST.
  * 
  * This assignment needs the implementation of undirected and weighted ( > 0 )
  * graphs. Such a graph must be implemented in both matrix and list
- * representations. Must use Java’s PriorityQueue to implement a heap. This
+ * representations. Must use Javaâ€™s PriorityQueue to implement a heap. This
  * project needs to be built on top of the first assignment.
  * 
  * As usual pay attention to the following additional requirements. More may be
  * added to this list after I look through your first assignment.
  * 
- * 1. Clearly highlight the Assignment#2 code. 2. Don’t maintain a collection of
+ * 1. Clearly highlight the Assignment#2 code. 2. Donâ€™t maintain a collection of
  * edges. Maintaining such a collection is yet another way of representing a
  * graph. We want to use only two rerpesentations of a graph, namely, adjacency
  * matrix and adjacency list representations. Storing the edges within each of
@@ -112,17 +114,17 @@ class TesterClass {
  * ArrayList<Node> aList; Iterator<Node> ite = aList.iterator( ); //note the
  * case for i in iterator // repeat if there are more elements in the collection
  * while (ite.hasNext( ) ) { Node node = ite.next( ); //get the next element
- * from the collection … //process node. }
+ * from the collection â€¦ //process node. }
  * 
  * 6. Provide appropriate documentation to explain complex code. 7. When
  * operating on a collection (such as an ArrayList ) write your own method only
  * if an equivalent method is not available in the API listing for that
- * collection. 8. While implementing Topological Sort don’t remove the edge from
+ * collection. 8. While implementing Topological Sort donâ€™t remove the edge from
  * the graph every time through the loop. It is generally desirable to preserve
- * the input as much as possible. So, don’t remove the edge from the graph;
+ * the input as much as possible. So, donâ€™t remove the edge from the graph;
  * instead, simply adjust the inDegree. 9. Operations such as search or delete
  * elements from a collection involves comparison for equality between objects.
- * So, don’t forget to add an equals method to the class whose instances may
+ * So, donâ€™t forget to add an equals method to the class whose instances may
  * have to be compared.
  * 
  * For example, given the collection ArrrayList<Node> aList; To perfrom a search
@@ -130,7 +132,7 @@ class TesterClass {
  * method in the Node class with the following signature.
  * 
  * public boolean equal(Object node) { //note the type of the parameter Node n1
- * = (Node) node; // cast the parameter before use …. }
+ * = (Node) node; // cast the parameter before use â€¦. }
  * 
  * 10. In all versions of your program include your name, course#, semester, and
  * assignment# along with date assigned and date submitted. 11. Seek immediate
@@ -162,12 +164,12 @@ class TesterClass {
  * 
  * Implement the algorithms discussed in class for each of the following:
  * 
- * 1. Warshall’s algorithm for Transitive Closure 2. Floyd’s Algorithm for
+ * 1. Warshallâ€™s algorithm for Transitive Closure 2. Floydâ€™s Algorithm for
  * All-Source Shortest Path 3. Matrix Chain Multiplication 4. 0-1 knapsack
  * problem
  * 
- * Notes: 1. For warshall’s and floyd’s algorithms, output the initial and final
- * matrices. 2. In the case of floyd’s algorithm, modify your code so it can
+ * Notes: 1. For warshallâ€™s and floydâ€™s algorithms, output the initial and final
+ * matrices. 2. In the case of floydâ€™s algorithm, modify your code so it can
  * actually output the shortest path between any two given nodes. 3. In the case
  * of matrix chain multiplication, your code should also output/indicate, in
  * some way, the parenthesisation of the given associative expression of
@@ -179,4 +181,14 @@ class TesterClass {
  * submit hard copies of only those classes, and their I/O files. Copies of
  * earlier assignments need not be submitted 7. Follow the other usual
  * instructions for implementation and submission.
+ * 
+ * ******************************************************************************
+ * 
+ * CSC406Assignment#4S15 	Due on or before April 15, 2015		rajasethupathy
+ *
+ * Implement Splay tree (include all three operations: search, insert, and delete). 
+ * You will get 5 extra credit points if you output n(x), nâ€™(x), r(x) and râ€™(x) 
+ * after each splay operation. Optionally, those of you who are interested, may 
+ * actually verify the values of Î” and Î´.
+ *
  */
