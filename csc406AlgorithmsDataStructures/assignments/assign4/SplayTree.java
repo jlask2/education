@@ -12,72 +12,78 @@ package algoData;
 
 import java.util.Scanner;
 
-/** Class SplayTree **/
+/** SplayTree Class: A Top Down Implementation of a Splay Tree*/
 class SplayTree
 {
+	/**Private Data Members*/
     private SNode root;
     private int count = 0;
+    private String inorderString;
+    private String preorderString;
+    private String postorderString;
 
-    /** Constructor **/
-    public SplayTree()
-    {
+    /** Constructor */
+    public SplayTree(){
         root = null;
     }
 
-    /** Function to check if tree is empty **/
-    public boolean isEmpty()
-    {
-        return root == null;
-    }
-
-    /** clear tree **/
-    public void clear()
-    {
-        root = null;
-    }
+/*********************************************************
+* Methods for Inserting
+**********************************************************/    
 
     /** function to insert nodeData */
-    public void insert(int ele)
-    {
-        SNode z = root;
+    public void insert(int ele){
+        
+    	SNode z = root;
         SNode p = null;
-        while (z != null)
-        {
+        
+        while (z != null){
             p = z;
-            if (ele < p.nodeData)
-                z = z.right;
-            else
+            if (ele < p.nodeData){
                 z = z.left;
+            }else{
+                z = z.right;
+            }
         }
+        
         z = new SNode();
         z.nodeData = ele;
         z.parent = p;
-        if (p == null)
+        
+        if (p == null){
             root = z;
-        else if (ele < p.nodeData)
-            p.right = z;
-        else
+        }else if (ele < p.nodeData){
             p.left = z;
+        }else{
+            p.right = z;
+        }
         Splay(z);
         count++;
     }
+
+/*********************************************************
+* Methods for Rotations
+**********************************************************/    
     
     /** rotate **/
-    public void makeLeftChildParent(SNode c, SNode p)
-    {
-        if ((c == null) || (p == null) || (p.left != c) || (c.parent != p))
+    public void makeLeftChildParent(SNode c, SNode p){
+        if ((c == null) || (p == null) || (p.left != c) || (c.parent != p)){
             throw new RuntimeException("WRONG");
-
-        if (p.parent != null)
-        {
-            if (p == p.parent.left)
+    	}
+    
+        if (p.parent != null){
+        	
+            if (p == p.parent.left){
                 p.parent.left = c;
-            else 
+        	}else{ 
                 p.parent.right = c;
+            }
         }
-        if (c.right != null)
+        
+        if (c.right != null){
             c.right.parent = p;
-
+        }
+        
         c.parent = p.parent;
         p.parent = c;
         p.left = c.right;
@@ -87,61 +93,66 @@ class SplayTree
     /** rotate **/
     public void makeRightChildParent(SNode c, SNode p)
     {
-        if ((c == null) || (p == null) || (p.right != c) || (c.parent != p))
+        if ((c == null) || (p == null) || (p.right != c) || (c.parent != p)){
             throw new RuntimeException("WRONG");
-        if (p.parent != null)
-        {
-            if (p == p.parent.left)
-                p.parent.left = c;
-            else
-                p.parent.right = c;
         }
-        if (c.left != null)
+        
+        if (p.parent != null){
+            
+        	if (p == p.parent.left){
+                p.parent.left = c;
+        	}else{
+                p.parent.right = c;
+        	}	
+        }
+        
+        if (c.left != null){
             c.left.parent = p;
+        }
+        
         c.parent = p.parent;
         p.parent = c;
         p.right = c.left;
         c.left = p;
     }
+    
+    private void zig(){
+    	
+    }
+
+/*********************************************************
+* Methods for Splaying
+**********************************************************/    
 
     /** function splay **/
-    private void Splay(SNode x)
-    {
-        while (x.parent != null)
-        {
+    private void Splay(SNode x){
+    	
+        while (x.parent != null){
             SNode Parent = x.parent;
             SNode GrandParent = Parent.parent;
-            if (GrandParent == null)
-            {
-                if (x == Parent.left)
+            
+            if (GrandParent == null){
+                
+            	if (x == Parent.left){
                     makeLeftChildParent(x, Parent);
-                else
-                    makeRightChildParent(x, Parent);                 
-            } 
-            else
-            {
-                if (x == Parent.left)
-                {
-                    if (Parent == GrandParent.left)
-                    {
+            	}else{
+                    makeRightChildParent(x, Parent);
+                }
+            }else{
+                if (x == Parent.left){
+                    
+                	if (Parent == GrandParent.left){
                         makeLeftChildParent(Parent, GrandParent);
                         makeLeftChildParent(x, Parent);
-                    }
-                    else 
-                    {
+                    }else{
                         makeLeftChildParent(x, x.parent);
                         makeRightChildParent(x, x.parent);
                     }
-                }
-                else 
-                {
-                    if (Parent == GrandParent.left)
-                    {
+                }else{
+                    if (Parent == GrandParent.left){
                         makeRightChildParent(x, x.parent);
                         makeLeftChildParent(x, x.parent);
-                    } 
-                    else 
-                    {
+                    }else{
                         makeRightChildParent(Parent, GrandParent);
                         makeRightChildParent(x, Parent);
                     }
@@ -151,45 +162,53 @@ class SplayTree
         root = x;
     }
 
-    /** function to remove nodeData **/
+/*********************************************************
+* Methods for Deleting
+**********************************************************/    
+
+    /** function to remove nodeData */
     public void remove(int ele)
     {
         SNode node = findNode(ele);
-       remove(node);
+        delete(node);
     }
 
-    /** function to remove node **/
-    private void remove(SNode node)
+    /** function to remove node */
+    private void delete(SNode node)
     {
-        if (node == null)
-            return;
-
+        if (node == null){
+        	return;
+        }
+ 
         Splay(node);
-        if( (node.left != null) && (node.right !=null))
-        { 
-            SNode min = node.left;
-            while(min.right!=null)
-                min = min.right;
-
-            min.right = node.right;
-            node.right.parent = min;
+        
+        if( (node.left != null) && (node.right !=null)){ 
+            
+        	SNode max = node.left;
+            
+            while(max.right!=null){
+            	max = max.right;
+            }
+            
+            max.right = node.right;
+            node.right.parent = max;
             node.left.parent = null;
             root = node.left;
-        }
-        else if (node.right != null)
-        {
-            node.right.parent = null;
+        
+        }else if (node.right != null){
+            
+        	node.right.parent = null;
             root = node.right;
-        } 
-        else if( node.left !=null)
-        {
-            node.left.parent = null;
+        
+        }else if( node.left !=null){
+        
+        	node.left.parent = null;
             root = node.left;
-        }
-        else
-        {
+        
+        }else{
             root = null;
         }
+        
         node.parent = null;
         node.left = null;
         node.right = null;
@@ -197,76 +216,133 @@ class SplayTree
         count--;
     }
 
-    /** Functions to count number of nodes **/
+/*********************************************************
+* Methods for Searching
+**********************************************************/
+    
+    /** Functions to search for nodeData */
+    public boolean search(int val)
+    {
+    	SNode sn = findNode(val);
+    	System.out.println("sn.nodeData: "+sn.nodeData);
+        return sn != null;
+    }
+    
+    /** Function to find a node*/
+    private SNode findNode(int ele){
+        SNode z = root;
+        //System.out.println("b4z.nodeData: "+z.nodeData);
+        while (z != null)
+        {
+            if (ele < z.nodeData){
+                z = z.left;
+                //System.out.println("leftz.nodeData: "+z.nodeData);
+            }else if (ele > z.nodeData){
+                z = z.right;
+                //System.out.println("rightz.nodeData: "+z.nodeData);
+            }else{
+            	//System.out.println("b4z.nodeData: "+z.nodeData);
+            	Splay(z);
+            	//System.out.println("afz.nodeData: "+z.nodeData);
+                return z;
+            }
+        }
+        return null;
+    }
+    
+/*********************************************************
+* Methods for Checks and Clearing
+**********************************************************/
+
+    /** Functions to count number of nodes */
     public int countNodes()
     {
         return count;
     }
-
-    /** Functions to search for an nodeData **/
-    public boolean search(int val)
+    
+    /** Function to check if tree is empty */
+    public boolean isEmpty()
     {
-        return findNode(val) != null;
+        return root == null;
+    }
+
+    /** clear tree */
+    public void clear()
+    {
+        root = null;
     }
     
-    private SNode findNode(int ele)
-    {
-        SNode z = root;
-        while (z != null)
-        {
-            if (ele < z.nodeData)
-                z = z.right;
-            else if (ele > z.nodeData)
-                z = z.left;
-            else
-                return z;
-        }
-        return null;
-    }
-
+/*********************************************************
+* Methods for Output
+**********************************************************/
+    
     /** Function for inorder traversal **/ 
-    public void inorder()
+    public String inorder()
     {
-        inorder(root);
+        return inorder(root);
     }
-    private void inorder(SNode r)
+    
+    /** Function to do recursive inorder traversal*/
+    private String inorder(SNode r)
     {
         if (r != null)
         {
             inorder(r.left);
-            System.out.print(r.nodeData +" ");
+            inorderString += r.nodeData +" ";
             inorder(r.right);
         }
+        return inorderString;
     }
 
     /** Function for preorder traversal **/
-    public void preorder()
+    public String preorder()
     {
-        preorder(root);
+        return preorder(root);
     }
-    private void preorder(SNode r)
+    
+    /** Function to do recursive preorder traversal*/
+    private String preorder(SNode r)
     {
         if (r != null)
         {
-            System.out.print(r.nodeData +" ");
+        	preorderString += r.nodeData +" ";
             preorder(r.left);             
             preorder(r.right);
         }
+        return preorderString;
     }
 
     /** Function for postorder traversal **/
-    public void postorder()
+    public String postorder()
     {
-        postorder(root);
+        return postorder(root);
     }
     
-    private void postorder(SNode r)
+    /** Function to do recursive postorder traversal*/
+    private String postorder(SNode r)
     {
         if (r != null)
         {
             postorder(r.left);             
             postorder(r.right);
-            System.out.print(r.nodeData +" ");
+            postorderString += r.nodeData +" ";
         }
+        return postorderString;
     }     
+    
+    @Override
+	/**toString method converts the data structure to a readable string*/
+    public String toString(){
+    	inorderString = "";
+    	preorderString = "";
+    	postorderString = "";
+    	String resultString = "";
+    	resultString+="\nPost order : "+postorder();
+    	resultString+="\nPre order : "+preorder();
+        resultString+="\nIn order : "+inorder();
+        if(root != null){
+        	resultString+="\nroot: "+root.nodeData+"\n"; 
+        }
+    	return resultString;
+    }
 }

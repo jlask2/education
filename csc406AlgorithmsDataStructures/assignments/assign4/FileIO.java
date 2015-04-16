@@ -2,10 +2,10 @@
  * Jason Laske
  * Professor Rajasethupathy
  * CSC 406 01 Spring 2015
- * Assignment 3
- * Date Assigned: 3/4/2015
- * Date Due: 3/25/2015
- * Date Submitted: 3/26/2015
+ * Assignment 4
+ * Date Assigned: 3/26/2015
+ * Date Due: 4/15/2015
+ * Date Submitted: 4/16/2015
  ***********************************/
 
 package algoData;
@@ -53,20 +53,20 @@ class FileIO {
 			do {
 				System.out
 						.println("Welcome to my Data Structures and Algorithms Library! "
-								+ "\n0) Enter 0 to exit the program"
-								+ "\n1) Unweigthed-DAG implementation"
-								+ "\n2) Weigthed-DAG implementation"
-								+ "\n3) Unweigthed-UAG implementation"
-								+ "\n4) Weigthed-UAG implemetation"
-								+ "\n5) Warshall's implementation"
-								+ "\n6) Floyd's implemetation with path reconstruction"
-								+ "\n7) Knapsack 0-1 with optimal sets"
-								+ "\n8) MCM with Optimized Parenthesization"
-								+ "\n9) Splay Tree"
-								+ "\n10) AVL Tree - coming soon"
-								+ "\n11) Black and Red Tree - coming soon"
-								+ "\n12) B-Tree - coming soon"
-								+ "\n13) B+ Tree - coming soon"
+								+ "\n\t0) Enter 0 to exit the program"
+								+ "\n\t1) Unweigthed-DAG implementation"
+								+ "\n\t2) Weigthed-DAG implementation"
+								+ "\n\t3) Unweigthed-UAG implementation"
+								+ "\n\t4) Weigthed-UAG implemetation"
+								+ "\n\t5) Warshall's implementation"
+								+ "\n\t6) Floyd's implemetation with path reconstruction"
+								+ "\n\t7) Knapsack 0-1 with optimal sets"
+								+ "\n\t8) MCM with Optimized Parenthesization"
+								+ "\n\t9) Splay Tree"
+								+ "\n\t10) AVL Tree - coming soon"
+								+ "\n\t11) Black and Red Tree - coming soon"
+								+ "\n\t12) B-Tree - coming soon"
+								+ "\n\t13) B+ Tree - coming soon"
 								+ "\nPlease select a choice: ");
 				inputChoice = new Scanner(System.in);
 				choice = inputChoice.nextInt();
@@ -83,7 +83,7 @@ class FileIO {
 			}
 		} catch (final InputMismatchException ime) {
 			System.out
-					.println("Input mismatch! Must be of type integer between 0 - 8");
+					.println("Input mismatch! Must be of type integer and the choice must agree with the given file read.");
 			ime.printStackTrace();
 		}
 	}
@@ -136,13 +136,8 @@ class FileIO {
 										.println("Please enter in the edges with weights. Hit enter twice in a row when you are finished: \n");
 							}
 							sc1 = new Scanner(System.in);
-							while (!(line = sc1.nextLine()).equals("")) { // write
-																			// the
-																			// contents
-																			// of
-																			// the
-																			// file
-								//sc1 = new Scanner(System.in);
+							while (!(line = sc1.nextLine()).equals("")) { 
+
 								buffOut.write(line);
 								buffOut.newLine();
 								sc1 = new Scanner(System.in);
@@ -175,13 +170,16 @@ class FileIO {
 							break;
 						case 8: 											// MCM
 							buffOut.newLine();
-							System.out
-									.println("Please enter in the set of dimensions d. ");
+							System.out.println("Please enter in the set of dimensions d. ");
 							sc1 = new Scanner(System.in);
 							buffOut.write(sc1.nextLine() + " ");
 							buffOut.close();
 							break;
 						case 9:												// Splay Tree
+							buffOut.newLine();
+							System.out.println("Enter in the initial nodes for this Splay Tree. ");
+							sc1 = new Scanner(System.in);
+							buffOut.write(sc1.nextLine() + " ");
 							buffOut.close();
 							break;
 						case 10:											// AVL Tree
@@ -194,7 +192,7 @@ class FileIO {
 							break;
 						default:
 							System.out
-									.println("Something went wrong, exiting the program!");
+									.println("Something went wrong, exiting the program!: handleIO");
 							System.exit(0);
 							break;
 						}
@@ -222,13 +220,96 @@ class FileIO {
 	}
 
 	/**
+	 * readFile method: reads from file passed as a parameter and handles file
+	 * marking and processing of the first line
+	 */
+	private void readFile(File inFile) {
+		try {
+			buffIn = new BufferedReader(new FileReader(inFile)); 
+												// attempt to read from the file
+			inFileLine = buffIn.readLine();
+			final String[] inFileLineArray = inFileLine.split(" ");
+			if(Integer.parseInt(inFileLineArray[0]) != choice){
+				throw new InputMismatchException("The choice must agree with the given file read");
+			}
+			try{
+			switch (choice) {
+			case 1: // same implementations corresponding to the comments in
+					// handleIO()
+			case 2:
+			case 3:
+			case 4:
+			case 5:
+			case 6:
+					if (inFileLineArray.length != 3) { // if the number of
+														// tokens is not 3 throw
+														// an exception
+						buffIn.close();
+						throw new IllegalArgumentException(
+								"Incorrect amount of inputs given");
+					} else { // parse the first line and mark the second line of
+								// the file
+						numOfNodes = Integer.parseInt(inFileLineArray[1]);
+						numOfEdges = Integer.parseInt(inFileLineArray[2]);
+							buffIn.mark(100);
+					}
+				break;
+			case 7:
+			case 8:
+			case 9:												// Splay Tree
+				if (inFileLineArray.length != 1) { // if the number of
+													// tokens is not 1 throw
+													// an exception
+					buffIn.close();
+					throw new IllegalArgumentException(
+							"Incorrect amount of inputs given");
+				} else { // mark the second line in the file
+						buffIn.mark(100);
+				}
+				break;
+			case 10:											// AVL Tree
+				break;
+			case 11:											// Black and Red Tree
+				break;
+			case 12:											// B - Tree
+				break;
+			case 13:											// B+ - Tree
+				break;
+			default:
+				System.out
+						.println("Something went wrong, exiting the program!: readFile()");
+				System.exit(0);
+				break;
+			}
+			} catch (final NullPointerException np) {
+				System.out.println("Not enough arguments given");
+				np.printStackTrace();
+			} catch (final IllegalArgumentException ie) {
+				System.out.println("Invalid arguments given");
+				ie.printStackTrace();
+			}
+		} catch (NullPointerException | IOException np) {
+			np.printStackTrace();
+		}
+	}
+
+	/**
 	 * mainMenu method: navigates the user to the correct implementation after
 	 * creating or reading the file
 	 */
 	protected void mainMenu(int choice) {
-		handleIO(choice);
+		if(choice < 10 && choice >= 0){ // applying restraints to the user selection
+			handleIO(choice);
+		}else{
+			choice = -1;
+			System.out.println("\nThis menu choice is not available yet.\n" +
+					"Please select another valid choice");
+		}
 		switch (choice) { //  same implementations corresponding to the
 							// comments in handleIO()
+		case -1 :										  //Loops the menu in case of bad input
+			System.out.println("Looping the Main Menu\n"); 
+		    break;
 		case 0:													//Exit the program
 			System.out
 					.println("All Finished. Thanks for using this program. Exiting the program.");
@@ -298,9 +379,6 @@ class FileIO {
 			break;
 		case 7:													//Knapsack
 			try {
-				// buffIn.reset();
-				// buffIn.mark(100);
-				String line;
 				int n = 0;
 				int W = 0;
 				int[] w = null;
@@ -338,12 +416,9 @@ class FileIO {
 			break;
 		case 8:														//MCM	
 			try {
-				// buffIn.reset();
-				// buffIn.mark(100);
-				String line;
 				int[] dimArray = null;
 				if ((line = buffIn.readLine()) != null) {
-					System.out.println(line);
+					System.out.println("The file contents are: "+line);
 					final String[] lineArray = line.split(" ");
 					dimArray = new int[lineArray.length];
 					for (int s = 0; s < lineArray.length; s++) {
@@ -363,31 +438,63 @@ class FileIO {
 			break;
 		case 9:												// Splay Tree
 			try {
-				Scanner scan = new Scanner(System.in);
-			       /** Creating object of SplayTree **/
-			       SplayTree spt = new SplayTree(); 
-			       System.out.println("Splay Tree Test\n");          
-			       char ch;
-			       /**  Perform tree operations  **/
+				   Scanner scan = new Scanner(System.in);
+			       int option;
+			       
+				   //Creating object of SplayTree
+			       SplayTree spt = new SplayTree();         
+			       
+			       if ((line = buffIn.readLine()) != null) {
+			    	   System.out.println("The file contents are: "+line);
+	        		   final String[] lineArray = line.split(" ");
+	        		   for (int s = 0; s < lineArray.length; s++) {
+							spt.insert(Integer.parseInt(lineArray[s]));
+					   }
+	        	   }
+			       
+			       //Display tree 
+			       System.out.println(spt.toString());
+		           /*System.out.print("\nPost order : ");
+		           spt.postorder();
+		           System.out.print("\nPre order : ");
+		           spt.preorder();
+		           System.out.print("\nIn order : ");
+		           spt.inorder();*/ 
+			       
+			       //Perform tree operations
 			       do    
 			       {
-			           System.out.println("\nSplay Tree Operations\n");
-			           System.out.println("1. insert ");
-			           System.out.println("2. remove ");
-			           System.out.println("3. search");
-			           System.out.println("4. count nodes");
-			           System.out.println("5. check empty");
-			           System.out.println("6. clear tree");
-
-			           int option = scan.nextInt();            
-			           switch (option)
-			           {
+			           System.out.println("\n\nSplay Tree Operations\n"
+			           +"\t0. Read from a file (note: reading from a file will clear the current tree)\n" 
+			           +"\t1. Insert\n"
+			           +"\t2. Delete\n"
+			           +"\t3. Search\n"
+			           +"\t4. Size of n(T) - the total number of nodes in the tree\n"
+			           +"\t5. Check if empty\n"
+			           +"\t6. Clear the tree\n"
+			           +"\t7. Go back to Main Menu\n");
+			           
+			           option = scan.nextInt();            
+			           switch (option){
+			           case 0:
+			        	   spt.clear();
+			        	   handleIO(choice);
+			        	   if ((line = buffIn.readLine()) != null) {
+			        		   System.out.println("The file contents were: "+line);
+			        		   final String[] lineArray = line.split(" ");
+			        		   for (int s = 0; s < lineArray.length; s++) {
+									spt.insert(Integer.parseInt(lineArray[s]));
+							   }
+			        	   }
+			               break;
 			           case 1 : 
 			               System.out.println("Enter integer nodeData to insert");
 			               spt.insert( scan.nextInt() );                     
 			               break;
 			           case 2 : 
 			               System.out.println("Enter integer nodeData to remove");
+			               //SNode dsn = new SNode
+			               //dsn.setNodeData(scan.nextInt());
 			               spt.remove( scan.nextInt() );                     
 			               break;                          
 			           case 3 : 
@@ -403,41 +510,25 @@ class FileIO {
 			           case 6 : 
 			               System.out.println("\nTree Cleared");
 			               spt.clear();
-			               break;        
-			           default : 
-			               System.out.println("Wrong Entry \n ");
+			               break;  
+			           case 7 : 
+			        	   System.out.println("Going back to the Main Menu");
+			        	   break;
+			           default :
+			        	   option = 7;
+			               System.out.println("Not a valid entry. Going back to the Main Menu\n ");
 			               break;   
 			           }
-			           /**  Display tree  **/
-			           System.out.print("\nPost order : ");
-			           spt.postorder();
-			           System.out.print("\nPre order : ");
-			           spt.preorder();
-			           System.out.print("\nIn order : ");
-			           spt.inorder(); 
-
-			           System.out.println("\nDo you want to continue (Type y or n) \n");
-			           ch = scan.next().charAt(0);                        
-			       } while (ch == 'Y'|| ch == 'y');               
-			   
-				// buffIn.reset();
-				// buffIn.mark(100);
-				/*String line;
-				int[] dimArray = null;
-				if ((line = buffIn.readLine()) != null) {
-					System.out.println(line);
-					final String[] lineArray = line.split(" ");
-					dimArray = new int[lineArray.length];
-					for (int s = 0; s < lineArray.length; s++) {
-						dimArray[s] = Integer.parseInt(lineArray[s]);
-					}
-				}
-				final SplayTree st = new SplayTree();
-				//st.calculateMatrix();
-				System.out.println(st.toString());
-				buffIn.close();*/
+			           
+			           //Display tree
+			           System.out.println(spt.toString());
+			           
+			       } while (option != 7);
+			       
 			} catch (final NumberFormatException nfe) {
 				nfe.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 			break;
 		case 10:											// AVL Tree
@@ -453,93 +544,6 @@ class FileIO {
 					.println("Something went wrong, exiting the program!: mainMenu()");
 			System.exit(0);
 			break;
-		}
-	}
-
-	/**
-	 * readFile method: reads from file passed as a parameter and handles file
-	 * marking and processing of the first line
-	 */
-	private void readFile(File inFile) {
-		try {
-			buffIn = new BufferedReader(/* fileIn = */new FileReader(inFile)); // attempt
-																				// to
-																				// read
-																				// from
-																				// the
-																				// file
-			inFileLine = buffIn.readLine();
-			final String[] inFileLineArray = inFileLine.split(" ");
-			try{
-			switch (choice) {
-			case 1: // same implementations corresponding to the comments in
-					// handleIO()
-			case 2:
-			case 3:
-			case 4:
-			case 5:
-			case 6:
-				//try {
-					if (inFileLineArray.length != 3) { // if the number of
-														// tokens is not 3 throw
-														// an exception
-						buffIn.close();
-						throw new IllegalArgumentException(
-								"Incorrect amount of inputs given");
-					} else { // parse the first line and mark the second line of
-								// the file
-						numOfNodes = Integer.parseInt(inFileLineArray[1]);
-						numOfEdges = Integer.parseInt(inFileLineArray[2]);
-						//try {
-							buffIn.mark(100);
-						//} catch (final IOException e) {
-						//	e.printStackTrace();
-						//}
-					}
-				/*} catch (final NullPointerException np) {
-					System.out.println("Not enough arguments given");
-					np.printStackTrace();
-				} catch (final IllegalArgumentException ie) {
-					System.out.println("Invalid arguments given");
-					ie.printStackTrace();
-				}*/
-				break;
-			case 7:
-			case 8:
-			case 9:												// Splay Tree
-				if (inFileLineArray.length != 1) { // if the number of
-													// tokens is not 1 throw
-													// an exception
-					buffIn.close();
-					throw new IllegalArgumentException(
-							"Incorrect amount of inputs given");
-				} else { // mark the second line in the file
-						buffIn.mark(100);
-				}
-				break;
-			case 10:											// AVL Tree
-				break;
-			case 11:											// Black and Red Tree
-				break;
-			case 12:											// B - Tree
-				break;
-			case 13:											// B+ - Tree
-				break;
-			default:
-				System.out
-						.println("Something went wrong, exiting the program!: readFile()");
-				System.exit(0);
-				break;
-			}
-			} catch (final NullPointerException np) {
-				System.out.println("Not enough arguments given");
-				np.printStackTrace();
-			} catch (final IllegalArgumentException ie) {
-				System.out.println("Invalid arguments given");
-				ie.printStackTrace();
-			}
-		} catch (NullPointerException | IOException np) {
-			np.printStackTrace();
 		}
 	}
 }
