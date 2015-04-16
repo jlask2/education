@@ -73,17 +73,16 @@ class FileIO {
 				mainMenu(choice);
 			} while (choice != 0);
 			if (choice == 0) {
-				System.out
-						.println("All Finished. Thanks for using this program. Exiting the program.");
+				System.out.println("All Finished. Thanks for using this program. " +
+																	"Exiting the program.");
 				System.exit(0);
 			} else {
-				System.out
-						.println("Something went wrong, exiting the program!: Main Loop");
+				System.out.println("Something went wrong, exiting the program!: Main Loop");
 				System.exit(0);
 			}
 		} catch (final InputMismatchException ime) {
-			System.out
-					.println("Input mismatch! Must be of type integer and the choice must agree with the given file read.");
+			System.out.println("Input mismatch! Must be of type integer and the choice " +
+													"must agree with the given file read.");
 			ime.printStackTrace();
 		}
 	}
@@ -93,47 +92,47 @@ class FileIO {
 	 * makes the call to the readFile() method
 	 */
 	protected void handleIO(int choice) {
-		if (choice == 0) { // exit if the choice is 0
-			System.out
-					.println("All Finished. Thanks for using this program. Exiting the program.: handleIO");
+		if (choice == 0) { 					// exit if the choice is 0
+			System.out.println("All Finished. Thanks for using this program. Exiting " +
+																"the program.: handleIO");
 			System.exit(0);
 		}
 		try {
-			System.out
-					.println("Please specify the name of the file you would like to read from or create. i.e. 'inFileX'\n");
+			System.out.println("Please specify the name of the file you would like to " +
+												"read from or create. i.e. 'inFileX'\n");
 			sc1 = new Scanner(System.in);
 			final String fileInName = sc1.nextLine();
 			final File inFile = new File(fileInName + ".txt");
 			try {
-				if (!(inFile.exists())) { // if the file doesn't exist
-					if (inFile.createNewFile()) { // create a new one with the
-													// given name
+				if (!(inFile.exists())) { 				// if the file doesn't exist
+					if (inFile.createNewFile()) { 		// create a new one with the
+														// given name
 						buffOut = new BufferedWriter(new FileWriter(inFile));
 						buffOut.write(choice + "");
-						switch (choice) { // handle the creation of the file
-											// depending on the user choice
-											// given
-						case 1: 											// Unweigthed-DAG implementation
-						case 2: 											// Weigthed-DAG implementation
-						case 3: 											// Unweigthed-UAG implementation
-						case 4: 											// Weighted-UAG implementation
-						case 5: 											// Warshalls
-						case 6: 											// Floyds
+						switch (choice) { 				// handle the creation of the file
+														// depending on the user choice
+														// given
+						
+						case 1: 						// Unweigthed-DAG implementation
+						case 2: 						// Weigthed-DAG implementation
+						case 3: 						// Unweigthed-UAG implementation
+						case 4: 						// Weighted-UAG implementation
+						case 5: 						// Warshalls
+						case 6: 						// Floyds
 							System.out
 									.println("Please enter in the number of nodes. \n");
 							sc1 = new Scanner(System.in);
 							buffOut.write(" " + sc1.nextInt() + " ");
-							System.out
-									.println("Please enter in the number of edges. \n");
+							System.out.println("Please enter in the number of edges. \n");
 							sc1 = new Scanner(System.in);
 							buffOut.write(sc1.nextInt()+"");
 							buffOut.newLine();
 							if (choice == 1 || choice == 3 || choice == 5) {
-								System.out
-										.println("Please enter in the edges. Hit enter twice in a row when you are finished: \n");
+								System.out.println("Please enter in the edges. Hit enter " +
+												"twice in a row when you are finished: \n");
 							} else {
-								System.out
-										.println("Please enter in the edges with weights. Hit enter twice in a row when you are finished: \n");
+								System.out.println("Please enter in the edges with weights. " +
+											"Hit enter twice in a row when you are finished: \n");
 							}
 							sc1 = new Scanner(System.in);
 							while (!(line = sc1.nextLine()).equals("")) { 
@@ -146,24 +145,20 @@ class FileIO {
 							break;
 						case 7: 											// Knapsack
 							buffOut.newLine();
-							System.out
-									.println("Please enter in the number of items n. ");
+							System.out.println("Please enter in the number of items n. ");
 							sc1 = new Scanner(System.in);
 							final int numOfItems = sc1.nextInt();
 							buffOut.write(numOfItems + "");
 							buffOut.newLine();
-							System.out
-									.println("Please enter in the max weight W. ");
+							System.out.println("Please enter in the max weight W. ");
 							sc1 = new Scanner(System.in);
 							buffOut.write(sc1.nextInt() + "");
 							buffOut.newLine();
-							System.out
-									.println("Please enter in the set of weights w. ");
+							System.out.println("Please enter in the set of weights w. ");
 							sc1 = new Scanner(System.in);
 							buffOut.write(sc1.nextLine());
 							buffOut.newLine();
-							System.out
-									.println("Please enter in the set of values v. ");
+							System.out.println("Please enter in the set of values v. ");
 							sc1 = new Scanner(System.in);
 							buffOut.write(sc1.nextLine() + " ");
 							buffOut.close();
@@ -177,40 +172,38 @@ class FileIO {
 							break;
 						case 9:												// Splay Tree
 							buffOut.newLine();
-							System.out.println("Enter in the initial nodes for this Splay Tree. ");
+							System.out.println("Enter in the initial nodes for this " +
+																			"Splay Tree. ");
 							sc1 = new Scanner(System.in);
 							buffOut.write(sc1.nextLine() + " ");
 							buffOut.close();
 							break;
-						case 10:											// AVL Tree
+						case 10:										// AVL Tree
 							break;
-						case 11:											// Black and Red Tree
+						case 11:										// Black and Red Tree
 							break;
-						case 12:											// B - Tree
+						case 12:										// B - Tree
 							break;
-						case 13:											// B+ - Tree
+						case 13:										// B+ - Tree
 							break;
 						default:
-							System.out
-									.println("Something went wrong, exiting the program!: handleIO");
+							System.out.println("Something went wrong, exiting the program!" +
+																				": handleIO");
 							System.exit(0);
 							break;
 						}
 						readFile(inFile);
-					} else { // new file creation did not succeed, reading from
-								// the default file which should exit the
-								// program
-						System.out
-								.println("Failed to create a valid File. \n"
-										+ "Reading from File in current working directory: inFileD.txt");
+					} else { 			// new file creation did not succeed, reading from
+										// the default file which should exit the program
+						System.out.println("Failed to create a valid File. \n"
+								+ "Reading from File in current working directory: inFileD.txt");
 						new FileReader("inFileD.txt");
 					}
-				} else { // else just read the file if it exists already
+				} else { 				// else just read the file if it exists already
 					readFile(inFile);
 				}
 			} catch (final FileNotFoundException f) {
-				System.out
-						.println("Failed to create a valid File. "
+				System.out.println("Failed to create a valid File. "
 								+ "Reading from File in current working directory: inFileD.txt");
 				new FileReader("inFileD.txt");
 			}
@@ -230,25 +223,26 @@ class FileIO {
 			inFileLine = buffIn.readLine();
 			final String[] inFileLineArray = inFileLine.split(" ");
 			if(Integer.parseInt(inFileLineArray[0]) != choice){
-				throw new InputMismatchException("The choice must agree with the given file read");
+				throw new InputMismatchException("The choice must agree with " +
+														"the given file read");
 			}
 			try{
 			switch (choice) {
-			case 1: // same implementations corresponding to the comments in
-					// handleIO()
+			case 1: 	// same implementations corresponding to the comments in
+																	// handleIO()
 			case 2:
 			case 3:
 			case 4:
 			case 5:
 			case 6:
-					if (inFileLineArray.length != 3) { // if the number of
+					if (inFileLineArray.length != 3) { 	// if the number of
 														// tokens is not 3 throw
 														// an exception
 						buffIn.close();
 						throw new IllegalArgumentException(
 								"Incorrect amount of inputs given");
-					} else { // parse the first line and mark the second line of
-								// the file
+					} else { 	// parse the first line and mark the second line of
+																		// the file
 						numOfNodes = Integer.parseInt(inFileLineArray[1]);
 						numOfEdges = Integer.parseInt(inFileLineArray[2]);
 							buffIn.mark(100);
@@ -257,13 +251,13 @@ class FileIO {
 			case 7:
 			case 8:
 			case 9:												// Splay Tree
-				if (inFileLineArray.length != 1) { // if the number of
+				if (inFileLineArray.length != 1) { 	// if the number of
 													// tokens is not 1 throw
 													// an exception
 					buffIn.close();
 					throw new IllegalArgumentException(
 							"Incorrect amount of inputs given");
-				} else { // mark the second line in the file
+				} else { 					// mark the second line in the file
 						buffIn.mark(100);
 				}
 				break;
@@ -276,8 +270,8 @@ class FileIO {
 			case 13:											// B+ - Tree
 				break;
 			default:
-				System.out
-						.println("Something went wrong, exiting the program!: readFile()");
+				System.out.println("Something went wrong, exiting the program!" +
+																	": readFile()");
 				System.exit(0);
 				break;
 			}
@@ -305,14 +299,14 @@ class FileIO {
 			System.out.println("\nThis menu choice is not available yet.\n" +
 					"Please select another valid choice");
 		}
-		switch (choice) { //  same implementations corresponding to the
+		switch (choice) { 	//  same implementations corresponding to the
 							// comments in handleIO()
-		case -1 :										  //Loops the menu in case of bad input
+		case -1 :									//Loops the menu in case of bad input
 			System.out.println("Looping the Main Menu\n"); 
 		    break;
 		case 0:													//Exit the program
-			System.out
-					.println("All Finished. Thanks for using this program. Exiting the program.");
+			System.out.println("All Finished. Thanks for using this program. " +
+																"Exiting the program.");
 			System.exit(0);
 			break;
 		case 1:													//DAG - Un-weighted
@@ -441,7 +435,6 @@ class FileIO {
 				   Scanner scan = new Scanner(System.in);
 			       int option;
 			       
-				   //Creating object of SplayTree
 			       SplayTree spt = new SplayTree();         
 			       
 			       if ((line = buffIn.readLine()) != null) {
@@ -451,21 +444,15 @@ class FileIO {
 							spt.insert(Integer.parseInt(lineArray[s]));
 					   }
 	        	   }
-			       
 			       //Display tree 
 			       System.out.println(spt.toString());
-		           /*System.out.print("\nPost order : ");
-		           spt.postorder();
-		           System.out.print("\nPre order : ");
-		           spt.preorder();
-		           System.out.print("\nIn order : ");
-		           spt.inorder();*/ 
-			       
+		          
 			       //Perform tree operations
 			       do    
 			       {
 			           System.out.println("\n\nSplay Tree Operations\n"
-			           +"\t0. Read from a file (note: reading from a file will clear the current tree)\n" 
+			           +"\t0. Read from a file (note: reading from a file will clear " +
+			           												"the current tree)\n" 
 			           +"\t1. Insert\n"
 			           +"\t2. Delete\n"
 			           +"\t3. Search\n"
@@ -486,20 +473,27 @@ class FileIO {
 									spt.insert(Integer.parseInt(lineArray[s]));
 							   }
 			        	   }
+			        	   //Display tree 
+					       System.out.println(spt.toString());
 			               break;
 			           case 1 : 
 			               System.out.println("Enter integer nodeData to insert");
 			               spt.insert( scan.nextInt() );                     
+			               //Display tree 
+					       System.out.println(spt.toString());
 			               break;
 			           case 2 : 
 			               System.out.println("Enter integer nodeData to remove");
-			               //SNode dsn = new SNode
-			               //dsn.setNodeData(scan.nextInt());
-			               spt.remove( scan.nextInt() );                     
+			               spt.remove( scan.nextInt() );             
+			               //Display tree 
+					       System.out.println(spt.toString());
 			               break;                          
 			           case 3 : 
 			               System.out.println("Enter integer nodeData to search");
-			               System.out.println("Search result : "+ spt.search( scan.nextInt() ));
+			               System.out.println("Search result : "
+			            		   					+ spt.search( scan.nextInt() ));
+			               //Display tree 
+					       System.out.println(spt.toString());
 			               break;                                          
 			           case 4 : 
 			               System.out.println("Nodes = "+ spt.countNodes());
@@ -510,19 +504,18 @@ class FileIO {
 			           case 6 : 
 			               System.out.println("\nTree Cleared");
 			               spt.clear();
+			               //Display tree 
+					       System.out.println(spt.toString());
 			               break;  
 			           case 7 : 
 			        	   System.out.println("Going back to the Main Menu");
 			        	   break;
 			           default :
 			        	   option = 7;
-			               System.out.println("Not a valid entry. Going back to the Main Menu\n ");
+			               System.out.println("Not a valid entry. Going back to " +
+			               										"the Main Menu\n ");
 			               break;   
 			           }
-			           
-			           //Display tree
-			           System.out.println(spt.toString());
-			           
 			       } while (option != 7);
 			       
 			} catch (final NumberFormatException nfe) {
@@ -540,8 +533,7 @@ class FileIO {
 		case 13:											// B+ - Tree
 			break;
 		default:
-			System.out
-					.println("Something went wrong, exiting the program!: mainMenu()");
+			System.out.println("Something went wrong, exiting the program!: mainMenu()");
 			System.exit(0);
 			break;
 		}
