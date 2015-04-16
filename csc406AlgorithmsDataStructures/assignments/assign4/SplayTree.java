@@ -13,14 +13,15 @@ package algoData;
 import java.util.Scanner;
 
 /** SplayTree Class: A Top Down Implementation of a Splay Tree*/
-class SplayTree
-{
+class SplayTree extends Tree{
+	
 	/**Private Data Members*/
     private SNode root;
     private int count = 0;
-    private String inorderString;
-    private String preorderString;
-    private String postorderString;
+    private String inorderString = "";
+    private String preorderString = "";
+    private String postorderString = "";
+    private String commentString = "";
 
     /** Constructor */
     public SplayTree(){ 
@@ -49,6 +50,8 @@ class SplayTree
                 z = z.right;             // traverse the right subtree   
             }else{                  // else we have a duplicate node 
             	duplicate = true;   // we have a duplicate node
+            	commentString += "\nThis is a duplicate node trying to be inserted. \n" +
+            							"The tree will keep its previous state.\n";
             	z = null;           // set the node to null and exit loop
             }
         }
@@ -76,7 +79,10 @@ class SplayTree
 * Methods for Rotations
 **********************************************************/    
     
-    /** method: rotate **/
+    /** makeLeftChildRotation method: rotate assuming the node in question 
+     * 	is its parents left child this is analagous to the zig part of 
+     *  the zigzig or zigzag rotation
+     * */
     public void makeLeftChildParent(SNode c, SNode p){
     	
     	// check to see if this is the right rotation being called
@@ -84,16 +90,16 @@ class SplayTree
             throw new RuntimeException("This is not the correct rotation");
     	}
     
-        if (p.parent != null){    // if grandparent is not null
+        if (p.parent != null){        // if grandparent is not null
         	
             if (p == p.parent.left){  // if the parent is the left child of the grandparent 
                 p.parent.left = c;    // set the child as the left child of the grandparent
         	}else{ 
-                p.parent.right = c;  // else set the child as the right child of the grandparent
+                p.parent.right = c;   // else set the child as the right child of the grandparent
             }
         }
         
-        if (c.right != null){  // if the childs right child is not null 
+        if (c.right != null){    // if the childs right child is not null 
             c.right.parent = p;  // set the childs right childs parent to the parent
         }
         
@@ -103,7 +109,10 @@ class SplayTree
         c.right = p;        // set the childs right child to the parent
     }
 
-    /** method: rotate **/
+    /** makeRightChildParent method: rotate assuming the node in question 
+     * 	is its parents right child, this is analagous to the zag part of 
+     *  the zagzig or zagzag rotation
+     * */
     public void makeRightChildParent(SNode c, SNode p){
     	
     	// check to see if this is the right rotation being called
@@ -130,11 +139,6 @@ class SplayTree
         c.left = p;          // set the childs left child to the parent
     }
     
-    /** method:  */
-    private void zig(){
-    	
-    }
-
 /*********************************************************
 * Methods for Splaying
 **********************************************************/    
@@ -142,39 +146,43 @@ class SplayTree
     /** splay method: splays the given node to the root of the tree */
     private void splay(SNode x){
     	
-        while (x.parent != null){
-            SNode Parent = x.parent;
-            SNode GrandParent = Parent.parent;
+        while (x.parent != null){	// while the node is not already the root
+            SNode Parent = x.parent;		// assign the nodes parent
+            SNode GrandParent = Parent.parent;// assign the nodes grandparent
             
-            if (GrandParent == null){
+            if (GrandParent == null){      // if the node has no grandparent
                 
-            	if (x == Parent.left){
-                    makeLeftChildParent(x, Parent);
-            	}else{
-                    makeRightChildParent(x, Parent);
+            	if (x == Parent.left){				 // if the node to splay 
+					   					   //is the left child of its parent 
+                    makeLeftChildParent(x, Parent);           	      // zig
+            	}else{												 // else
+                    makeRightChildParent(x, Parent);                  // zag
                 }
             }else{
-                if (x == Parent.left){
-                    
-                	if (Parent == GrandParent.left){
-                        makeLeftChildParent(Parent, GrandParent);
-                        makeLeftChildParent(x, Parent);
+                if (x == Parent.left){               // if the node to splay 
+                						   //is the left child of its parent
+                	if (Parent == GrandParent.left){ // if the parent is the 
+					    					// left child of the grandparent
+                        makeLeftChildParent(Parent, GrandParent);  // then  
+                        makeLeftChildParent(x, Parent);            // zigzig
                     }else{
-                        makeLeftChildParent(x, x.parent);
-                        makeRightChildParent(x, x.parent);
+                        makeLeftChildParent(x, x.parent);          // else
+                        makeRightChildParent(x, x.parent);         // zigzag
                     }
-                }else{
-                    if (Parent == GrandParent.left){
-                        makeRightChildParent(x, x.parent);
-                        makeLeftChildParent(x, x.parent);
+                }else{								 // else the node to 
+                	                //splay is the right child of the parent
+                    if (Parent == GrandParent.left){ // if the parent is the 
+                    					    // left child of the grandparent
+                        makeRightChildParent(x, x.parent);         // then
+                        makeLeftChildParent(x, x.parent);          // zagzig
                     }else{
-                        makeRightChildParent(Parent, GrandParent);
-                        makeRightChildParent(x, Parent);
+                        makeRightChildParent(Parent, GrandParent); // else
+                        makeRightChildParent(x, Parent);           // zagzag
                     }
                 }
             }
         }
-        root = x;
+        root = x;							  // set the node as the new root
     }
 
 /*********************************************************
@@ -191,6 +199,9 @@ class SplayTree
     private void delete(SNode node){
     	
         if (node == null){ // if the node in question is null  
+        	commentString += "\nThis node cannot be deleted " +
+        						"because it does not exist\n" +
+        			 "The tree will keep its previous state\n";
         	return;        // and could not be found, do nothing
         }
  
@@ -242,32 +253,28 @@ class SplayTree
     /** search method: to search for a given nodes nodeData */
     public boolean search(int val)
     {
-    	SNode sn = findNode(val); // find the node 
-    	//System.out.println("sn.nodeData: "+sn.nodeData);
-        return sn != null; // return whether found or not
+    	SNode sn = findNode(val); 	// find the node 
+        return sn != null; 			// return whether found or not
     }
     
     /** findNode method: to find a node given its nodeData*/
     private SNode findNode(int ele){
-        SNode z = root;                   // start at the root
-        //System.out.println("b4z.nodeData: "+z.nodeData);
-        while (z != null){ // while the root is not null
+        SNode z = root;              // start at the root
+        while (z != null){ 			 // while the root is not null
         	
-            if (ele < z.nodeData){ // if the nodes nodeData is less than 
-            	                   // the dummy nodes nodeData 
-                z = z.left;        // traverse the left subtree
-                //System.out.println("leftz.nodeData: "+z.nodeData);
+            if (ele < z.nodeData){ 	 // if the nodes nodeData is less than 
+            	                     // the dummy nodes nodeData 
+                z = z.left;          // traverse the left subtree
             }else if (ele > z.nodeData){ // else if the nodes nodeData is 
-            					// greater than the dummy nodes nodeData 
-                z = z.right;    // traverse the right subtree
-                //System.out.println("rightz.nodeData: "+z.nodeData);
+            					     // greater than the dummy nodes nodeData 
+                z = z.right;         // traverse the right subtree
             }else{
-            	//System.out.println("b4z.nodeData: "+z.nodeData);
             	splay(z);// splay on the node that is found and bring to the root
-            	//System.out.println("afz.nodeData: "+z.nodeData);
                 return z;
             }
         }
+        commentString += "\nCould not find the node given.\n"
+        			+"The tree will keep its previous state\n";
         return null;  // did not find the node we were looking for
     }
     
@@ -364,6 +371,8 @@ class SplayTree
         if(root != null){
         	resultString+="\nroot: "+root.nodeData+"\n"; 
         }
+        resultString+=commentString;
+        commentString = "";
     	return resultString;
     }
 }

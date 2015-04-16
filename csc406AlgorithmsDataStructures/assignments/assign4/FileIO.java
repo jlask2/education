@@ -459,7 +459,8 @@ class FileIO {
 			           +"\t4. Size of n(T) - the total number of nodes in the tree\n"
 			           +"\t5. Check if empty\n"
 			           +"\t6. Clear the tree\n"
-			           +"\t7. Go back to Main Menu\n");
+			           +"\t7. Go back to Main Menu\n"
+			           +"Please select a choice\n");
 			           
 			           option = scan.nextInt();            
 			           switch (option){
