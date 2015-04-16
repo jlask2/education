@@ -297,6 +297,7 @@ class SplayTree extends Tree{
     /** clear method: clears the tree */
     public void clear()
     {
+    	count = 0;
         root = null;
     }
     
