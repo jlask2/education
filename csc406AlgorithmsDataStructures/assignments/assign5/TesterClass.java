@@ -32,8 +32,8 @@ class TesterClass {
 }
 
 /*
- ******************************************************************************* 
- *
+ * ******************************************************************************
+ * 
  * CSC406Assignment#1: Due on or before February 11, 2015 rajasethupathy
  * 
  * Project: Implement the weighted/unweighted directed graph data structures
@@ -82,7 +82,6 @@ class TesterClass {
  * need help in understanding/implementing your project.
  * 
  * ******************************************************************************
- * ******************************************
  * 
  * CSC406Assignment#2 ¬¬¬ Due on or before March 4, 2015 raj
  * 
@@ -157,7 +156,6 @@ class TesterClass {
  * root class.
  * 
  * ******************************************************************************
- * *************************************
  * 
  * CSC406Sp15Assignment#3 Due on or before March 25, 2015 raj
  * 
@@ -184,11 +182,31 @@ class TesterClass {
  * 
  * ******************************************************************************
  * 
- * CSC406Assignment#4S15 	Due on or before April 15, 2015		rajasethupathy
- *
- * Implement Splay tree (include all three operations: search, insert, and delete). 
- * You will get 5 extra credit points if you output n(x), n’(x), r(x) and r’(x) 
- * after each splay operation. Optionally, those of you who are interested, may 
- * actually verify the values of Δ and δ.
- *
+ * CSC406Assignment#4S15 Due on or before April 15, 2015 rajasethupathy
+ * 
+ * Implement Splay tree (include all three operations: search, insert, and
+ * delete). You will get 5 extra credit points if you output n(x), n’(x), r(x)
+ * and r’(x) after each splay operation. Optionally, those of you who are
+ * interested, may actually verify the values of Δ and δ.
+ * 
+ * ******************************************************************************
+ * 
+ * CSC406Assignment#5S15 Due on or before April 29, 2015 raj
+ * 
+ * 
+ * Implement any two of the following algorithms:
+ * 
+ * 1. Simplex method for linear programming. Implement only the ideas that we
+ * discussed. Read the objective function and the constraints from a file. Ouput
+ * to a file each simplex table and its associated solution. no negative test
+ * case needed. 
+ * 
+ * 2. Construct Huffman tree for a text. Read the frequencies of
+ * chars from a file. Must use java’s priority queue. Output the tree to a file.
+ * No negative test case required. 
+ * 
+ * 3. Red-black tree with search and insert
+ * operations only. Insert must call search. Read keys from a file. Output the
+ * results to a file. Both search and insert must be tested on a key that is in
+ * the tree and on a key that is not in the tree.
  */
