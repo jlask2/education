@@ -206,12 +206,12 @@ class FileIO {
 							buffOut.newLine();
 							System.out.println("Please enter in the number of unknown variables X. ");
 							sc1 = new Scanner(System.in);
-							int numOfConstraints = Integer.parseInt(sc1.nextLine());
-							buffOut.write(numOfConstraints+"");
+							buffOut.write(sc1.nextLine());
 							buffOut.newLine();
 							System.out.println("Please enter in the number of constraints C. ");
 							sc1 = new Scanner(System.in);
-							buffOut.write(sc1.nextLine());
+							int numOfConstraints = Integer.parseInt(sc1.nextLine());
+							buffOut.write(numOfConstraints+"");	
 							buffOut.newLine();
 							System.out.println("Please enter in the set of the coefficients of " +
 																					"the variables X. ");
@@ -768,41 +768,55 @@ class FileIO {
 				}
 				theObjectiveRow[ii] = 0;
 
-				//Perform the Test by making the call to this static method
-				Simplex.test(theConstraintCoefficients, theObjectiveRow);
-		   
 				
 			/*-----------------------For File Output------------------------*/
 				
-				/*DEBUG*/fileContents += "\ntheEquation:\n\n";
+				fileContents += "\ntheEquation:\n\n";
 				for(int y = 0; y < theEquation.length; y++){
-						fileContents += " "+theEquation[y];				
+						fileContents += "\t"+theEquation[y];				
 				}
 				fileContents += "\n";
 				
-				/*DEBUG*/fileContents += "\ntheConstraintCoefficients matrix:\n\n";
+				fileContents += "\ntheConstraintCoefficients matrix:\n\n";
 				for(int y = 0; y < theConstraintCoefficients.length; y++){
 					
 					for(int z = 0; z < theConstraintCoefficients[0].length; z++){				
-						fileContents += " "+theConstraintCoefficients[y][z];
+						fileContents += "\t"+theConstraintCoefficients[y][z];
 					}
 					fileContents += "\n";
 				}
 				fileContents += "\n";
 				
-				/*DEBUG*/fileContents += "theObjectiveRow:\n\n";
+				fileContents += "theObjectiveRow:\n\n";
 				for(int y = 0; y < theObjectiveRow.length; y++){
-					fileContents += " "+theObjectiveRow[y];				
+					fileContents += "\t"+theObjectiveRow[y];				
 				}
 				fileContents += "\n\n";
-
-	        System.out.println("Select a new output filename: \n");
-	        String filename = "defaultOutputSimplex"; 
-	        scan = new Scanner(System.in);
-	        filename = scan.nextLine()+".txt";
-	        buffOut = new BufferedWriter(new FileWriter(filename));
-	        buffOut.write(fileContents+"\n"+Simplex.getCompiledResults());
-	        buffOut.close();
+				boolean unbounded = false;
+				//Perform the Test by making the call to this static method
+				try{
+					Simplex.test(theConstraintCoefficients, theObjectiveRow);
+				}catch(ArithmeticException a){
+					a.printStackTrace();
+					 System.out.println("Select a new output filename: \n");
+			        String filename = "defaultOutputSimplex"; 
+			        scan = new Scanner(System.in);
+			        filename = scan.nextLine()+".txt";
+			        buffOut = new BufferedWriter(new FileWriter(filename));
+			        buffOut.write(fileContents+"\n"+Simplex.getCompiledResults());
+			        buffOut.close();
+			        unbounded = true;
+				}
+			if(unbounded == false){	
+		        System.out.println("Select a new output filename: \n");
+		        String filename = "defaultOutputSimplex"; 
+		        scan = new Scanner(System.in);
+		        filename = scan.nextLine()+".txt";
+		        buffOut = new BufferedWriter(new FileWriter(filename));
+		        buffOut.write(fileContents+"\n"+Simplex.getCompiledResults());
+		        buffOut.close();
+		        unbounded = false;
+			}
 	    	
 			/*Scanner scan = new Scanner(System.in);
 			try                           { Simplex.test1();             }

@@ -10,6 +10,8 @@
 
 package algoData;
 
+import java.text.DecimalFormat;
+
 /*************************************************************************
  *  Compilation:  javac Simplex.java
  *  Execution:    java Simplex
@@ -40,7 +42,7 @@ public class Simplex {
         M = conmatrix.length;
         //System.out.println();
         N = conmatrix[0].length - 1;
-        //System.out.println("M: "+M+" N: "+N);
+        System.out.println("M: "+M+" N: "+N);
         a = new double[M+1][N+M+1];
         for (int i = 0; i < M; i++)
             for (int j = 0; j < N; j++)
@@ -49,8 +51,9 @@ public class Simplex {
         for (int j = 0; j < N; j++) a[M][j]   = objrow[j];
         for (int i = 0; i < M; i++) a[i][M+N] = conmatrix[i][N];
 
-        basis = new int[M];
-        for (int i = 0; i < M; i++) basis[i] = N + i;
+       /* basis = new int[M];
+        for (int i = 0; i < M; i++) basis[i] = N + i;*/;
+        compiledResult = "";
         compiledResult += toString();
         System.out.println(toString());
         
@@ -70,13 +73,13 @@ public class Simplex {
 
             // find leaving row p
             int p = minRatioRule(q);
-            if (p == -1) throw new ArithmeticException("Linear program is unbounded");
+            if (p == -1) throw new ArithmeticException(compiledResult +="Linear program is unbounded\n");
 
             // pivot
             pivot(p, q);
 
             // update basis
-            basis[p] = q;
+            //basis[p] = q;
             compiledResult += toString();
             System.out.println(toString());
         }
@@ -88,7 +91,7 @@ public class Simplex {
             if (a[M][j] < 0) return j;
         return -1;  // optimal
     }
-
+/*
    // index of a non-basic column with most positive cost
     private int dantzig() {
         int q = 0;
@@ -98,7 +101,7 @@ public class Simplex {
         if (a[M][q] <= 0) return -1;  // optimal
         else return q;
     }
-
+*/
     // find row p using min ratio rule (-1 if no such row)
     private int minRatioRule(int q) {
         int p = -1;
@@ -133,6 +136,7 @@ public class Simplex {
         return a[M][M+N];
     }
 
+    /*
     // return primal solution vector
     public double[] primal() {
         double[] x = new double[N];
@@ -227,22 +231,23 @@ public class Simplex {
 
     private boolean check(double[][]A, double[] b, double[] c) {
         return isPrimalFeasible(A, b) && isDualFeasible(A, c) && isOptimal(b, c);
-    }
+    }*/
 
     // print tableaux
     public String toString() {
-        //System.out.println("M = " + M);
-        //System.out.println("N = " + N);
     	String resultString = "";
+    	DecimalFormat df = new DecimalFormat("###.##");
+        //String output = myFormatter.format(value);
         for (int i = 0; i <= M; i++) {
             for (int j = 0; j <= M + N; j++) {
-            	resultString += "\t"+a[i][j]; //System.out.print("%7.2f " ,a[i][j]);
+            	
+            	resultString += "\t"+df.format(a[i][j]); //System.out.print("%7.2f " ,a[i][j]);
             }
             resultString += "\n";
         }
         resultString += "value = " + value()+"\n";
-        for (int i = 0; i < M; i++)
-            if (basis[i] < N) resultString += "x_" + basis[i] + " = " + a[i][M+N]+"\n";
+        /*for (int i = 0; i < M; i++)
+            if (basis[i] < N) resultString += "x_" + basis[i] + " = " + a[i][M+N]+"\n";*/
         resultString += "\n";
         return resultString;
     }
@@ -254,12 +259,12 @@ public class Simplex {
     public static void test(double[][] A, double[] c) {
         Simplex lp = new Simplex(A, c);
         System.out.println("value = " + lp.value());
-        double[] x = lp.primal();
+        /*double[] x = lp.primal();
         for (int i = 0; i < x.length; i++)
             System.out.println("x[" + i + "] = " + x[i]);
         double[] y = lp.dual();
         for (int j = 0; j < y.length; j++)
-            System.out.println("y[" + j + "] = " + y[j]);
+            System.out.println("y[" + j + "] = " + y[j]);*/
         //lp.toString();
     }
 
