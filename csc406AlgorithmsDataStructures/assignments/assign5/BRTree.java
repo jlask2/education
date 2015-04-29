@@ -10,16 +10,10 @@
 
 package algoData;
 
-import java.awt.Color;
-import java.util.Scanner;
-
-
 /** Class RBTree: Extends Abstract Class Tree */
 public class BRTree extends Tree{
 
 	/** protected data members */
-    private BRNode node;
-	private BRNode root;
     
     private String inorderString = "";
     private String preorderString = "";
@@ -40,25 +34,6 @@ public class BRTree extends Tree{
         nullNode.left = nullNode;
         nullNode.right = nullNode;
     }
-    
-	public BRTree(){
-		root = null;
-	}
-
-	/** search method: */
-	/*protected void search(BRNode node){
-		
-	}*/
-	
-	/** insert method: */
-	/*protected void insert(BRNode node){
-		search(node);
-	}*/
-	
-	/** delete method: */
-	/*protected void delete(BRNode node){
-		search(node);
-	}*/
 	
 	 /** Constructor */
 	 public BRTree(int negInf)
@@ -296,9 +271,6 @@ public class BRTree extends Tree{
     	resultString+="\nPost order : "+postorder();
     	resultString+="\nPre order : "+preorder();
         resultString+="\nIn order : "+inorder();
-        if(root != null){
-        	resultString+="\nroot: "+root.nodeData+"\n"; 
-        }
         resultString+=commentString;
         commentString = "";
     	return resultString;

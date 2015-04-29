@@ -10,15 +10,13 @@
 
 package algoData;
 
-import java.awt.Color;
 
 /** Class Black and Red Node: Black and Red Node for the implementation of a Black and Red Tree */
 public class BRNode extends TreeNode {
 
 	/** private data members */
 	protected int nodeData;
-	protected int color;
-	private Color br;	
+	protected int color;	
 	private BRNode parent;
 	protected BRNode left;
 	protected BRNode right;
@@ -26,17 +24,7 @@ public class BRNode extends TreeNode {
     /* Black - 1  RED - 0 */
     static final int BLACK = 1;    
     static final int RED   = 0;
-	
- 	/**Constructor*/
-	/*public BRNode(int nodeData){
-		setNodeData(nodeData);
-		setParent(null);
-		setLeft(null);
-		setRight(null);
-		setColor(null);	
-	}*/
-
-    
+ 
     /** Constructor */
     public BRNode(int nodeData)
     {
@@ -107,23 +95,12 @@ public class BRNode extends TreeNode {
 	public void setParent(BRNode parent) {
 		this.parent = parent;
 	}
-
-	/**
-	 * @return the br
-	 */
-	public Color getColor() {
-		return br;
-	}
-
-	/**
-	 * @param br the br to set
-	 */
-	public void setColor(Color br) {
-		this.br = br;
-	}
 	
 	@Override
 	public String toString(){
-		return new String("");
+		String nodeString = "Node data: "+this.nodeData+
+				"color: "+this.color+"left: "+this.left.nodeData+
+				"right: "+this.right.nodeData;
+		return nodeString;
 	}
 }

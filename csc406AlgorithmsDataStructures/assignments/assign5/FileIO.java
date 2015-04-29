@@ -793,6 +793,7 @@ class FileIO {
 				}
 				fileContents += "\n\n";
 				boolean unbounded = false;
+				
 				//Perform the Test by making the call to this static method
 				try{
 					Simplex.test(theConstraintCoefficients, theObjectiveRow);
@@ -817,24 +818,7 @@ class FileIO {
 		        buffOut.close();
 		        unbounded = false;
 			}
-	    	
-			/*Scanner scan = new Scanner(System.in);
-			try                           { Simplex.test1();             }
-	        catch (ArithmeticException e) { e.printStackTrace(); }
-	        System.out.println("--------------------------------");
-
-	        try                           { Simplex.test2();             }
-	        catch (ArithmeticException e) { e.printStackTrace(); }
-	        System.out.println("--------------------------------");
-
-	        try                           { Simplex.test3();             }
-	        catch (ArithmeticException e) { e.printStackTrace(); }
-	        System.out.println("--------------------------------");
-
-	        try                           { Simplex.test4();             }
-	        catch (ArithmeticException e) { e.printStackTrace(); }
-	        System.out.println("--------------------------------");*/
-	        
+	    
 	        } catch (NumberFormatException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
