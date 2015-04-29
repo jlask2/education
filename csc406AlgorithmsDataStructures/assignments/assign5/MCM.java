@@ -40,11 +40,11 @@ public class MCM {
 	 */
 
 	/**
-	 * MCM Constructor: Algorithm MCP(d0, d1, ….., dn) Input: d0, d1, .., dn
+	 * MCM Constructor: Algorithm MCP(d0, d1, .., dn) Input: d0, d1, .., dn
 	 * represent the dimensions of matrices A0, A1, A2, .., An-1 where the
 	 * dimension of the matrix Ak is dk X dk+1. Output: the minimal number of
 	 * scalar multiplications to find the product of the matrices, A0, A1, A2,
-	 * …, An-1.
+	 * , An-1.
 	 */
 	MCM(int[] dimArray) {
 		n = dimArray.length - 1;

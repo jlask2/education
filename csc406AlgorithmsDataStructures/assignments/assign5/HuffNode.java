@@ -11,74 +11,27 @@
 package algoData;
 
 /** Class HuffNode: Huffman Node for the implementation of a Huffman Tree */
-public class HuffNode extends TreeNode {
+//Huffman tree node
+class HuffNode implements Comparable<HuffNode> {
+    protected final char ch;
+    protected final int freq;
+    protected final HuffNode left, right;
 
-	/** private data members */
-	private int nodeData;
-	private HuffNode left;
-	private HuffNode right;
- 	private HuffNode root;
-	
- 	/**Constructor*/
-	public HuffNode(int nodeData){
-		setNodeData(nodeData);
-		setLeft(null);
-		setRight(null);
-	}
+    HuffNode(char ch, int freq, HuffNode left, HuffNode right) {
+        this.ch    = ch;
+        this.freq  = freq;
+        this.left  = left;
+        this.right = right;
+    }
 
-	/**
-	 * @return the left
-	 */
-	public HuffNode getLeft() {
-		return left;
-	}
+    // is the HuffNode a leaf node?
+    protected boolean isLeaf() {
+        assert (left == null && right == null) || (left != null && right != null);
+        return (left == null && right == null);
+    }
 
-	/**
-	 * @param left the left to set
-	 */
-	public void setLeft(HuffNode left) {
-		this.left = left;
-	}
-
-	/**
-	 * @return the right
-	 */
-	public HuffNode getRight() {
-		return right;
-	}
-
-	/**
-	 * @param right the right to set
-	 */
-	public void setRight(HuffNode right) {
-		this.right = right;
-	}
-
-	/**
-	 * @return the root
-	 */
-	public HuffNode getRoot() {
-		return root;
-	}
-
-	/**
-	 * @param root the root to set
-	 */
-	public void setRoot(HuffNode root) {
-		this.root = root;
-	}
-
-	/**
-	 * @return the nodeData
-	 */
-	public int getNodeData() {
-		return nodeData;
-	}
-
-	/**
-	 * @param nodeData the nodeData to set
-	 */
-	public void setNodeData(int nodeData) {
-		this.nodeData = nodeData;
-	}
+    // compare, based on frequency
+    public int compareTo(HuffNode that) {
+        return this.freq - that.freq;
+    }
 }

@@ -93,7 +93,7 @@ abstract class G {
 		return numOfEdges;
 	}
 
-	/** numNodes( ) – returns the number of nodes */
+	/** numNodes( ) returns the number of nodes */
 	protected int numNodes() {
 		return numOfNodes;
 	}

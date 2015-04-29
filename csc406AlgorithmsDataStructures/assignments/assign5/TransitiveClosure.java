@@ -29,11 +29,11 @@ public class TransitiveClosure {
 	 * Step 1: R = A //O(n^2) Step 2: for k = 1..n do // O(n^3) for i = 1..n do
 	 * for j = 1..n do if rik = 1 and rkj =1 then rij = 1 step 3: return R.
 	 * 
-	 * Analysis: Warshall’s Algorithm is O(n^3) time complexity.
+	 * Analysis: Warshalls Algorithm is O(n^3) time complexity.
 	 * 
-	 * Note: 1. We don’t have to write the last step elaborately as if (rijk-1 =
+	 * Note: 1. We dont have to write the last step elaborately as if (rijk-1 =
 	 * 1) or ( rikk-1 = 1 and rkjk-1 = 1) then rijk = 1. 2. What is the space
-	 * complexity of the algorithm? 3. Warshall’s algorithm when implemented on
+	 * complexity of the algorithm? 3. Warshalls algorithm when implemented on
 	 * a bit matrix could be much more efficient with a better constant factor
 	 * in O(n^3) OR-operations
 	 * 
