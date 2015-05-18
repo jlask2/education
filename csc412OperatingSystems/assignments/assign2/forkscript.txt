@@ -1,0 +1,325 @@
+Script started on Thu 05 Mar 2015 07:57:56 PM EST
+[51] [jlask2@holly2]% cat testfork.c
+/*--------------------------------------------------------------------
+* testfork.c                                                         
+* Author@ Jason Laske
+* Professor Anand
+* CSC 412 Operating Systems
+* Assignment 2
+* 3/5/2015
+* Description: Demonstrate the fork() system call function 
+* by calling the getpid() function 
+* an amount equal to the passing count argument and 
+* distingush the parent and child processes.
+--------------------------------------------------------------------*/
+
+#include <stdio.h>     // printf, perror
+#include <stdlib.h>    // exit
+#include <sys/types.h> // pid_t
+#include <unistd.h>    // _exit, fork
+
+/*pass command line arguments from shell;
+  argc.number of parameters and argv[].the arguments*/
+int main(int argc, char *argv[]){
+   
+   const long MAX_COUNT = 2000;
+   long count;
+   pid_t pid;
+
+   /*pass command line arguments from shell; argc.number of parameters and argv[].the arguments
+	This command should only recieve exactly 2 arguments, a.out and the count*/
+   if (argc != 2){
+      /*run as - a.out count*/
+      printf("Error - usage: %s count\n", argv[0]); 
+      
+      /*signal error (return value other than 0) to shell*/
+      exit(EXIT_FAILURE);
+   }else{ 
+      int j;
+
+      /*If the right amount of arguments are passed, check to make sure argument 2 is a integer 
+        and is less than or equal to MAX_COUNT=2000(lets be nice to the system), otherwise exit*/
+      for (j=1; j < argc; j++){
+      char* end;
+      count = strtol(argv[j], &end, 10); /*convert ascii value to long value using strtol*/
+        if (argc == 2 && !end[0] && count >= 0 && count <= MAX_COUNT){
+                printf("%s is valid, good to go!\n", argv[j]);
+        } else {
+                printf("%s is invalid input, argument 2 must be a integer and less than or equal to 2000, exiting program\n", argv[j]);
+                exit(EXIT_FAILURE);
+        }
+      }
+   }
+   
+   printf("This is testfork.c\n"); 
+   
+   pid =  fork();           // Fork the process
+   
+   /*Check the return of the fork() method to see which is the calling process or if a failure occured*/
+   if(pid == -1){          // the child process was not created, most likely due to bad input
+      printf("The child process was not created successfully. Exiting program");
+      exit(EXIT_FAILURE);
+   }else if(pid == 0){     // the child was created and fork() returned a 0 to the new child process
+      printf("Child process started \n");
+      int i;
+      for(i = 1; i <= count; i++){ 
+        printf("I am the child process and my process id is...(%d) count = %d\n", (int)getpid(), i);
+      }
+      printf("Child process ended \n");
+      printf("This is testfork.c after child process end\n");
+      exit(EXIT_SUCCESS);
+   }else{           // the parent process recieves a positive value from fork(), the pid of the new child
+      printf("Parent process started \n");
+      int i;
+      for(i = 1; i <= count; i++){
+        printf("I am the parent process and my process id is...(%d) count = %d\n", (int)getpid(), i);
+      }
+      printf("Parent process ended\n");
+      printf("This was testfork.c\n");
+      exit(EXIT_SUCCESS);
+   }
+   return 0;
+}
+[52] [jlask2@holly2]% cc testfork.c -o testfork >& errorfile
+[53] [jlask2@holly2]% testfork 30
+30 is valid, good to go!
+This is testfork.c
+Child process started 
+I am the child process and my process id is...(1040) count = 1
+I am the child process and my process id is...(1040) count = 2
+I am the child process and my process id is...(1040) count = 3
+I am the child process and my process id is...(1040) count = 4
+I am the child process and my process id is...(1040) count = 5
+I am the child process and my process id is...(1040) count = 6
+Parent process started 
+I am the child process and my process id is...(1040) count = 7
+I am the child process and my process id is...(1040) count = 8
+I am the child process and my process id is...(1040) count = 9
+I am the child process and my process id is...(1040) count = 10
+I am the child process and my process id is...(1040) count = 11
+I am the child process and my process id is...(1040) count = 12
+I am the child process and my process id is...(1040) count = 13
+I am the child process and my process id is...(1040) count = 14
+I am the child process and my process id is...(1040) count = 15
+I am the child process and my process id is...(1040) count = 16
+I am the child process and my process id is...(1040) count = 17
+I am the child process and my process id is...(1040) count = 18
+I am the child process and my process id is...(1040) count = 19
+I am the child process and my process id is...(1040) count = 20
+I am the child process and my process id is...(1040) count = 21
+I am the child process and my process id is...(1040) count = 22
+I am the child process and my process id is...(1040) count = 23
+I am the child process and my process id is...(1040) count = 24
+I am the child process and my process id is...(1040) count = 25
+I am the child process and my process id is...(1040) count = 26
+I am the child process and my process id is...(1040) count = 27
+I am the child process and my process id is...(1040) count = 28
+I am the child process and my process id is...(1040) count = 29
+I am the child process and my process id is...(1040) count = 30
+Child process ended 
+This is testfork.c after child process end
+I am the parent process and my process id is...(1039) count = 1
+I am the parent process and my process id is...(1039) count = 2
+I am the parent process and my process id is...(1039) count = 3
+I am the parent process and my process id is...(1039) count = 4
+I am the parent process and my process id is...(1039) count = 5
+I am the parent process and my process id is...(1039) count = 6
+I am the parent process and my process id is...(1039) count = 7
+I am the parent process and my process id is...(1039) count = 8
+I am the parent process and my process id is...(1039) count = 9
+I am the parent process and my process id is...(1039) count = 10
+I am the parent process and my process id is...(1039) count = 11
+I am the parent process and my process id is...(1039) count = 12
+I am the parent process and my process id is...(1039) count = 13
+I am the parent process and my process id is...(1039) count = 14
+I am the parent process and my process id is...(1039) count = 15
+I am the parent process and my process id is...(1039) count = 16
+I am the parent process and my process id is...(1039) count = 17
+I am the parent process and my process id is...(1039) count = 18
+I am the parent process and my process id is...(1039) count = 19
+I am the parent process and my process id is...(1039) count = 20
+I am the parent process and my process id is...(1039) count = 21
+I am the parent process and my process id is...(1039) count = 22
+I am the parent process and my process id is...(1039) count = 23
+I am the parent process and my process id is...(1039) count = 24
+I am the parent process and my process id is...(1039) count = 25
+I am the parent process and my process id is...(1039) count = 26
+I am the parent process and my process id is...(1039) count = 27
+I am the parent process and my process id is...(1039) count = 28
+I am the parent process and my process id is...(1039) count = 29
+I am the parent process and my process id is...(1039) count = 30
+Parent process ended
+This was testfork.c
+[54] [jlask2@holly2]% cat ts[Kestforkwait.c
+/*--------------------------------------------------------------------
+* testforkwait.c
+* Author@ Jason Laske
+* Professor Anand
+* CSC 412 Operating Systems
+* Assignment 2
+* 3/5/2015
+* Description: Demonstrate the fork() system call function
+* and the wait() function by calling the getpid() function
+* an amount equal to the passing count argument,
+* distingushing the parent and child processess and allow the child 
+* processes to finish before the parent finishes.
+--------------------------------------------------------------------*/
+
+#include <stdio.h>     // printf, perror
+#include <stdlib.h>    // exit 
+#include <sys/types.h> // pid_t 
+#include <unistd.h>    // _exit, fork 
+#include <sys/wait.h>  // wait 
+
+/*pass command line arguments from shell;
+  argc.number of parameters and argv[].the arguments*/
+int main(int argc, char *argv[]){
+ 
+   const long MAX_COUNT = 2000;
+   long count;
+ 
+   int status;
+   char *end;
+   pid_t pid;
+
+   /*pass command line arguments from shell; argc.number of parameters and argv[].the arguments
+        This command should only recieve exactly 2 arguments, a.out and the count*/
+   if (argc != 2){
+      /*run as - a.out count*/
+      printf("Error - usage: %s (integer)count\n", argv[0]);
+
+      /*signal error (return value other than 0) to shell*/
+      exit(EXIT_FAILURE);
+   }else{
+      int j;
+      
+      /*If the right amount of arguments are passed, check to make sure argument 2 is a integer 
+        and it is less than or equal to MAX_COUNT = 2000(lets be nice to the system), otherwise exit*/
+      for (j=1; j < argc; j++){
+      char* end;
+      count = strtol(argv[j], &end, 10); /*convert ascii value to long value using strtol*/
+      	if (argc == 2 && !end[0] && count >= 0 && count <= MAX_COUNT){
+        	printf("%s is valid, good to go!\n", argv[j]);
+        } else {
+       	        printf("%s is invalid input, argument 2 must be a integer and less than or equal to 2000, exiting program\n", argv[j]);
+          	exit(EXIT_FAILURE);
+        }
+      }
+   }
+
+   printf("This is testforkwait.c\n");
+
+   pid =  fork();          // Fork the process
+
+   /*Check the return of the fork() method to see which is the calling process or if a failure occured*/
+   if(pid == -1){          // The child process was not created, most likely due to bad input
+      printf("The child process was not created successfully. Exiting program");
+      exit(EXIT_FAILURE);
+   }else if(pid == 0){     // the child was created and fork returned a 0 to the child process
+      int i;
+      printf("Child process started \n");
+      for(i = 1; i <= count; i++){
+        printf("I am the child process and my process id is...(%d) count = %d\n", (int)getpid(), i);
+      }
+      printf("Child process ended \n");
+      exit(EXIT_SUCCESS);
+   }else{           // the parent process receives a positive value from fork(), the pid of child
+        /* Check to see if the child process terminated and what status is returned from the 
+           child process when terminated*/
+        if((pid = wait(&status)) == -1){
+           perror("wait error"); 		// Wait for child process 
+        }else{                                  // Other wise check status
+           if(WIFSIGNALED(status) != 0){
+              printf("Child process ended because of signal %d \n", WTERMSIG(status));
+           }else if(WIFEXITED(status) != 0){
+              printf("Child process ended normally; status = %d \n", WEXITSTATUS(status));
+	      printf("Parent process started \n");
+           }else{
+              printf("Child process did not end normally \n");
+	   }
+        }
+      int i;
+      for(i = 1; i <= count; i++){
+        printf("I am the parent process and my process id is...(%d) count = %d\n", (int)getpid(), i);
+      }
+      printf("Parent process ended\n");
+      printf("This was testforkwait.c\n");
+      exit(EXIT_SUCCESS);
+   }
+ 
+   return 0;
+}
+
+[55] [jlask2@holly2]% cc testforkwait.c -o testforkwait >& errorfilewait
+[56] [jlask2@holly2]% testforkwait 30
+30 is valid, good to go!
+This is testforkwait.c
+Child process started 
+I am the child process and my process id is...(1048) count = 1
+I am the child process and my process id is...(1048) count = 2
+I am the child process and my process id is...(1048) count = 3
+I am the child process and my process id is...(1048) count = 4
+I am the child process and my process id is...(1048) count = 5
+I am the child process and my process id is...(1048) count = 6
+I am the child process and my process id is...(1048) count = 7
+I am the child process and my process id is...(1048) count = 8
+I am the child process and my process id is...(1048) count = 9
+I am the child process and my process id is...(1048) count = 10
+I am the child process and my process id is...(1048) count = 11
+I am the child process and my process id is...(1048) count = 12
+I am the child process and my process id is...(1048) count = 13
+I am the child process and my process id is...(1048) count = 14
+I am the child process and my process id is...(1048) count = 15
+I am the child process and my process id is...(1048) count = 16
+I am the child process and my process id is...(1048) count = 17
+I am the child process and my process id is...(1048) count = 18
+I am the child process and my process id is...(1048) count = 19
+I am the child process and my process id is...(1048) count = 20
+I am the child process and my process id is...(1048) count = 21
+I am the child process and my process id is...(1048) count = 22
+I am the child process and my process id is...(1048) count = 23
+I am the child process and my process id is...(1048) count = 24
+I am the child process and my process id is...(1048) count = 25
+I am the child process and my process id is...(1048) count = 26
+I am the child process and my process id is...(1048) count = 27
+I am the child process and my process id is...(1048) count = 28
+I am the child process and my process id is...(1048) count = 29
+I am the child process and my process id is...(1048) count = 30
+Child process ended 
+Child process ended normally; status = 0 
+Parent process started 
+I am the parent process and my process id is...(1047) count = 1
+I am the parent process and my process id is...(1047) count = 2
+I am the parent process and my process id is...(1047) count = 3
+I am the parent process and my process id is...(1047) count = 4
+I am the parent process and my process id is...(1047) count = 5
+I am the parent process and my process id is...(1047) count = 6
+I am the parent process and my process id is...(1047) count = 7
+I am the parent process and my process id is...(1047) count = 8
+I am the parent process and my process id is...(1047) count = 9
+I am the parent process and my process id is...(1047) count = 10
+I am the parent process and my process id is...(1047) count = 11
+I am the parent process and my process id is...(1047) count = 12
+I am the parent process and my process id is...(1047) count = 13
+I am the parent process and my process id is...(1047) count = 14
+I am the parent process and my process id is...(1047) count = 15
+I am the parent process and my process id is...(1047) count = 16
+I am the parent process and my process id is...(1047) count = 17
+I am the parent process and my process id is...(1047) count = 18
+I am the parent process and my process id is...(1047) count = 19
+I am the parent process and my process id is...(1047) count = 20
+I am the parent process and my process id is...(1047) count = 21
+I am the parent process and my process id is...(1047) count = 22
+I am the parent process and my process id is...(1047) count = 23
+I am the parent process and my process id is...(1047) count = 24
+I am the parent process and my process id is...(1047) count = 25
+I am the parent process and my process id is...(1047) count = 26
+I am the parent process and my process id is...(1047) count = 27
+I am the parent process and my process id is...(1047) count = 28
+I am the parent process and my process id is...(1047) count = 29
+I am the parent process and my process id is...(1047) count = 30
+Parent process ended
+This was testforkwait.c
+[57] [jlask2@holly2]% ^Dexit
+
+Script done on Thu 05 Mar 2015 08:00:02 PM EST
