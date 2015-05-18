@@ -1,0 +1,58 @@
+Script started on Tue 05 May 2015 08:34:20 PM EDT
+]0;jlaske@jlu0: ~/Development/Repos/education/csc412OperatingSystems/assignments/assign4jlaske@jlu0:~/Development/Repos/education/csc412OperatingSystems/assignments/assiign4$ ls -la test.txt
+-rwxrw-r-- 1 jlaske jlaske 87 May  5 20:10 [0m[01;32mtest.txt[0m
+]0;jlaske@jlu0: ~/Development/Repos/education/csc412OperatingSystems/assignments/assign4jlaske@jlu0:~/Development/Repos/education/csc412OperatingSystems/assignments/assiign4$ newcat test.txt
+No command 'newcat' found, did you mean:
+ Command 'mewcat' from package 'mew-beta-bin' (universe)
+ Command 'mewcat' from package 'mew-bin' (universe)
+ Command 'netcat' from package 'netcat6' (universe)
+ Command 'netcat' from package 'netcat-traditional' (universe)
+ Command 'netcat' from package 'netcat-openbsd' (main)
+newcat: command not found
+]0;jlaske@jlu0: ~/Development/Repos/education/csc412OperatingSystems/assignments/assign4jlaske@jlu0:~/Development/Repos/education/csc412OperatingSystems/assignments/assiign4$ ./newcat test.txt
+This is some random
+aritrary test with no 
+preceding blanks and 
+a newline at the end
+
+]0;jlaske@jlu0: ~/Development/Repos/education/csc412OperatingSystems/assignments/assign4jlaske@jlu0:~/Development/Repos/education/csc412OperatingSystems/assignments/assiign4$ wc test.txt
+ 5 16 87 test.txt
+]0;jlaske@jlu0: ~/Development/Repos/education/csc412OperatingSystems/assignments/assign4jlaske@jlu0:~/Development/Repos/education/csc412OperatingSystems/assignments/assiign4$ ./cw test.txt
+ 5 16 87 test.txt
+]0;jlaske@jlu0: ~/Development/Repos/education/csc412OperatingSystems/assignments/assign4jlaske@jlu0:~/Development/Repos/education/csc412OperatingSystems/assignments/assiign4$ ls -la twnle.txt
+-rwxrw-r-- 1 jlaske jlaske 61 Apr 30 00:22 [0m[01;32mtwnle.txt[0m
+]0;jlaske@jlu0: ~/Development/Repos/education/csc412OperatingSystems/assignments/assign4jlaske@jlu0:~/Development/Repos/education/csc412OperatingSystems/assignments/assiign4$ ./newcat twnle.txt
+This is some arbitrary text
+with no 
+ending newline or blank
+]0;jlaske@jlu0: ~/Development/Repos/education/csc412OperatingSystems/assignments/assign4jlaske@jlu0:~/Development/Repos/education/csc412OperatingSystems/assignments/assiign4$ wc twnle.txt
+ 3 11 61 twnle.txt
+]0;jlaske@jlu0: ~/Development/Repos/education/csc412OperatingSystems/assignments/assign4jlaske@jlu0:~/Development/Repos/education/csc412OperatingSystems/assignments/assiign4$ ./cw te
+./cw: can't open te
+]0;jlaske@jlu0: ~/Development/Repos/education/csc412OperatingSystems/assignments/assign4jlaske@jlu0:~/Development/Repos/education/csc412OperatingSystems/assignments/assiign4$ ./cw twnle.txt
+ 3 11 61 twnle.txt
+]0;jlaske@jlu0: ~/Development/Repos/education/csc412OperatingSystems/assignments/assign4jlaske@jlu0:~/Development/Repos/education/csc412OperatingSystems/assignments/assiign4$ ls -la twpb.txt
+-rwxrw-r-- 1 jlaske jlaske 54 Apr 30 00:21 [0m[01;32mtwpb.txt[0m
+]0;jlaske@jlu0: ~/Development/Repos/education/csc412OperatingSystems/assignments/assign4jlaske@jlu0:~/Development/Repos/education/csc412OperatingSystems/assignments/assiign4$ n[K./newcat twpb.txt
+   This is some arbitrary text
+with preceding blanks
+
+]0;jlaske@jlu0: ~/Development/Repos/education/csc412OperatingSystems/assignments/assign4jlaske@jlu0:~/Development/Repos/education/csc412OperatingSystems/assignments/assiign4$ wc twpb.txt
+ 3  8 54 twpb.txt
+]0;jlaske@jlu0: ~/Development/Repos/education/csc412OperatingSystems/assignments/assign4jlaske@jlu0:~/Development/Repos/education/csc412OperatingSystems/assignments/assiign4$ ./cw twpb.txt
+ 3 8 54 twpb.txt
+]0;jlaske@jlu0: ~/Development/Repos/education/csc412OperatingSystems/assignments/assign4jlaske@jlu0:~/Development/Repos/education/csc412OperatingSystems/assignments/assiign4$ ^C
+]0;jlaske@jlu0: ~/Development/Repos/education/csc412OperatingSystems/assignments/assign4jlaske@jlu0:~/Development/Repos/education/csc412OperatingSystems/assignments/assiign4$ stop
+stop: missing job name
+Try `stop --help' for more information.
+]0;jlaske@jlu0: ~/Development/Repos/education/csc412OperatingSystems/assignments/assign4jlaske@jlu0:~/Development/Repos/education/csc412OperatingSystems/assignments/assiign4$ quit
+No command 'quit' found, did you mean:
+ Command 'quilt' from package 'quilt' (main)
+ Command 'quot' from package 'quota' (main)
+ Command 'luit' from package 'x11-utils' (main)
+ Command 'quiz' from package 'bsdgames' (universe)
+ Command 'qgit' from package 'qgit' (universe)
+quit: command not found
+]0;jlaske@jlu0: ~/Development/Repos/education/csc412OperatingSystems/assignments/assign4jlaske@jlu0:~/Development/Repos/education/csc412OperatingSystems/assignments/assiign4$ exit
+
+Script done on Tue 05 May 2015 08:38:20 PM EDT
