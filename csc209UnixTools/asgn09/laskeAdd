@@ -1,0 +1,125 @@
+Script started on Wed 23 Apr 2014 06:28:52 PM EDT
+[51] [jlask2@holly2]% cat a-ana aadd
+     1	#!/bin/bash
+     2	#
+     3	#*************************
+     4	#Jason Laske
+     5	#Dr. Lakshamanan
+     6	#CSC209 Assignment09 Add
+     7	#Date Due: 4/23/2014
+     8	#Date Submitted: 4/23/2014
+     9	#*************************
+    10	#
+    11	#****************************************************************
+    12	# Describe the purpose of this program
+    13	#****************************************************************
+    14	
+    15	 echo ""
+    16	 echo "This program adds the integers in the command line and outputs them."
+    17	
+    18	#****************************************************************
+    19	# Enter the while loop to run multiple iterations of the program
+    20	#****************************************************************
+    21	
+    22	 continueFlag=1
+    23	 while [[ $continueFlag -eq 1 ]]
+    24	 do
+    25	 
+    26	 #echo ""
+    27	 #echo -n "Enter the command (usage: $0 integer1 ...): "; read add  
+    28	
+    29	#****************************************************************
+    30	# Check for command line arguments, if so proceed with the calculations
+    31	#****************************************************************
+    32	 
+    33	 echo ""
+    34	 if [[ $# -eq 0 ]]
+    35	  then
+    36	     echo "usage: $0 integer1 ..."
+    37	     exit 1
+    38	 fi
+    39	
+    40	#****************************************************************
+    41	# Set up some Variables
+    42	#****************************************************************
+    43	
+    44	   total=0
+    45	
+    46	#****************************************************************
+    47	# Control structure to handle the computation
+    48	#****************************************************************
+    49	
+    50	   for i in $@
+    51	   do
+    52	     total=$(($i + $total))
+    53	   done
+    54	
+    55	#****************************************************************
+    56	# Output the total
+    57	#****************************************************************
+    58	
+    59	 echo "The sum of the given integers is $total"
+    60	
+    61	#****************************************************************
+    62	# Ask to continue running the program
+    63	#****************************************************************
+    64	
+    65	 echo ""
+    66	 echo -n "Would you like to continue? (y to continue)"; read continue
+    67	
+    68	#DEBUG#  echo "$continue"
+    69	
+    70	    if [[ $continue != "y" ]]
+    71	    then
+    72	        continueFlag=0
+    73	    else
+    74	        continueFlag=1
+    75	    fi
+    76	 echo ""
+    77	 done
+    78	
+    79	#****************************************************************
+    80	# Exit the program
+    81	#****************************************************************
+    82	
+    83	 exit 0
+    84	
+    85	#
+[52] [jlask2@holly2]% ./add
+
+This program adds the integers in the command line and outputs them.
+
+usage: ./add integer1 ...
+[53] [jlask2@holly2]% /.//add 10
+
+This program adds the integers in the command line and outputs them.
+
+The sum of the given integers is 10
+
+Would you like to continue? (y to continue)y
+
+
+The sum of the given integers is 10
+
+Would you like to continue? (y to continue)n
+
+[54] [jlask2@holly2]% ./add 10 0 -20
+
+This program adds the integers in the command line and outputs them.
+
+The sum of the given integers is -10
+
+Would you like to continue? (y to continue)n
+
+[55] [jlask2@holly2]% ./add 0 1 2 3 4 5 6 7 8 9 10
+
+This program adds the integers in the command line and outputs them.
+
+The sum of the given integers is 55
+
+Would you like to continue? (y to continue)n
+
+[56] [jlask2@holly2]% exit
+exit
+
+Script done on Wed 23 Apr 2014 06:30:42 PM EDT

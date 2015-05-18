@@ -1,0 +1,47 @@
+#!/bin/bash
+#
+# Program to backup an ordinary file in ~/.cache
+# A time stamp is appended to the file name 
+# The file permissions are set as read-only
+# 
+# Usage: ./cache file
+#
+# Check for argument
+if [[ $# -ne 1 ]]
+	then 
+		echo "Usage: $0 file"
+		exit 1
+fi
+#
+# Check if the named file exists and can be accessed
+if [[ !(-f $1) ]]
+	then 
+		echo "$0: File $1 cannot be accessed"
+		exit 2
+fi
+#
+# Check if the file is readable
+if [[ !(-r $1) ]]
+	then 	
+		echo "$0: File $1 is not readable"
+		exit 3
+fi
+#
+# Check if ~/.cache directory exits; else create one
+if [[ !(-d ~/.cache) ]]
+	then 
+		mkdir ~/.cache
+fi
+#
+# Set permissions for ~/.cache directory
+chmod 700 ~/.cache
+#
+# Form time stamp and copy file
+stamp=$(date +%Y%m%d%H%M%S)
+new=$(basename $1)
+new="$new.$stamp"
+cp $1 ~/.cache/$new
+chmod 400 ~/.cache/$new
+#
+exit 0
+#

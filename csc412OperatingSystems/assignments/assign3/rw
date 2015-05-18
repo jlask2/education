@@ -1,0 +1,140 @@
+Script started on Tue 14 Apr 2015 03:47:42 PM EDT
+[51] [jlask2@holly2]% cat reader.c writer.c
+/***************************************************************************
+*Author@ Jason Laske
+*Professor Anand
+*Date Assigned: 4/2/2015
+*Date Due: 4/14/2015
+*Date Submitted: 4/14/201
+***************************************************************************/
+/*Description: reader.c:
+*1b.) (6 points) The second program is invoked as follows: reader 
+*The program reads characters until EOF from its standard input and 
+*displays that information on screen, with at most 50 characters per line.  
+*That is, for every 50 characters read from the input, a '\n' is added to 
+*output.  For the last line, even if fewer than 50 characters are 
+*printed, add a '\n' character.  (But you must ensure that you do not have an 
+*unnecessary blank line if the number of characters in the last line is 
+*exactly 50.) The program uses getchar and putchar for this purpose.
+****************************************************************************/
+/**Header Decalarations*/
+#include <stdio.h> /*typically in /usr/include*/
+#include <stdlib.h>
+#include <string.h>
+
+/**Constant Declarations*/
+const int MAXLINELENGTH = 50;
+
+/**Function Prototypes*/
+void filecopy(FILE *, FILE *);
+
+/**Main Function*/
+int main(int argc, char *argv[]){
+
+FILE *fp;
+
+if(argc == 1){ //if no file specified read from std input
+    filecopy(stdin, stdout);
+}else{       //else attempt to read from the given file
+  while(--argc > 0){
+    if((fp = fopen(*++argv, "r")) == NULL){//file cannot be read
+      printf("cat: cannot open %s\n", *argv);
+      exit(EXIT_FAILURE);
+    }else{
+      filecopy(fp, stdout); //pass the file pinter to filecopy
+      fclose(fp);
+    }
+  }
+}
+  return 0;
+}
+   
+/** filecopy Function recieves the file pointer and 
+* redirects to std output inserting a newline after 
+* every 50 characters except for the final line if
+* it contains exactly 50 characters
+*/
+void filecopy(FILE *ifp, FILE *ofp){
+  
+  int mod, c, index=0;
+  
+  while((c = getc(ifp)) != EOF){
+     mod = index%MAXLINELENGTH; //used to determine the 50th cahracter
+     if(mod == 0 && c != EOF){ //50th character add a '\n'
+        putc(12, ofp);
+        putc(c, ofp);
+     }else{              //else put the cahracter 
+        putc(c, ofp);
+     }
+     index++; //keeps track of the num of characters processed so far
+  }
+  putc(12, ofp);  //handle the case of exactly 50 charters in last line
+}
+/**********************************************************************
+*Author@ Jason Laske
+*Professor Anand
+*Date Assigned: 4/2/2015
+*Date Due: 4/14/2015
+*Date Submitted: 4/14/2015
+************************************************************************/
+/*Description: writer.c:
+*1a.) (4 points) The first of which is invoked as follows: writer n
+*The program writes on its standard output Hello and hello alternately.  
+*The two strings are printed n times each, where n is the command line 
+*argument provided at the time of invoking the program.  The program uses 
+*printf for this purpose. Note the absence of '\n' (the newline 
+*character) in the two strings. 
+*************************************************************************/
+/**Header Declarations*/
+#include <stdio.h> /*typically in /usr/include*/
+#include <stdlib.h>
+
+/**Main Function*/
+int main (int argc, char* argv [])
+/*pass command line arguments from shell; argc-number of parameters and 
+argv[] the arguments*/
+{
+   int count, i; 
+   if (argc != 2){
+      fprintf(stderr, "usage: %s count(int)\n", argv[0]); 
+      /* run as- writer (int) */
+      exit (-1); 
+      /*signal error (return other than 0) to shell*/
+   }
+   else{ 
+      count = atoi (argv[1]); 
+      count = count*2; //need to print for both upper and lower case
+   }
+
+   for ( i = 0; i < count; i++ ){
+      if(i%2 == 0){
+	printf("Hello"); //first print Hello 
+      }else{
+        printf("hello"); //Then print hello
+      }
+   } 
+   return 0;
+}
+[52] [jlask2@holly2]% reader 
+hello
+hello
+for reading
+for reading
+[53] [jlask2@holly2]% reader testcat.txt
+Hello from testcat.txt
+[54] [jlask2@holly2]% writer 1
+Hellohello[55] [jlask2@holly2]% writer 5
+HellohelloHellohelloHellohelloHellohelloHellohello[56] [jlask2@holly2]% writer 8
+HellohelloHellohelloHellohelloHellohelloHellohelloHellohelloHellohelloHellohello[57] [jlask2@holly2]% 
+[57] [jlask2@holly2]% writer 10
+HellohelloHellohelloHellohelloHellohelloHellohelloHellohelloHellohelloHellohelloHellohelloHellohello[58] [jlask2@holly2]% writer
+usage: writer count(int)
+[59] [jlask2@holly2]% writer 1 | reader
+Hellohello[60] [jlask2@holly2]% writer 5 | reader
+HellohelloHellohelloHellohelloHellohelloHellohello[61] [jlask2@holly2]% writer 8 |reader
+HellohelloHellohelloHellohelloHellohelloHellohelloHellohelloHellohelloHellohello[62] [jlask2@holly2]% writer 10 | reader
+HellohelloHellohelloHellohelloHellohelloHellohelloHellohelloHellohelloHellohelloHellohelloHellohello[63] [jlask2@holly2]% ls
+newcat	newcat.c  oldcat  oldcat.c  reader  reader.c  rw  template.c  testcat.txt  writer  writer.c
+[64] [jlask2@holly2]% ^Dexit
+
+Script done on Tue 14 Apr 2015 03:50:42 PM EDT

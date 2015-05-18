@@ -1,0 +1,75 @@
+//**************************
+//Jason Laske
+//Daniel Rogers
+//CSC311  Lab10
+//Date Due: 5/08/2014
+//Date Submitted: 5/08/2014
+//**************************
+
+#include <stdlib.h>
+#include <stdio.h>
+#include <ctype.h>
+
+//***************************************************************
+// Prototype Declaration
+//***************************************************************
+ 
+ /**transformInput*/
+ void transformInput(char input[], int outWhite, int outDigits, int outLower, int outUpper);
+
+//***************************************************************
+// Main
+//***************************************************************
+
+int main() 
+{  	
+	char input[2048];
+	char dummy;
+ 	int outWhite = 0;
+	int outDigits = 0;
+	int outLower = 0;
+	int outUpper = 0;
+
+//***************************************************************
+// Prompt user to input until z 
+//***************************************************************
+
+	printf("Enter any input from the keyboard. To end input z\n");
+	scanf("%s", input);
+	scanf("%c", dummy);
+    
+//***************************************************************
+// Call the method to perform the calculations
+//***************************************************************
+
+	transformInput(input, outWhite, outDigits, outLower, outUpper);
+
+//***************************************************************
+// Output 
+//***************************************************************
+	
+	printf("The number of whitespace characters is: %d\n", outWhite);
+	printf("The number of digits is: %d\n", outDigits);
+	printf("The number of lowercase characters is: %d\n", outLower);
+        printf("The numbe of uppercase characters is: %d\n", outUpper);
+
+//***************************************************************
+// Close the files and exit
+//***************************************************************
+	
+	printf("Goodbye\n");
+	return 0;
+}
+
+//***************************************************************
+// Function Declaration
+//***************************************************************
+ 
+ /**transformInput*/
+ void transformInput(char input[], int outWhite, int outDigits, int outLower, int 
+outUpper){
+	outWhite = 1;
+	outDigits = 2;
+	outLower = 3;
+    	outUpper = 4; 
+ }

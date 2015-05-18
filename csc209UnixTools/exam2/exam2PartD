@@ -1,0 +1,70 @@
+Script started on Wed 23 Apr 2014 07:18:16 PM EDT
+[51] [jlask2@holly2]% echo Jason Laske
+Jason Laske
+[52] [jlask2@holly2]% cat -n countHidden
+     1	#!/bin/bash
+     2	# Invoke the code as: ./countHidden directory
+     3	#
+     4	# Check number of command line arguments
+     5	if  [[ $# -ne 1 ]]
+     6	   then 
+     7		echo "usage: $0 directory"
+     8		exit 1
+     9	fi
+    10	#
+    11	# Check if the argument provided is a directory 
+    12	if [[ !(-d $1) ]]
+    13	   then 
+    14		echo "usage: $0 directory"
+    15		exit 2
+    16	fi
+    17	#
+    18	# Determine the count and set teh value of a shell variable
+    19	number=`echo $1/.* | wc -w` # command output substitution
+    20	# Subtract two to account for . and  .. entries
+    21	number=$(( $number - 2 ))
+    22	# Display result
+    23	echo "Number of hidden entries under $1 is: $number"
+    24	#
+    25	exit 0
+    26	#
+[53] [jlask2@holly2]% ls -la .
+total 16
+drwx------  3 jlask2 students 4096 Apr 23 19:18 .
+drwx------ 14 jlask2 students 4096 Apr 23 19:06 ..
+-rwx------  1 jlask2 students  560 Apr 23 19:13 countHidden
+-rw-------  1 jlask2 students    0 Apr 23 19:18 exam2PartD
+drwx------  2 jlask2 students 4096 Apr 23 19:15 .test02
+-rw-------  1 jlask2 students    0 Apr 23 19:15 .test1
+[54] [jlask2@holly2]% countHidden .
+Number of hidden entries under . is: 2
+[55] [jlask2@holly2]% ls -la ~
+total 124
+drwx--x--x    5 jlask2 students  4096 Apr  9 12:41 .
+drwxr-xr-x 2915 root   root     69632 Dec 21 08:01 ..
+-rw-------    1 jlask2 students   449 Apr 23 18:32 .bash_history
+-rw-------    1 jlask2 students    97 Jan 29 19:50 .bash_logout
+-rwx-----x    1 jlask2 students   176 Jul 19  2013 .bash_profile
+-rw-------    1 jlask2 students   382 Jan 29 19:50 .bashrc
+drwx------   14 jlask2 students  4096 Apr 23 19:06 csc209
+drwx------    8 jlask2 students  4096 Apr 17 20:06 csc311
+-rw-------    1 jlask2 students   227 Jan 29 19:47 .cshrc
+-rw-------    1 jlask2 students  1140 Apr 23 19:06 .history
+-rw-------    1 jlask2 students    35 Feb  4 23:37 .lesshst
+-rw-------    1 jlask2 students    81 Jan 29 19:48 .login
+-rw-------    1 jlask2 students    61 Feb  5 19:21 .plan
+drwxr-xr-x    4 jlask2 students  4096 Jan 29 20:16 public_html
+[56] [jlask2@holly2]% countHidden ~
+Number of hidden entries under /home/fall13/jlask2 is: 9
+[57] [jlask2@holly2]% countHidden /etc
+Number of hidden entries under /etc is: 2
+[58] [jlask2@holly2]% countHidden /bin
+Number of hidden entries under /bin is: 0
+[59] [jlask2@holly2]% countHidden ~klakshma
+Number of hidden entries under /home/faculty/klakshma is: -1
+[60] [jlask2@holly2]% countHidden
+usage: .//countHidden directory
+[61] [jlask2@holly2]% exit
+exit
+
+Script done on Wed 23 Apr 2014 07:21:50 PM EDT

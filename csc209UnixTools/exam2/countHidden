@@ -1,0 +1,26 @@
+#!/bin/bash
+# Invoke the code as: ./countHidden directory
+#
+# Check number of command line arguments
+if  [[ $# -ne 1 ]]
+   then 
+	echo "usage: $0 directory"
+	exit 1
+fi
+#
+# Check if the argument provided is a directory 
+if [[ !(-d $1) ]]
+   then 
+	echo "usage: $0 directory"
+	exit 2
+fi
+#
+# Determine the count and set teh value of a shell variable
+number=`echo $1/.* | wc -w` # command output substitution
+# Subtract two to account for . and  .. entries
+number=$(( $number - 2 ))
+# Display result
+echo "Number of hidden entries under $1 is: $number"
+#
+exit 0
+#

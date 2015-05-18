@@ -1,0 +1,62 @@
+Script started on Wed 05 Feb 2014 08:08:55 PM EST
+[1] [jlask2@holly2]% echo jason
+jason
+[2] [jlask2@holly2]% pwd
+/home/fall13/jlask2/csc209/asgn02
+[3] [jlask2@holly2]% ls -ld ~
+drwx--x--x 4 jlask2 students 4096 Feb  5 18:51 /home/fall13/jlask2
+[4] [jlask2@holly2]% ls -ld ..
+drwx------ 4 jlask2 students 4096 Feb  5 17:29 ..
+[5] [jlask2@holly2]% ls -l ..
+total 8
+drwx------ 2 jlask2 students 4096 Feb  4 23:05 asgn01
+drwx------ 2 jlask2 students 4096 Feb  5 20:08 asgn02
+[6] [jlask2@holly2]% ls -ld .
+drwx------ 2 jlask2 students 4096 Feb  5 20:08 .
+[7] [jlask2@holly2]% ls -la ../asgn01
+total 12
+drwx------ 2 jlask2 students 4096 Feb  4 23:05 .
+drwx------ 4 jlask2 students 4096 Feb  5 17:29 ..
+-rwx------ 1 jlask2 students   72 Feb  4 23:05 hello.bash
+[8] [jlask2@holly2]% ls -la .
+total 40
+drwx------ 2 jlask2 students 4096 Feb  5 20:08 .
+drwx------ 4 jlask2 students 4096 Feb  5 17:29 ..
+-rw------- 1 jlask2 students   61 Feb  5 19:32 asgn02
+-rwx------ 1 jlask2 students 4945 Feb  5 17:42 hello
+-rw------- 1 jlask2 students  101 Feb  5 17:41 hello.c
+-rw------- 1 jlask2 students  418 Feb  5 17:46 Hello.class
+-rw------- 1 jlask2 students  110 Feb  5 17:45 Hello.java
+-rwx------ 1 jlask2 students   43 Feb  5 17:36 hello.py
+-rw------- 1 jlask2 students    0 Feb  5 20:08 laske
+-rw------- 1 jlask2 students   61 Feb  5 19:43 .plan
+[9] [jlask2@holly2]% cat ../asgn01/hello.bash
+#!/bin/bash
+# print a one-line greeting
+#
+echo "Hello, World!"
+exit 0
+#
+[10] [jlask2@holly2]% ../asgn01/hello.bash
+Hello, World!
+[11] [jlask2@holly2]% cat ~/csc209/asgn02/hello.py
+#!/usr/bin/python
+#
+print "Hello, Mars!"
+#
+[12] [jlask2@holly2]% ~/csc209/asgn02/hello.py
+Hello, Mars!
+[13] [jlask2@holly2]% ls -la ../../public_html
+total 16
+drwxr-xr-x 4 jlask2 students 4096 Jan 29 20:16 .
+drwx--x--x 4 jlask2 students 4096 Feb  5 18:51 ..
+drwx--x--x 2 jlask2 students 4096 Jan 29 20:16 cgi-bin
+drwx--x--x 2 jlask2 students 4096 Jan 29 20:23 csc209
+[14] [jlask2@holly2]% 46
+46: Command not found.
+[15] [jlask2@holly2]% wc -l /etc/passwd
+46 /etc/passwd
+[16] [jlask2@holly2]% exit
+exit
+
+Script done on Wed 05 Feb 2014 08:16:21 PM EST

@@ -1,0 +1,85 @@
+#!/bin/bash
+#
+#*************************
+#Jason Laske
+#Dr. Lakshamanan
+#CSC209 Assignment10 removetrash
+#Date Due: 5/7/2014
+#Date Submitted: 5/7/2014
+#*************************
+#
+#****************************************************************
+# Describe the purpose of this program
+#****************************************************************
+
+ echo ""
+ echo "This program adds the integers in the command line and outputs them."
+
+#****************************************************************
+# Enter the while loop to run multiple iterations of the program
+#****************************************************************
+
+ continueFlag=1
+ while [[ $continueFlag -eq 1 ]]
+ do
+ 
+ #echo ""
+ #echo -n "Enter the command (usage: $0 integer1 ...): "; read add  
+
+#****************************************************************
+# Check for command line arguments, if so proceed with the calculations
+#****************************************************************
+ 
+ echo ""
+ if [[ $# -eq 0 ]]
+  then
+     echo "usage: $0 integer1 ..."
+     exit 1
+ fi
+
+#****************************************************************
+# Set up some Variables
+#****************************************************************
+
+   total=0
+
+#****************************************************************
+# Control structure to handle the computation
+#****************************************************************
+
+   for i in $@
+   do
+     total=$(($i + $total))
+   done
+
+#****************************************************************
+# Output the total
+#****************************************************************
+
+ echo "The sum of the given integers is $total"
+
+#****************************************************************
+# Ask to continue running the program
+#****************************************************************
+
+ echo ""
+ echo -n "Would you like to continue? (y to continue)"; read continue
+
+#DEBUG#  echo "$continue"
+
+    if [[ $continue != "y" ]]
+    then
+        continueFlag=0
+    else
+        continueFlag=1
+    fi
+ echo ""
+ done
+
+#****************************************************************
+# Exit the program
+#****************************************************************
+
+ exit 0
+
+#

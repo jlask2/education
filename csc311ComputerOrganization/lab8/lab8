@@ -1,0 +1,81 @@
+Script started on Thu 17 Apr 2014 07:39:51 PM EDT
+[51] [jlask2@holly2]% cc lab8.c
+[52] [jlask2@holly2]% a.out
+Step 1
+*************************
+The chosen initial value for i1 is: 1
+The chosen initial value for i2 is: 2
+The chosen initial value for d1 is: 3.000000
+The chosen initial value for d2 is: 4.000000
+
+The address of i1 is: 0xbfc7b8e8
+The address of i2 is: 0xbfc7b8e4
+The address of d1 is: 0xbfc7b8d8
+The address of d2 is: 0xbfc7b8d0
+
+Step 2
+*************************
+The address of intptr1 is: 0xbfc7b8cc
+The address of intptr2 is: 0xbfc7b8c8
+The address of dubptr1 is: 0xbfc7b8c4
+The address of dubptr2 is: 0xbfc7b8c0
+
+Step 3
+*************************
+The value of intptr1 is: 0xbfc7b8e8
+The value of intptr2 is: 0xbfc7b8e4
+The value of dubptr1 is: 0xbfc7b8d8
+The value of dubptr2 is: 0xbfc7b8d0
+
+Step 4
+*************************
+The value of intptr1 after (intptr1 = intptr2) is: 0xbfc7b8e4
+The assigment of dubptr1 = intptr1 without cast causes an incompatiable type warning.
+The value of dubptr1 = (double*)intptr1 after typcasting is: 0xbfc7b8e4
+
+Step 5
+*************************
+The value of intptr1 after the assignent of intptr1 = NULL is: (nil)
+The assignment of intptr1 = NULL causes a segmaentation fault in step 6.
+
+Step 6
+*************************
+The value of *intptr2 is: 2
+The value of *intptr1 after the assignment to NULL causes a segmentation fault here.
+
+Step 7
+*************************
+The value of i1 after *intptr2 = 100 is: 1
+The value of i2 after *intptr2 = 100 is: 100
+
+Step8
+*************************
+The value of intptr2++ is: 0xbfc7b8e8
+The value of dubptr2++ is: 0xbfc7b8d8
+The value of intptr2-- is: 0xbfc7b8e0
+The value of dubptr2-- is: 0xbfc7b8c8
+The value of *intptr2++ is: 1
+The value of *dubptr2++ is: 3.000000
+The value of *intptr2-- is: 4992901
+The value of *dubptr2-- is: 0.000000
+
+Step 9
+*************************
+Does intptr1 == intptr2 after intptr1 = &i1?: 0, it is false.
+Does *intptr1 == *intptr2 after intptr1 = &i1?: 0, it is false.
+Does intptr1 == intptr2 after i2 = (int)(intptr1)?: 1, it is true.
+Does *intptr1 == *intptr2 after i2 = (int)(intptr1)?: 1, it is true.
+
+Step 10
+*************************
+The value of ptr is: 0x9001008
+The value of *ptr is: 3.141600
+
+Step 11
+*************************
+Is the value of ptr the same as it was in qustion 10?: 0x9001008 , Yes it is.
+
+[53] [jlask2@holly2]% exit
+exit
+
+Script done on Thu 17 Apr 2014 07:40:07 PM EDT
