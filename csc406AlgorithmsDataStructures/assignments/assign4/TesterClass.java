@@ -18,7 +18,7 @@ class TesterClass {
 	/** main method: runs the main program */
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
-			@Override
+			//@Override
 			public void run() {
 				start();
 			}

@@ -61,7 +61,12 @@ class FileIO {
 								+ "\n5) Warshall's implementation"
 								+ "\n6) Floyd's implemetation with path reconstruction"
 								+ "\n7) Knapsack 0-1 with optimal sets"
-								+ "\n8) MCM with optimal parenthesization"
+								+ "\n8) MCM with Optimized Parenthesization"
+								+ "\n9) Splay Tree"
+								+ "\n10) AVL Tree - coming soon"
+								+ "\n11) Black and Red Tree - coming soon"
+								+ "\n12) B-Tree - coming soon"
+								+ "\n13) B+ Tree - coming soon"
 								+ "\nPlease select a choice: ");
 				inputChoice = new Scanner(System.in);
 				choice = inputChoice.nextInt();
