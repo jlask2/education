@@ -1,0 +1,109 @@
+Script started on Tue 14 Apr 2015 03:56:29 PM EDT
+[51] [jlask2@holly2]% newcat newcat.c
+/******************************************************************************
+* Author@ Jason Laske
+* Professor Anand
+* Date Assigned: 4/2/2015
+* Date Due: 4/12/2015
+* Date Submitted: 4/12/2015
+* Description: newcat program uses unix system calls to achieve the same 
+* results of oldcat which utilizes c library functions. Accepts input from
+* either standard input or a given file and outputs to standard output.
+* Can easily be extended to output to a given file as well. 
+******************************************************************************/
+/**Header Declarations*/
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <unistd.h>
+#include <fcntl.h>
+
+/**Funtion Prototype*/
+void filecopy(int ifd, int ofd);
+
+/**Main Function*/
+int main(int argc, char *argv[]){
+
+int fd;
+char *prog = argv[0];
+
+if(argc == 1){   //if no file specified read from std input
+  filecopy(STDIN_FILENO, STDOUT_FILENO);
+}else{           // else for each file name given read from 
+                 //the file and output to std output
+  while(--argc > 0){     
+     if((fd = open(argv[1], O_RDONLY, 0)) == -1){//reading from the file failed
+         fprintf(stderr, "%s: can't open %s\n", prog, argv[1]);
+         exit(EXIT_FAILURE);
+     }else{
+         filecopy(fd, STDOUT_FILENO);
+         close(fd);         
+     }
+  }
+}
+return 0;
+}
+
+/** filecopy Function reads each character from the given file
+* and outputs to standard output
+*/
+void filecopy(int ifd, int ofd){
+  int n;
+  char buf[512];
+  while((n = read(ifd, buf, 512)) > 0){
+    write(ofd, buf, n);
+  }
+}
+[52] [jlask2@holly2]% ls -l
+total 72
+-rw------- 1 jlask2 students    0 Apr 14 15:56 newc
+-rwx------ 1 jlask2 students 5738 Apr 14 14:46 newcat
+-rw------- 1 jlask2 students 1574 Apr 14 14:53 newcat.c
+-rw------- 1 jlask2 students 4803 Apr 14 15:55 oldc
+-rwx------ 1 jlask2 students 5898 Apr 14 14:59 oldcat
+-rw------- 1 jlask2 students 1335 Apr 14 14:59 oldcat.c
+-rwx------ 1 jlask2 students 5929 Apr 14 15:37 reader
+-rw------- 1 jlask2 students 2360 Apr 14 15:37 reader.c
+-rw------- 1 jlask2 students 5286 Apr 14 15:50 rw
+-rw------- 1 jlask2 students  368 Apr 11 23:41 template.c
+--wx------ 1 jlask2 students   23 Apr 14 15:02 testcat.txt
+-rwx------ 1 jlask2 students 5417 Apr 14 15:39 writer
+-rw------- 1 jlask2 students 1492 Apr 14 15:38 writer.c
+[53] [jlask2@holly2]% newcat testcat.txt
+newcat: can't open testcat.txt
+[54] [jlask2@holly2]% chmod 700 testcat.txt
+[55] [jlask2@holly2]% ls -la
+total 80
+drwxrwxr-x 2 jlask2 students 4096 Apr 14 15:56 .
+drwxrwxr-x 5 jlask2 students 4096 Apr  2 14:48 ..
+-rw------- 1 jlask2 students    0 Apr 14 15:56 newc
+-rwx------ 1 jlask2 students 5738 Apr 14 14:46 newcat
+-rw------- 1 jlask2 students 1574 Apr 14 14:53 newcat.c
+-rw------- 1 jlask2 students 4803 Apr 14 15:55 oldc
+-rwx------ 1 jlask2 students 5898 Apr 14 14:59 oldcat
+-rw------- 1 jlask2 students 1335 Apr 14 14:59 oldcat.c
+-rwx------ 1 jlask2 students 5929 Apr 14 15:37 reader
+-rw------- 1 jlask2 students 2360 Apr 14 15:37 reader.c
+-rw------- 1 jlask2 students 5286 Apr 14 15:50 rw
+-rw------- 1 jlask2 students  368 Apr 11 23:41 template.c
+-rwx------ 1 jlask2 students   23 Apr 14 15:02 testcat.txt
+-rwx------ 1 jlask2 students 5417 Apr 14 15:39 writer
+-rw------- 1 jlask2 students 1492 Apr 14 15:38 writer.c
+[56] [jlask2@holly2]% newcat testcat.txt
+Hello from testcat.txt
+[57] [jlask2@holly2]% cta
+cta: Command not found.
+[58] [jlask2@holly2]% cat testcat.txt
+Hello from testcat.txt
+[59] [jlask2@holly2]% newcat somefilethatsmissing
+newcat: can't open somefilethatsmissing
+[60] [jlask2@holly2]% newcat
+hello from newcat standard  input
+hello from newcat standard  input
+this is a cat comand but using unis unix system calls rather than c library functions
+this is a cat comand but using unis unix system calls rather than c library functions
+exiting noew with cntrl d
+exiting noew with cntrl d
+[61] [jlask2@holly2]% ^Dexit
+
+Script done on Tue 14 Apr 2015 03:59:41 PM EDT

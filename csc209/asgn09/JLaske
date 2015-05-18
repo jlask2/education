@@ -1,0 +1,67 @@
+Script started on Wed 16 Apr 2014 08:33:00 PM EDT
+[46] [jlask2@holly2]% echo Jason Laske
+Jason Laske
+[47] [jlask2@holly2]% cat -n greet
+     1	#!/bin/bash
+     2	#
+     3	#Time of day greeting (Author: Jason Laske, Date: 04/16/2014)
+     4	#
+     5	if [[ $# -eq 0 ]]
+     6	   then
+     7		hour=`date +%H`	# command output substitution
+     8	   else
+     9		hour=$1
+    10	fi
+    11	#
+    12	#Check to see if the $hour is less than 0 or greater than 23
+    13	#
+    14	if [[ $hour -lt 0 || $hour -gt 23 ]]
+    15	   then 
+    16		echo "usage: $0 (A integer value between 0 and 23)"
+    17	   	exit 1
+    18	fi
+    19	#
+    20	if [[ $hour -lt 12 ]]
+    21	   then
+    22		echo "Good Morning!"
+    23	   else
+    24		if [[ $hour -lt 18 ]]
+    25		  then
+    26			echo "Good Afternoon!"
+    27		  else
+    28			echo "Good Evening!"
+    29		fi
+    30	fi
+    31	#
+    32	exit 0
+    33	#
+[48] [jlask2@holly2]% greet -1
+usage: .//greet (A integer value between 0 and 23)
+[49] [jlask2@holly2]% greet 0
+Good Morning!
+[50] [jlask2@holly2]% greet 1
+Good Morning!
+[51] [jlask2@holly2]% greet 11
+Good Morning!
+[52] [jlask2@holly2]% greet 12
+Good Afternoon!
+[53] [jlask2@holly2]% greet 13
+Good Afternoon!
+[54] [jlask2@holly2]% greet 17
+Good Afternoon!
+[55] [jlask2@holly2]% greet18
+greet18: Command not found.
+[56] [jlask2@holly2]% greet 18
+Good Evening!
+[57] [jlask2@holly2]% greet 19
+Good Evening!
+[58] [jlask2@holly2]% greet 23
+Good Evening!
+[59] [jlask2@holly2]% greet 24
+usage: .//greet (A integer value between 0 and 23)
+[60] [jlask2@holly2]% greet
+Good Evening!
+[61] [jlask2@holly2]% exit
+exit
+
+Script done on Wed 16 Apr 2014 08:34:46 PM EDT

@@ -1,0 +1,83 @@
+Script started on Wed 09 Apr 2014 12:24:44 AM EDT
+[19] [jlask2@holly2]% echo $USER
+jlask2
+[20] [jlask2@holly2]% ccat
+ccat: Command not found.
+[21] [jlask2@holly2]% cat -nE sedprog
+     1	s/^ *//g$
+     2	s/ *$//g$
+     3	s/  */ /g$
+     4	/^$/ d$
+[22] [jlask2@holly2]% cat -nE test01
+     1	Line one.$
+     2	   This is the second line.  $
+     3	      The third   $
+     4	$
+     5	   This    is    really line 4,  with one         blank line before.     $
+     6	$
+     7	$
+     8	 $
+     9	Five$
+    10	 $
+    11	Line 6 is this.  $
+    12	    Seven $
+    13	$
+    14	Eighth real line.   $
+    15	$
+    16	$
+    17	 Line 9  $
+    18	   Line   10   is   the  last$
+    19	$
+    20	                                 $
+[23] [jlask2@holly2]% cat -nE test02
+     1	Line one.$
+     2	This is the second line.$
+     3	The third$
+     4	This is really line 4, with one blank line before.$
+     5	Five$
+     6	Line 6 is this.$
+     7	Seven$
+     8	Eighth real line.$
+     9	Line 9$
+    10	Line 10 is the last$
+[24] [jlask2@holly2]% od -c test01
+0000000   L   i   n   e       o   n   e   .  \n               T   h   i
+0000020   s       i   s       t   h   e       s   e   c   o   n   d    
+0000040   l   i   n   e   .          \n                           T   h
+0000060   e       t   h   i   r   d              \n  \n               T
+0000100   h   i   s                   i   s                   r   e   a
+0000120   l   l   y       l   i   n   e       4   ,           w   i   t
+0000140   h       o   n   e                                       b   l
+0000160   a   n   k       l   i   n   e       b   e   f   o   r   e   .
+0000200                      \n  \n  \n      \n   F   i   v   e  \n    
+0000220  \n   L   i   n   e       6       i   s       t   h   i   s   .
+0000240          \n                   S   e   v   e   n      \n  \n   E
+0000260   i   g   h   t   h       r   e   a   l       l   i   n   e   .
+0000300              \n  \n  \n       L   i   n   e       9          \n
+0000320               L   i   n   e               1   0               i
+0000340   s               t   h   e           l   a   s   t  \n  \n    
+0000360                                                                
+*
+0000420  \n
+0000421
+[25] [jlask2@holly2]% od -c test02
+0000000   L   i   n   e       o   n   e   .  \n   T   h   i   s       i
+0000020   s       t   h   e       s   e   c   o   n   d       l   i   n
+0000040   e   .  \n   T   h   e       t   h   i   r   d  \n   T   h   i
+0000060   s       i   s       r   e   a   l   l   y       l   i   n   e
+0000100       4   ,       w   i   t   h       o   n   e       b   l   a
+0000120   n   k       l   i   n   e       b   e   f   o   r   e   .  \n
+0000140   F   i   v   e  \n   L   i   n   e       6       i   s       t
+0000160   h   i   s   .  \n   S   e   v   e   n  \n   E   i   g   h   t
+0000200   h       r   e   a   l       l   i   n   e   .  \n   L   i   n
+0000220   e       9  \n   L   i   n   e       1   0       i   s       t
+0000240   h   e       l   a   s   t  \n
+0000250
+[26] [jlask2@holly2]% wc test01
+ 20  35 273 test01
+[27] [jlask2@holly2]% wc test02
+ 10  35 168 test02
+[28] [jlask2@holly2]% exit
+exit
+
+Script done on Wed 09 Apr 2014 12:27:13 AM EDT

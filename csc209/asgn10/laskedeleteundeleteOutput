@@ -1,0 +1,298 @@
+Script started on Wed 30 Apr 2014 03:00:06 PM EDT
+[51] [jlask2@holly2]% echo Jason Laske
+Jason Laske
+[52] [jlask2@holly2]% ls
+delete	file2	 friday13th		    laskefindcmdOutput	   removetrash
+file1	findcmd  laskedeleteundeleteOutput  laskefriday13thOutput  undelete
+[53] [jlask2@holly2]% delete file1
+
+[54] [jlask2@holly2]% ls ~/.trash
+file1
+[55] [jlask2@holly2]% ls
+delete	findcmd     laskedeleteundeleteOutput  laskefriday13thOutput  undelete
+file2	friday13th  laskefindcmdOutput	       removetrash
+[56] [jlask2@holly2]% undelte
+undelte: Command not found.
+[57] [jlask2@holly2]% undelete file1
+
+[58] [jlask2@holly2]% ls ~/.trash
+[59] [jlask2@holly2]% ls
+delete	file2	 friday13th		    laskefindcmdOutput	   removetrash
+file1	findcmd  laskedeleteundeleteOutput  laskefriday13thOutput  undelete
+[60] [jlask2@holly2]% delt
+delt: Command not found.
+[61] [jlask2@holly2]% delete
+
+usage: .//delete filename
+[62] [jlask2@holly2]% undelete
+
+usage: .//undelete filename
+[63] [jlask2@holly2]% ls
+delete	file2	 friday13th		    laskefindcmdOutput	   removetrash
+file1	findcmd  laskedeleteundeleteOutput  laskefriday13thOutput  undelete
+[64] [jlask2@holly2]% delete file3
+
+.//delete: file3 does not exist
+[65] [jlask2@holly2]% u
+u: Command not found.
+[66] [jlask2@holly2]% ~[K
+[66] [jlask2@holly2]% ls ~/.trash
+[67] [jlask2@holly2]% undelete file3
+
+.//undelete: file3 does not exist in ~/.trash
+[68] [jlask2@holly2]% delete1
+delete1: Command not found.
+[69] [jlask2@holly2]% delete 2
+
+.//delete: 2 does not exist
+[70] [jlask2@holly2]% delete file2
+
+[71] [jlask2@holly2]% ls
+delete	findcmd     laskedeleteundeleteOutput  laskefriday13thOutput  undelete
+file1	friday13th  laskefindcmdOutput	       removetrash
+[72] [jlask2@holly2]% touch file2
+[73] [jlask2@holly2]% ls
+delete	file2	 friday13th		    laskefindcmdOutput	   removetrash
+file1	findcmd  laskedeleteundeleteOutput  laskefriday13thOutput  undelete
+[74] [jlask2@holly2]% undelete file2
+
+.//undelete: file2 exists in current working directory.
+ 		Overwrite? (y/n) n
+.//undelete: file2 is not deleted
+[75] [jlask2@holly2]% undelete file2
+
+.//undelete: file2 exists in current working directory.
+ 		Overwrite? (y/n) y
+[76] [jlask2@holly2]% ls
+delete	file2	 friday13th		    laskefindcmdOutput	   removetrash
+file1	findcmd  laskedeleteundeleteOutput  laskefriday13thOutput  undelete
+[77] [jlask2@holly2]% ls~
+ls~: Command not found.
+[78] [jlask2@holly2]% ls ~/.trash
+[79] [jlask2@holly2]% ex[K[K
+[79] [jlask2@holly2]% cat -n s
+cat: s: No such file or directory
+[80] [jlask2@holly2]% cat -n delete undelete
+     1	#!/bin/bash
+     2	#
+     3	#*************************
+     4	#Jason Laske
+     5	#Dr. Lakshamanan
+     6	#CSC209 Assignment10 delete
+     7	#Date Due: 5/7/2014
+     8	#Date Submitted: 5/7/2014
+     9	#*************************
+    10	#
+    11	#****************************************************************
+    12	# Describe the purpose of this program
+    13	#****************************************************************
+    14	#
+    15	# The program will remove the named file/directory from the current 
+    16	# working directory and place it in ~/.trash."
+    17	# Invoke as 
+    18	# ./delete filename
+    19	#
+    20	#****************************************************************
+    21	# Enter the while loop to run multiple iterations of the program
+    22	#****************************************************************
+    23	
+    24	 #continueFlag=1
+    25	 #while [[ $continueFlag -eq 1 ]]
+    26	 #do
+    27	 
+    28	 #echo ""
+    29	 #echo -n "Enter the command (usage: $0 integer1 ...): "; read add  
+    30	
+    31	#****************************************************************
+    32	# Check for command line arguments
+    33	#****************************************************************
+    34	 
+    35	 echo ""
+    36	 if [[ $# -ne 1 ]]
+    37	  then
+    38	     echo "usage: $0 filename"
+    39	     exit 1
+    40	 fi
+    41	
+    42	#****************************************************************
+    43	# Check if the named entry exists in the cwd
+    44	#****************************************************************
+    45	
+    46	 if [[ !(-e $1) ]]
+    47	  then
+    48	     echo "$0: $1 does not exist"
+    49	     exit 2
+    50	 fi
+    51	
+    52	#****************************************************************
+    53	# Check if ~/.trash exists; crate one if necessary
+    54	#****************************************************************
+    55	
+    56	 if [[ !(-d ~/.trash) ]]
+    57	   then  
+    58	      mkdir ~/.trash
+    59	 fi
+    60	 
+    61	#****************************************************************
+    62	# Check if ~/.trash contains an entry with the given name 
+    63	#****************************************************************
+    64	
+    65	 if [[ -e ~/.trash/$1 ]]
+    66	   then 
+    67	      echo -n "$0: $1 exists in .trash. Overwrite? (y/n) "
+    68	      read resp
+    69	      if [[ $resp == "y" ]]
+    70	        then
+    71	  	   rm -rf ~/.trash/$1
+    72	        else
+    73	           echo "$0: $1 is not deleted"
+    74		   exit 3
+    75	      fi
+    76	 fi
+    77	
+    78	#****************************************************************
+    79	# Move the enty from the cwd to ~/.trash
+    80	#****************************************************************
+    81	 
+    82	 mv $1 ~/.trash
+    83	
+    84	#****************************************************************
+    85	# Ask to continue running the program
+    86	#****************************************************************
+    87	
+    88	 #echo ""
+    89	 #echo -n "Would you like to continue? (y to continue)"; read continue
+    90	
+    91	 #DEBUG#  #echo "$continue"
+    92	
+    93	    #if [[ $continue != "y" ]]
+    94	    #then
+    95	    #   continueFlag=0
+    96	    #else
+    97	    #    continueFlag=1
+    98	    #fi
+    99	 #echo ""
+   100	 #done
+   101	
+   102	#****************************************************************
+   103	# Exit the program
+   104	#****************************************************************
+   105	
+   106	 exit 0
+   107	
+   108	#
+   109	#!/bin/bash
+   110	#
+   111	#*************************
+   112	#Jason Laske
+   113	#Dr. Lakshamanan
+   114	#CSC209 Assignment10 undelete
+   115	#Date Due: 5/7/2014
+   116	#Date Submitted: 5/7/2014
+   117	#*************************
+   118	#
+   119	#****************************************************************
+   120	# Describe the purpose of this program
+   121	#****************************************************************
+   122	#
+   123	# The program will replace the named file/directory from /.trash
+   124	# and place it in the current working directory."
+   125	# Invoke as 
+   126	# ./undelete filename
+   127	#
+   128	#****************************************************************
+   129	# Enter the while loop to run multiple iterations of the program
+   130	#****************************************************************
+   131	
+   132	 #continueFlag=1
+   133	 #while [[ $continueFlag -eq 1 ]]
+   134	 #do
+   135	 
+   136	 #echo ""
+   137	 #echo -n "Enter the command (usage: $0 filename: "; read add  
+   138	
+   139	#****************************************************************
+   140	# Check for command line arguments
+   141	#****************************************************************
+   142	 
+   143	 echo ""
+   144	 if [[ $# -ne 1 ]]
+   145	  then
+   146	     echo "usage: $0 filename"
+   147	     exit 1
+   148	 fi
+   149	
+   150	#****************************************************************
+   151	# Check if ~/.trash exists; if not report and exit
+   152	#****************************************************************
+   153	
+   154	 if [[ !(-d ~/.trash) ]]
+   155	   then  
+   156	     echo "~/.trash does not exist";
+   157	     exit 3 
+   158	 fi
+   159	
+   160	
+   161	#****************************************************************
+   162	# Check if the named entry exists in ~/.trash
+   163	#****************************************************************
+   164	
+   165	 if [[ !(-e ~/.trash/$1) ]]
+   166	  then
+   167	     echo "$0: $1 does not exist in ~/.trash"
+   168	     exit 2
+   169	 fi
+   170	 
+   171	#****************************************************************
+   172	# Check if cwd contains an entry with the given name 
+   173	#****************************************************************
+   174	
+   175	 if [[ -e ./$1 ]]
+   176	   then 
+   177	      echo -n "$0: $1 exists in current working directory.
+   178	 		Overwrite? (y/n) "
+   179	      read resp
+   180	      if [[ $resp == "y" ]]
+   181	        then
+   182	  	   rm -rf ./$1
+   183	        else
+   184	           echo "$0: $1 is not deleted"
+   185		   exit 3
+   186	      fi
+   187	 fi
+   188	
+   189	#****************************************************************
+   190	# Move the enty from ~/.trash to cwd
+   191	#****************************************************************
+   192	 
+   193	 mv ~/.trash/$1 ./$1
+   194	
+   195	#****************************************************************
+   196	# Ask to continue running the program
+   197	#****************************************************************
+   198	
+   199	 #echo ""
+   200	 #echo -n "Would you like to continue? (y to continue)"; read continue
+   201	
+   202	 #DEBUG#  #echo "$continue"
+   203	
+   204	    #if [[ $continue != "y" ]]
+   205	    #then
+   206	    #   continueFlag=0
+   207	    #else
+   208	    #    continueFlag=1
+   209	    #fi
+   210	 #echo ""
+   211	 #done
+   212	
+   213	#****************************************************************
+   214	# Exit the program
+   215	#****************************************************************
+   216	
+   217	 exit 0
+   218	
+   219	#
+[81] [jlask2@holly2]% exit
+exit
+
+Script done on Wed 30 Apr 2014 03:08:27 PM EDT

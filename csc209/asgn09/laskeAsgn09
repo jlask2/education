@@ -1,0 +1,78 @@
+Script started on Sat 19 Apr 2014 03:16:27 PM EDT
+[51] [jlask2@holly2]% cat -n fibonacci
+     1	#!/bin/bash
+     2	#
+     3	#*************************
+     4	#Jason Laske
+     5	#Dr. Lakshamanan
+     6	#CSC209 Assignment09 Fibonacci
+     7	#Date Due: 4/23/2014
+     8	#Date Submitted: 4/23/2014
+     9	#*************************
+    10	#
+    11	#
+    12	# 
+    13	 continueFlag=1
+    14	 while [[ $continueFlag -eq 1 ]]
+    15	 do
+    16	#
+    17	#
+    18	#
+    19	 echo ""
+    20	 echo "This program prints terms in the Fibonacci sequence."
+    21	#
+    22	#
+    23	#
+    24	 echo -n "Number of terms to be printed (enter a non-negative integer): "; read a
+    25	#
+    26	#
+    27	#
+    28	 echo ""   
+    29	 if [[ $a -lt 0 ]]
+    30	  then
+    31	     echo "Sorry, you must enter a non-negative integer!"
+    32	  else
+    33	
+    34	   b=0
+    35	   c=1
+    36	   d=0
+    37	   e=2
+    38	
+    39	   for i in `seq 1 $a`
+    40	   do 
+    41	     if [[ $e -eq 2 ]]
+    42	     then
+    43		echo -n "1 "
+    44		e=$((++e))
+    45	     else
+    46		d=$(($b + $c))
+    47		echo -n "$d "
+    48	        b=$c
+    49		c=$d
+    50	   	e=$((++e))
+    51	     fi
+    52	   done
+    53	 
+    54	 fi
+    55	
+    56	 echo ""
+    57	 echo ""
+    58	 echo -n "Would you like to enter another non-negative integer? (y to continue)"; read continue
+    59	
+    60	#DEBUG#  echo "$continue"
+    61	    
+    62	    if [[ $continue != "y" ]]
+    63	    then 
+    64		continueFlag=0
+    65	    else	
+    66		continueFlag=1
+    67	    fi 	
+    68	 echo ""
+    69	 done  
+    70	# 
+    71	 exit 0
+    72	#
+[52] [jlask2@holly2]% exit
+exit
+
+Script done on Sat 19 Apr 2014 03:16:55 PM EDT
