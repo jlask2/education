@@ -1,0 +1,234 @@
+<?xml version=.1.0. encoding=.utf-8.?>
+<!DOCTYPE html PUBLIC .-//W3C//DTD XHTML 1.0 Strict//EN. 
+http://www.w3.org/TR/xhtml111/DTD/xhtml11-strict-dtd.>
+
+<html xmlns=http://www.w3.org/1999/xhtml>
+<head>
+<link href="index.css" rel="stylesheet" type="text/css" />
+<title>XYZ Auto Insurance Quoter</title>
+</head>
+<body>
+<form>
+  <h1>Welcome to the XYZ Auto Insurance Quoter!</h1>
+  <p>
+  <hr/>
+  Welcome to XYZ Insurance! We provide services in the 
+  following states: NY, CT, NJ,<br>
+  VT, MA, PA. Please note 	   	
+  that we only insure cars manufactured in 2002 or later.
+  </p>
+  <p> In order for us to better serve you by getting you the best 
+    deal possible on your car<br>
+    insurance, please fill 	
+    out the form below with the most accurate information 
+    possible: </p>
+  <table>
+    <tr>
+      <td><label>First<br/>
+          Name:</label></td>
+      <td><input type="text" name="firstname" size="20" >
+        </input>
+        <label>M.I.:
+          <input type="text" name="mi" size="2" maxlength="2" >
+          </input>
+        </label>
+        <label>Last Name:
+          <input type="text" name="lastname" size="20" >
+          </input>
+        </label></td>
+    </tr>
+    <tr>
+      <td><label>Address:</label></td>
+      <td><input type="text" name="address" size="50" >
+        </input></td>
+    </tr>
+    <tr>
+      <td><label></label></td>
+      <td><input type="text" name="address" size="50" >
+        </input></td>
+    </tr>
+    <tr>
+      <td><label>City:</label></td>
+      <td><input type="text" name="city" size="20" >
+        </input>
+        <label>State:
+          <select name="state" autofocus="true" value="state">
+            <option value="ct">CT</option>
+            <option value="nj">NJ</option>
+            <option value="ny" selected="true">NY</option>
+            <option value="vt">VT</option>
+            <option value="ma">MA</option>
+            <option value="pa">PA</option>
+          </select>
+        </label>
+        <label>Zip (5-digits):
+          <input type="text" name="zip" size="5" maxlength="5" >
+          </input>
+        </label></td>
+    </tr>
+  </table>
+  <hr/>
+  <p><b>Driver information</b></p>
+  <table>
+    <tr>
+      <td><label>
+        Date of birth (mm/dd/yyyy):
+        <input type="text" name="month" size="2" maxlength="2" >
+        </input>
+        <label>/
+          <input type="text" name="day" size="2" maxlength="2" >
+        </label>
+        <label>/
+          </input>
+          <input type="text" name="year" size="2" maxlength="4" >
+          </input>
+        </label>
+        </label></td>
+    </tr>
+    <tr>
+      <td><label>Gender:
+          <select autofocus="true" value="gender">
+            <option value="male" selected="true">Male</option>
+            <option value="female">Female</option>
+          </select>
+        </label>
+        <label>Marital status:
+          <select autofocus="true" value="maritalstatus">
+            <option value="single" selected="true">Single</option>
+            <option value="married">Married</option>
+            <option value="separated">Separated</option>
+            <option value="divorced">Divorced</option>
+            <option value="widowed">Widowed</option>
+          </select>
+        </label></td>
+    </tr>
+  </table>
+  <p>
+    <label>Please indicate number of convictions for traffic violations 
+in the past 5 years:
+      <input type="text" name="numofconv" size="4" maxlength="4" >
+      </input>
+    </label>
+  </p>
+  <hr/>
+  <p><b>Car Information</b></p>
+  <label>Make:
+    <select name="make" autofocus="true" value="make">
+      <option value="cheverolet">Chevrolet</option>
+      <option value="honda">Honda</option>
+      <option value="ford">Ford</option>
+      <option value="toyota" selected="true">Toyota</option>
+    </select>
+  </label>
+  <label>Model:
+    <select name="model" autofocus="true" value="model">
+      <option value="accord">Accord</option>
+      <option value="camaro">Camaro</option>
+      <option value="camry">Camry</option>
+      <option value="caprice">Caprice</option>
+      <option value="civic">Civic</option>
+      <option value="corolla">Corolla</option>
+      <option value="edge">Edge</option>
+      <option value="expedition">Expedition</option>
+      <option value="fiesta">Fiesta</option>
+      <option value="odyssey">Odyssey</option>
+      <option value="rav4" selected="true">RAV4</option>
+      <option value="traverse">Traverse</option>
+      <option value="tahoe">Tahoe</option>
+      <option value="volt">Volt</option>
+    </select>
+  </label>
+  <label>Year:
+    <select name="caryear" autofocus="true">
+      <option value="2014">2014</option>
+      <option value="2013">2013</option>
+      <option value="2012">2012</option>
+      <option value="2011" selected="true">2011</option>
+      <option value="2010">2010</option>
+      <option value="2009">2009</option>
+      <option value="2008">2008</option>
+      <option value="2007">2007</option>
+      <option value="2006">2006</option>
+      <option value="2005">2005</option>
+      <option value="2004">2004</option>
+      <option value="2003">2003</option>
+      <option value="2002">2002</option>
+    </select>
+  </label>
+  <label>Color:
+    <input type="text" name="color" size="10" >
+    </input>
+  </label>
+  <p>Please indicate whether the car is to be driven to work, or 
+    used for pleasure, or both.<br>
+    Please check all that apply:</p>
+  <table size="2" id="workpleasure">
+    <tr>
+      <td></td>
+      <td><label>Work:
+          <input type="checkbox" name="work" value="work" 
+checked="true">
+          </input>
+        </label>
+        <label>Pleasure:
+          <input type="checkbox" name="pleasure" value="pleasure">
+          </input>
+        </label></td>
+    </tr>
+  </table>
+  <p>If "Work" checked, please indicate number of miles to work 
+    place (one-way):
+    <input type="text" size="6" name="miles">
+    </input>
+  </p>
+  <hr/>
+  <p><b>Income Information</b></p>
+  <p>We are requesting income information because residents in certain 
+high-insurance<br>
+    premium areas may qualify for a discount in their premiums based on 
+their driving record<br>
+    and income level. Please indicate your family's annual income: </p>
+  <table>
+    <tr>
+      <td><label>Less than $25,000</label></td>
+      <td><input type="radio" name="incomegroup" value="lessthan25000" 
+checked="true">
+        </input></td>
+    </tr>
+    <tr>
+      <td><label>Between $25,000 and $50,000</label></td>
+      <td><input type="radio" name="incomegroup" 
+value="between25000and50000">
+        </input></td>
+    </tr>
+    <tr>
+      <td><label>Between $50,000 and $75,000</label></td>
+      <td><input type="radio" name="incomegroup" 
+value="between50000and75000">
+        </input></td>
+    </tr>
+    <tr>
+      <td><label>Between $75,000 and $100,000</label></td>
+      <td><input type="radio" name="incomegroup" 
+value="between75000and100000">
+        </input></td>
+    </tr>
+    <tr>
+      <td><label>Greater than $100,000</label></td>
+      <td><input type="radio" name="incomegroup" 
+value="greaterthan100000">
+        </input></td>
+    </tr>
+  </table>
+  <br/>
+  <input type="submit" value="Submit Information">
+  </input>
+  <input type="Reset" value="reset">
+  </input>
+  <hr/>
+  <i>Last updated: September 17, 2014/ {Jason Laske 
+(jlask2@brockport.edu)}</i>
+</form>
+</body>
+</html>
+

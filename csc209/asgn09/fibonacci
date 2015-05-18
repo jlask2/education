@@ -1,0 +1,97 @@
+#!/bin/bash
+#
+#*************************
+#Jason Laske
+#Dr. Lakshamanan
+#CSC209 Assignment09 Fibonacci
+#Date Due: 4/23/2014
+#Date Submitted: 4/23/2014
+#*************************
+#
+#****************************************************************
+# Enter the while loop to run multiple iterations of the program
+#****************************************************************
+
+ continueFlag=1
+ while [[ $continueFlag -eq 1 ]]
+ do
+
+#****************************************************************
+# Describe the purpose of this program
+#****************************************************************
+
+ echo ""
+ echo "This program prints n terms in the Fibonacci sequence."
+
+#****************************************************************
+# Enter the number of terms to be printed out
+#****************************************************************
+  
+ echo -n "Number of terms to be printed (enter a non-negative integer): "; read a
+
+#****************************************************************
+# Check for a negative input, if not proceed with the calculations
+#****************************************************************
+ 
+echo ""   
+ if [[ $a -lt 0 ]]
+  then
+     echo "Sorry, you must enter a non-negative integer!"
+  else
+
+#****************************************************************
+# Set up some Variables 
+#****************************************************************
+   
+   b=0
+   c=1
+   d=0
+   e=2
+
+#****************************************************************
+# Control structure to handle the computation
+#****************************************************************
+   
+   for i in `seq 1 $a`
+   do 
+     if [[ $e -eq 2 ]]
+     then
+	echo -n "1 "
+	e=$((++e))
+     else
+	d=$(($b + $c))
+	echo -n "$d "
+        b=$c
+	c=$d
+   	e=$((++e))
+     fi
+   done
+ 
+ fi
+
+#****************************************************************
+# Ask to continue running the program
+#****************************************************************
+ 
+echo ""
+ echo ""
+ echo -n "Would you like to enter another non-negative integer? (y to continue)"; read continue
+
+#DEBUG#  echo "$continue"
+    
+    if [[ $continue != "y" ]]
+    then 
+	continueFlag=0
+    else	
+	continueFlag=1
+    fi 	
+ echo ""
+ done  
+
+#****************************************************************
+# Exit the program
+#**************************************************************** 
+ 
+exit 0
+
+#

@@ -1,0 +1,80 @@
+Script started on Wed 14 May 2014 07:47:16 PM EDT
+[51] [jlask2@holly2]% echo Jason Laske
+Jason Laske
+[52] [jlask2@holly2]% pwd
+/home/fall13/jlask2/csc209/final
+[53] [jlask2@holly2]% cat cache
+#!/bin/bash
+#
+# Program to backup an ordinary file in ~/.cache
+# A time stamp is appended to the file name 
+# The file permissions are set as read-only
+# 
+# Usage: ./cache file
+#
+# Check for argument
+if [[ $# -ne 1 ]]
+	then 
+		echo "Usage: $0 file"
+		exit 1
+fi
+#
+# Check if the named file exists and can be accessed
+if [[ !(-f $1) ]]
+	then 
+		echo "$0: File $1 cannot be accessed"
+		exit 2
+fi
+#
+# Check if the file is readable
+if [[ !(-r $1) ]]
+	then 	
+		echo "$0: File $1 is not readable"
+		exit 3
+fi
+#
+# Check if ~/.cache directory exits; else create one
+if [[ !(-d ~/.cache) ]]
+	then 
+		mkdir ~/.cache
+fi
+#
+# Set permissions for ~/.cache directory
+chmod 700 ~/.cache
+#
+# Form time stamp and copy file
+stamp=$(date +%Y%m%d%H%M%S)
+new=$(basename $1)
+new="$new.$stamp"
+cp $1 ~/.cache/$new
+chmod 400 ~/.cache/$new
+#
+exit 0
+#
+[54] [jlask2@holly2]% ls -la ~/cache
+ls: /home/fall13/jlask2/cache: No such file or directory
+[55] [jlask2@holly2]% cache[K[K[K[K[K
+[55] [jlask2@holly2]% cd csc209/final
+csc209/final: No such file or directory.
+[56] [jlask2@holly2]% cache
+Usage: .//cache file
+[57] [jlask2@holly2]% cache junk
+.//cache: File junk cannot be accessed
+[58] [jlask2@holly2]% cache test1
+[59] [jlask2@holly2]% cache .test2
+[60] [jlask2@holly2]% cache project2
+.//cache: File project2 cannot be accessed
+[61] [jlask2@holly2]% cache ./project1/hello
+[62] [jlask2@holly2]% cache ./test1
+[63] [jlask2@holly2]% ls -la ~/.cache
+total 12
+drwx------ 2 jlask2 students 4096 May 14 19:51 .
+drwx--x--x 7 jlask2 students 4096 May 14 19:50 ..
+-r-------- 1 jlask2 students   37 May 14 19:51 hello.20140514195135
+-r-------- 1 jlask2 students    0 May 14 19:50 test1.20140514195050
+-r-------- 1 jlask2 students    0 May 14 19:51 test1.20140514195148
+-r-------- 1 jlask2 students    0 May 14 19:51 .test2.20140514195104
+[64] [jlask2@holly2]% exit
+exit
+
+Script done on Wed 14 May 2014 07:52:42 PM EDT

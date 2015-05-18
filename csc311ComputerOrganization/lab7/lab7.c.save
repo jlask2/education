@@ -1,0 +1,62 @@
+#include <stdlib.h>
+#include <stdio.h>
+
+main(){
+
+char a;
+char z;
+char L;
+char dummy;
+//char d[7] = new char['d','e','c','i','m','a','l']; 
+int k = 0;
+
+ while(k == 0){
+	int i = 0;
+	printf("Base of input integer: Enter b for binary, d for decimal, h for hexadecimal or o for octal: \n");
+	scanf("%c", &a);
+	scanf("%c", &a);scanf("%c", &a);scanf("%c", &a);
+scanf("%c", &a);
+
+	printf("%c\n", a);
+	if(a == 'd'){
+		printf("Enter the number1: \n");
+		scanf("%d", &i);
+	}else if(a == 'h'){
+		printf("Enter the number2: \n");
+		scanf("%x", &i);
+	}else if(a == 'o'){
+        	printf("Enter the number3: \n");
+		scanf("%o", &i);
+	}else if(a == 'b'){
+		printf("Enter the number4: \n");
+		scanf("%d", &i);
+	}else{
+		printf("Error1\n");
+	}
+
+	printf("Enter the base of the output d, h or o: \n");
+	scanf("%c", &z);
+	printf("%c\n", z);
+
+	if(z == 'd'){
+       	        printf("decimal %d\n", i);
+	}else if(z == 'h'){
+       	 	printf("hex %\nx", i);
+	}else if(z == 'o'){
+	        printf("octal %o\n", i);
+	}else{
+		printf("Error2\n");
+	}
+	printf("The integer in is in \n");
+	
+	printf("Do you wish to do another? Y or N: ");
+	scanf("%c", &L);
+	
+	printf("\n\n");
+
+	if(L == 'N'){
+		k = 1;
+	}
+ }
+return 0;
+}

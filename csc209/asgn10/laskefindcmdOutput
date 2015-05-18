@@ -1,0 +1,149 @@
+Script started on Wed 30 Apr 2014 02:55:15 PM EDT
+[51] [jlask2@holly2]% echo Jason Laske
+Jason Laske
+[52] [jlask2@holly2]% ./findcmd
+
+usage: ./findcmd command
+[53] [jlask2@holly2]% ./findcmd findcmd
+
+ls: /usr/kerberos/bin/findcmd: No such file or directory
+ls: /usr/local/bin/findcmd: No such file or directory
+ls: /bin/findcmd: No such file or directory
+ls: /usr/bin/findcmd: No such file or directory
+ls: /usr/X11R6/bin/findcmd: No such file or directory
+./findcmd
+[54] [jlask2@holly2]% ./findcmd ping
+
+ls: /usr/kerberos/bin/ping: No such file or directory
+ls: /usr/local/bin/ping: No such file or directory
+/bin/ping
+[55] [jlask2@holly2]% ./findcmd ting
+
+ls: /usr/kerberos/bin/ting: No such file or directory
+ls: /usr/local/bin/ting: No such file or directory
+ls: /bin/ting: No such file or directory
+ls: /usr/bin/ting: No such file or directory
+ls: /usr/X11R6/bin/ting: No such file or directory
+ls: .//ting: No such file or directory
+ls: .//ting: No such file or directory
+./findcmd: cannot open directory /home/fall13/jlask2/bin
+Command not found. 
+
+[56] [jlask2@holly2]% which ping
+/bin/ping
+[57] [jlask2@holly2]% cat -n findcmd
+     1	#!/bin/bash
+     2	#
+     3	#*************************
+     4	#Jason Laske
+     5	#Dr. Lakshamanan
+     6	#CSC209 Assignment10 findcmd
+     7	#Date Due: 5/7/2014
+     8	#Date Submitted: 5/7/2014
+     9	#*************************
+    10	#
+    11	#****************************************************************
+    12	# Describe the purpose of this program
+    13	#****************************************************************
+    14	
+    15	 #echo ""
+    16	 #echo "This program finds an executable file in the ordered  
+    17	 #	listing of directories and outputs the path if it exists."
+    18	
+    19	#****************************************************************
+    20	# Enter the while loop to run multiple iterations of the program
+    21	#****************************************************************
+    22	
+    23	 #continueFlag=1
+    24	 #while [[ $continueFlag -eq 1 ]]
+    25	 #do
+    26	 
+    27	 #echo ""
+    28	 #echo -n "Enter the command (usage: $0 integer1 ...): "; read add  
+    29	
+    30	#****************************************************************
+    31	# Check for exactly 1 command line argument, if so proceed 
+    32	#****************************************************************
+    33	 
+    34	 echo ""
+    35	 if [[ $# -ne 1 ]]
+    36	  then
+    37	     echo "usage: $0 command"
+    38	     exit 1
+    39	 fi
+    40	
+    41	#****************************************************************
+    42	# Set up some Variables
+    43	#****************************************************************
+    44	
+    45	 notFound=0
+    46	
+    47	#****************************************************************
+    48	# Control structure to traverse the directories
+    49	#****************************************************************
+    50	   
+    51	   p=`echo $PATH | tr ':' ' '`
+    52	 #DEBUG# echo "$p"
+    53	   for i in $p
+    54	   do
+    55		if [[ !(-r $i && -x $i) ]]
+    56		then 
+    57		        echo "$0: cannot open directory $i"
+    58	          else
+    59			f=`ls $i/$1`
+    60			if [[ $f == $i/$1 ]]
+    61			then
+    62			    p=`echo "./"`			
+    63			    if [[ $i == "./" ]]
+    64			    then
+    65				echo "$i$1"
+    66				exit 2
+    67		            else
+    68				echo "$i/$1"
+    69		                exit 3
+    70		 	    fi
+    71			else
+    72				notFound=1 #Command not found
+    73			fi    
+    74		fi
+    75	 #DEBUG# echo "i: $i"    
+    76	   done
+    77	
+    78	#****************************************************************
+    79	# Output if no file found
+    80	#****************************************************************
+    81	
+    82	 if [[ notFound -eq 1 ]]
+    83	 then
+    84		 echo "Command not found. "
+    85	 fi
+    86	
+    87	#****************************************************************
+    88	# Ask to continue running the program
+    89	#****************************************************************
+    90	
+    91	 #echo ""
+    92	 #echo -n "Would you like to continue? (y to continue)"; read continue
+    93	
+    94	#DEBUG#  echo "$continue"
+    95	
+    96	    #if [[ $continue != "y" ]]
+    97	    #then
+    98	    #    continueFlag=0
+    99	    #else
+   100	    #    continueFlag=1
+   101	    #fi
+   102	 echo ""
+   103	# done
+   104	
+   105	#****************************************************************
+   106	# Exit the program
+   107	#****************************************************************
+   108	
+   109	 exit 4
+   110	
+   111	#
+[58] [jlask2@holly2]% exit
+exit
+
+Script done on Wed 30 Apr 2014 02:59:12 PM EDT

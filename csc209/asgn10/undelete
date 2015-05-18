@@ -1,0 +1,111 @@
+#!/bin/bash
+#
+#*************************
+#Jason Laske
+#Dr. Lakshamanan
+#CSC209 Assignment10 undelete
+#Date Due: 5/7/2014
+#Date Submitted: 5/7/2014
+#*************************
+#
+#****************************************************************
+# Describe the purpose of this program
+#****************************************************************
+#
+# The program will replace the named file/directory from /.trash
+# and place it in the current working directory."
+# Invoke as 
+# ./undelete filename
+#
+#****************************************************************
+# Enter the while loop to run multiple iterations of the program
+#****************************************************************
+
+ #continueFlag=1
+ #while [[ $continueFlag -eq 1 ]]
+ #do
+ 
+ #echo ""
+ #echo -n "Enter the command (usage: $0 filename: "; read add  
+
+#****************************************************************
+# Check for command line arguments
+#****************************************************************
+ 
+ echo ""
+ if [[ $# -ne 1 ]]
+  then
+     echo "usage: $0 filename"
+     exit 1
+ fi
+
+#****************************************************************
+# Check if ~/.trash exists; if not report and exit
+#****************************************************************
+
+ if [[ !(-d ~/.trash) ]]
+   then  
+     echo "~/.trash does not exist";
+     exit 3 
+ fi
+
+
+#****************************************************************
+# Check if the named entry exists in ~/.trash
+#****************************************************************
+
+ if [[ !(-e ~/.trash/$1) ]]
+  then
+     echo "$0: $1 does not exist in ~/.trash"
+     exit 2
+ fi
+ 
+#****************************************************************
+# Check if cwd contains an entry with the given name 
+#****************************************************************
+
+ if [[ -e ./$1 ]]
+   then 
+      echo -n "$0: $1 exists in current working directory.
+ 		Overwrite? (y/n) "
+      read resp
+      if [[ $resp == "y" ]]
+        then
+  	   rm -rf ./$1
+        else
+           echo "$0: $1 is not deleted"
+	   exit 3
+      fi
+ fi
+
+#****************************************************************
+# Move the enty from ~/.trash to cwd
+#****************************************************************
+ 
+ mv ~/.trash/$1 ./$1
+
+#****************************************************************
+# Ask to continue running the program
+#****************************************************************
+
+ #echo ""
+ #echo -n "Would you like to continue? (y to continue)"; read continue
+
+ #DEBUG#  #echo "$continue"
+
+    #if [[ $continue != "y" ]]
+    #then
+    #   continueFlag=0
+    #else
+    #    continueFlag=1
+    #fi
+ #echo ""
+ #done
+
+#****************************************************************
+# Exit the program
+#****************************************************************
+
+ exit 0
+
+#

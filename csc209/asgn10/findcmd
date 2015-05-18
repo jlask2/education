@@ -1,0 +1,111 @@
+#!/bin/bash
+#
+#*************************
+#Jason Laske
+#Dr. Lakshamanan
+#CSC209 Assignment10 findcmd
+#Date Due: 5/7/2014
+#Date Submitted: 5/7/2014
+#*************************
+#
+#****************************************************************
+# Describe the purpose of this program
+#****************************************************************
+
+ #echo ""
+ #echo "This program finds an executable file in the ordered  
+ #	listing of directories and outputs the path if it exists."
+
+#****************************************************************
+# Enter the while loop to run multiple iterations of the program
+#****************************************************************
+
+ #continueFlag=1
+ #while [[ $continueFlag -eq 1 ]]
+ #do
+ 
+ #echo ""
+ #echo -n "Enter the command (usage: $0 integer1 ...): "; read add  
+
+#****************************************************************
+# Check for exactly 1 command line argument, if so proceed 
+#****************************************************************
+ 
+ echo ""
+ if [[ $# -ne 1 ]]
+  then
+     echo "usage: $0 command"
+     exit 1
+ fi
+
+#****************************************************************
+# Set up some Variables
+#****************************************************************
+
+ notFound=0
+
+#****************************************************************
+# Control structure to traverse the directories
+#****************************************************************
+   
+   p=`echo $PATH | tr ':' ' '`
+ #DEBUG# echo "$p"
+   for i in $p
+   do
+	if [[ !(-r $i && -x $i) ]]
+	then 
+	        echo "$0: cannot open directory $i"
+          else
+		f=`ls $i/$1`
+		if [[ $f == $i/$1 ]]
+		then
+		    p=`echo "./"`			
+		    if [[ $i == "./" ]]
+		    then
+			echo "$i$1"
+			exit 2
+	            else
+			echo "$i/$1"
+	                exit 3
+	 	    fi
+		else
+			notFound=1 #Command not found
+		fi    
+	fi
+ #DEBUG# echo "i: $i"    
+   done
+
+#****************************************************************
+# Output if no file found
+#****************************************************************
+
+ if [[ notFound -eq 1 ]]
+ then
+	 echo "Command not found. "
+ fi
+
+#****************************************************************
+# Ask to continue running the program
+#****************************************************************
+
+ #echo ""
+ #echo -n "Would you like to continue? (y to continue)"; read continue
+
+#DEBUG#  echo "$continue"
+
+    #if [[ $continue != "y" ]]
+    #then
+    #    continueFlag=0
+    #else
+    #    continueFlag=1
+    #fi
+ echo ""
+# done
+
+#****************************************************************
+# Exit the program
+#****************************************************************
+
+ exit 4
+
+#
