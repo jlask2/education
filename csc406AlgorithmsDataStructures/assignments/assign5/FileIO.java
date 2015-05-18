@@ -2,10 +2,10 @@
  * Jason Laske
  * Professor Rajasethupathy
  * CSC 406 01 Spring 2015
- * Assignment 4
- * Date Assigned: 3/26/2015
- * Date Due: 4/15/2015
- * Date Submitted: 4/16/2015
+ * Assignment 5
+ * Date Assigned: 4/18/2015
+ * Date Due: 4/29/2015
+ * Date Submitted: 4/29/2015
  ***********************************/
 
 package algoData;
@@ -64,9 +64,11 @@ class FileIO {
 								+ "\n\t8) MCM with Optimized Parenthesization"
 								+ "\n\t9) Splay Tree"
 								+ "\n\t10) AVL Tree - coming soon"
-								+ "\n\t11) Black and Red Tree - coming soon"
+								+ "\n\t11) Black and Red Tree"
 								+ "\n\t12) B-Tree - coming soon"
 								+ "\n\t13) B+ Tree - coming soon"
+								+ "\n\t14) Huffman Tree"
+								+ "\n\t15) Simplex Method - Linear Programming Strategy"
 								+ "\nPlease select a choice: ");
 				inputChoice = new Scanner(System.in);
 				choice = inputChoice.nextInt();
@@ -170,21 +172,67 @@ class FileIO {
 							buffOut.write(sc1.nextLine() + " ");
 							buffOut.close();
 							break;
-						case 9:												// Splay Tree
+						case 9:											// Splay Tree
+						case 10:										// AVL Tree
+						case 11:										// Black and Red Tree
+						case 12:										// B - Tree
+						case 13:										// B+ - Tree
+						case 14:										// Huffman Tree
 							buffOut.newLine();
+							String treeType = "";
+							if(choice == 9){
+								 treeType = "Splay ";
+							}else if(choice == 10){
+								 treeType = "AVL ";
+							}else if(choice == 11){
+								 treeType = "Red Black ";
+							}else if(choice == 12){
+								 treeType = "B - "; 
+							}else if(choice == 13){
+								 treeType = "B+ - ";
+							}else if(choice == 14){
+								 treeType = "Huffman "; 
+							}else{
+							     throw new IllegalArgumentException("Choice not specified " +
+							     												  "correctly");
+							}
 							System.out.println("Enter in the initial nodes for this " +
-																			"Splay Tree. ");
+																			treeType+"Tree. ");
 							sc1 = new Scanner(System.in);
 							buffOut.write(sc1.nextLine() + " ");
+							buffOut.close();			
+							break;
+						case 15:										// Simplex Method
+							buffOut.newLine();
+							System.out.println("Please enter in the number of unknown variables X. ");
+							sc1 = new Scanner(System.in);
+							buffOut.write(sc1.nextLine());
+							buffOut.newLine();
+							System.out.println("Please enter in the number of constraints C. ");
+							sc1 = new Scanner(System.in);
+							int numOfConstraints = Integer.parseInt(sc1.nextLine());
+							buffOut.write(numOfConstraints+"");	
+							buffOut.newLine();
+							System.out.println("Please enter in the set of the coefficients of " +
+																					"the variables X. ");
+							sc1 = new Scanner(System.in);
+							buffOut.write(sc1.nextLine());
+							buffOut.newLine();
+							int count = 0;
+							do{
+								System.out.println("Please enter in the set of the coefficients of " +
+																					"the constraints C. ");
+								sc1 = new Scanner(System.in);
+								line = sc1.nextLine() + " ";
+								buffOut.write(line);
+								buffOut.newLine();
+								count++;
+								if(count == numOfConstraints){
+									line = " ";
+								}
+							}while(line != " ");
+							line = "";
 							buffOut.close();
-							break;
-						case 10:										// AVL Tree
-							break;
-						case 11:										// Black and Red Tree
-							break;
-						case 12:										// B - Tree
-							break;
-						case 13:										// B+ - Tree
 							break;
 						default:
 							System.out.println("Something went wrong, exiting the program!" +
@@ -250,24 +298,22 @@ class FileIO {
 				break;
 			case 7:
 			case 8:
-			case 9:												// Splay Tree
-				if (inFileLineArray.length != 1) { 	// if the number of
-													// tokens is not 1 throw
-													// an exception
-					buffIn.close();
-					throw new IllegalArgumentException(
-							"Incorrect amount of inputs given");
-				} else { 					// mark the second line in the file
-						buffIn.mark(100);
-				}
-				break;
+			case 9:												// Splay Tree				
 			case 10:											// AVL Tree
-				break;
 			case 11:											// Black and Red Tree
-				break;
 			case 12:											// B - Tree
-				break;
 			case 13:											// B+ - Tree
+			case 14:										// Huffman - Tree
+			case 15:										// Simplex Method
+				if (inFileLineArray.length != 1) { 	// if the number of
+					// tokens is not 1 throw
+					// an exception
+				buffIn.close();
+					throw new IllegalArgumentException(
+											"Incorrect amount of inputs given");
+				} else { 					// mark the second line in the file
+					buffIn.mark(100);
+				}
 				break;
 			default:
 				System.out.println("Something went wrong, exiting the program!" +
@@ -292,7 +338,7 @@ class FileIO {
 	 * creating or reading the file
 	 */
 	protected void mainMenu(int choice) {
-		if(choice < 10 && choice >= 0){ // applying restraints to the user selection
+		if(choice < 16 && choice >= 0){ // applying restraints to the user selection
 			handleIO(choice);
 		}else{
 			choice = -1;
@@ -466,6 +512,7 @@ class FileIO {
 			           switch (option){
 			           case 0:
 			        	   spt.clear();
+			        	   buffIn.close();
 			        	   handleIO(choice);
 			        	   if ((line = buffIn.readLine()) != null) {
 			        		   System.out.println("The file contents were: "+line);
@@ -509,16 +556,18 @@ class FileIO {
 					       System.out.println(spt.toString());
 			               break;  
 			           case 7 : 
+			        	   buffIn.close();
 			        	   System.out.println("Going back to the Main Menu");
 			        	   break;
 			           default :
 			        	   option = 7;
+			        	   buffIn.close();
 			               System.out.println("Not a valid entry. Going back to " +
 			               										"the Main Menu\n ");
 			               break;   
 			           }
 			       } while (option != 7);
-			       
+			       buffIn.close();
 			} catch (final NumberFormatException nfe) {
 				nfe.printStackTrace();
 			} catch (IOException e) {
@@ -528,10 +577,253 @@ class FileIO {
 		case 10:											// AVL Tree
 			break;
 		case 11:											// Black and Red Tree
+			try {
+				   Scanner scan = new Scanner(System.in);
+			       int option;
+			       String fileContents = "";
+			       String menuOptions = "";
+			       
+			       BRTree rbt = new BRTree(Integer.MIN_VALUE);
+			       
+			       if ((line = buffIn.readLine()) != null) {
+			    	   fileContents += "The file contents are: "+line+"\n";
+			    	   System.out.println(fileContents);
+	        		   final String[] lineArray = line.split(" ");
+	        		   for (int s = 0; s < lineArray.length; s++) {
+							rbt.insert(Integer.parseInt(lineArray[s]));
+					   }
+	        	   }
+			       //Display tree 
+			       fileContents += rbt.toString()+"\n";
+			       System.out.println(rbt.toString());
+		          
+			       //Perform tree operations
+			       do    
+			       {    
+			           menuOptions = "\n\nRed and Black Tree Operations\n"
+			           +"\t0. Read from a file (note: reading from a file will clear " +
+			           												"the current tree)\n" 
+			           +"\t1. Insert\n"
+			           +"\t2. Search\n"
+			           +"\t3. Size of n(T) - the total number of nodes in the tree\n"
+			           +"\t4. Check if empty\n"
+			           +"\t5. Clear the tree\n"
+			           +"\t6. Write out to a file\n"
+			           +"\t7. Go back to Main Menu\n"
+			           +"Please select a choice\n";
+			           System.out.println(menuOptions);
+			           fileContents += menuOptions;
+			           
+			           option = scan.nextInt();
+			           fileContents += option+"\n\n";
+			           switch (option){
+			           case 0:
+			        	   rbt.clear();
+			        	   buffIn.close();
+			        	   handleIO(choice);
+			        	   if ((line = buffIn.readLine()) != null) {
+			        		   fileContents += "The file contents were: "+line+"\n";
+			        		   System.out.println("The file contents were: "+line);
+			        		   final String[] lineArray = line.split(" ");
+			        		   for (int s = 0; s < lineArray.length; s++) {
+									rbt.insert(Integer.parseInt(lineArray[s]));
+							   }
+			        	   }
+			        	   //Display tree 
+			        	   fileContents += rbt.toString()+"\n";
+					       System.out.println(rbt.toString());
+			               break;
+			           case 1 : 
+			        	   fileContents += "Enter integer nodeData to insert\n";
+			               System.out.println("Enter integer nodeData to insert");
+			               int scnt = scan.nextInt();
+			        	   fileContents += scnt+"\n";
+			               rbt.insert(scnt);                     
+			               //Display tree 
+			               fileContents += rbt.toString()+"\n";
+					       System.out.println(rbt.toString());
+			               break;                          
+			           case 2 : 
+			        	   fileContents += "Enter integer nodeData to search\n";
+			               System.out.println("Enter integer nodeData to search");
+			               int scnt2 = scan.nextInt();
+			        	   fileContents += scnt2+"\n";
+			               boolean searchResult = rbt.search(scnt2);
+			        	   fileContents += "Search result : "+searchResult+"\n";
+			        	   System.out.println("Search result : "+searchResult);
+			            		   				
+			               //Display tree 
+			               fileContents += rbt.toString()+"\n";
+					       System.out.println(rbt.toString());
+			               break;                                          
+			           case 3 : 
+			        	   fileContents += "Nodes = "+ rbt.countNodes()+"\n";
+					       System.out.println("Nodes = "+ rbt.countNodes());
+			               break;     
+			           case 4 : 
+			        	   fileContents += "Empty status = "+ rbt.isEmpty()+"\n";
+					       System.out.println("Empty status = "+ rbt.isEmpty());
+			               break;     
+			           case 5 : 
+			        	   fileContents += "\nTree Cleared\n";
+					       System.out.println("\nTree Cleared");
+			               rbt.clear();
+			               //Display tree 
+			               fileContents += rbt.toString()+"\n";
+					       System.out.println(rbt.toString());
+			               break;  
+			           case 6 :
+			        	   buffIn.close();
+			        	   System.out.println("Select a new output filename: \n");
+				   	        String filename = "defaultOutputRBTree"; 
+				   	        scan = new Scanner(System.in);
+				   	        filename = scan.nextLine()+".txt";
+				   	        buffOut = new BufferedWriter(new FileWriter(filename));
+				   	        buffOut.write(fileContents+"\n");
+				   	        buffOut.close();
+			        	   break;
+			           case 7 : 
+			        	   buffIn.close();
+			        	   System.out.println("Going back to the Main Menu");
+			        	   break;
+			           default :
+			        	   option = 7;
+			        	   buffIn.close();
+			               System.out.println("Not a valid entry. Going back to " +
+			               										"the Main Menu\n ");
+			               break;   
+			           }
+			       } while (option != 7);
+			       buffIn.close();
+			} catch (final NumberFormatException nfe) {
+				nfe.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}      
 			break;
 		case 12:											// B - Tree
 			break;
 		case 13:											// B+ - Tree
+			break;
+		case 14:										// Huffman - Tree
+			break;
+		case 15:										// Simplex Method
+			String fileContents = "The file contents are: \n";
+			int lineNumber = 0;
+			int numOfUnknowns = 0;
+			int numOfConstraints = 0;
+			double[] theEquation;
+			double[] theObjectiveRow;
+			double[][] theConstraintCoefficients;
+			Scanner scan;
+
+			/*-----------------------Read From the File------------------------*/
+			try {
+				/*-------------get the number of unknowns---------------*/
+				if((line = buffIn.readLine()) != null){
+					numOfUnknowns = Integer.parseInt(line);
+					fileContents += line+"\n";
+				}
+
+				/*-------------get the number of constraints---------------*/
+				if((line = buffIn.readLine()) != null){
+					numOfConstraints = Integer.parseInt(line);
+					fileContents += line+"\n";
+				}
+				
+				/*-------------get the coefficients of the equation---------------*/
+				theEquation = new double[numOfUnknowns];
+				if((line = buffIn.readLine()) != null){
+					fileContents += line+"\n";
+					scan = new Scanner(line);
+					int i = 0;
+					while(scan.hasNext()){ 
+						theEquation[i] = scan.nextDouble();
+						i++;
+					}
+				}
+				
+				/*-------------get the coefficients of the constraints---------------*/
+				int i = 0;
+				int j = 0;
+				theConstraintCoefficients = new double[numOfConstraints][numOfUnknowns+1];
+				while(((line = buffIn.readLine()) != null) && (lineNumber !=  numOfConstraints)) {
+				   fileContents += line+"\n";
+				   scan = new Scanner(line);  
+				   while(scan.hasNext()){
+				   	   theConstraintCoefficients[i][j] = scan.nextDouble();
+					   j++;
+				   }
+				   i++;
+				   j = 0;
+				   lineNumber++;
+	     	    }
+				lineNumber = 0;
+				
+				/*-------------produce the initial objective row---------------*/
+				theObjectiveRow = new double[numOfUnknowns+1];
+				int ii= 0;
+				for(ii= 0; ii < theEquation.length; ii++){
+					theObjectiveRow[ii] = (theEquation[ii]*-1);
+				}
+				theObjectiveRow[ii] = 0;
+
+				
+			/*-----------------------For File Output------------------------*/
+				
+				fileContents += "\ntheEquation:\n\n";
+				for(int y = 0; y < theEquation.length; y++){
+						fileContents += "\t"+theEquation[y];				
+				}
+				fileContents += "\n";
+				
+				fileContents += "\ntheConstraintCoefficients matrix:\n\n";
+				for(int y = 0; y < theConstraintCoefficients.length; y++){
+					
+					for(int z = 0; z < theConstraintCoefficients[0].length; z++){				
+						fileContents += "\t"+theConstraintCoefficients[y][z];
+					}
+					fileContents += "\n";
+				}
+				fileContents += "\n";
+				
+				fileContents += "theObjectiveRow:\n\n";
+				for(int y = 0; y < theObjectiveRow.length; y++){
+					fileContents += "\t"+theObjectiveRow[y];				
+				}
+				fileContents += "\n\n";
+				boolean unbounded = false;
+				
+				//Perform the Test by making the call to this static method
+				try{
+					Simplex.test(theConstraintCoefficients, theObjectiveRow);
+				}catch(ArithmeticException a){
+					a.printStackTrace();
+					 System.out.println("Select a new output filename: \n");
+			        String filename = "defaultOutputSimplex"; 
+			        scan = new Scanner(System.in);
+			        filename = scan.nextLine()+".txt";
+			        buffOut = new BufferedWriter(new FileWriter(filename));
+			        buffOut.write(fileContents+"\n"+Simplex.getCompiledResults());
+			        buffOut.close();
+			        unbounded = true;
+				}
+			if(unbounded == false){	
+		        System.out.println("Select a new output filename: \n");
+		        String filename = "defaultOutputSimplex"; 
+		        scan = new Scanner(System.in);
+		        filename = scan.nextLine()+".txt";
+		        buffOut = new BufferedWriter(new FileWriter(filename));
+		        buffOut.write(fileContents+"\n"+Simplex.getCompiledResults());
+		        buffOut.close();
+		        unbounded = false;
+			}
+	    
+	        } catch (NumberFormatException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			break;
 		default:
 			System.out.println("Something went wrong, exiting the program!: mainMenu()");
