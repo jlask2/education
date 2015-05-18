@@ -1,0 +1,4 @@
+const asd = 3 ;
+var b2 , b3 ;
+procedure c3 ; t7r5 := - 10 
+d3 := + t7r5 * 9 / 0 $
