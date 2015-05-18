@@ -1,0 +1,222 @@
+﻿<?xml version=“1.0” encoding=“utf-8”?>
+<!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.0 Strict//EN” 
+http://www.w3.org/TR/xhtml111/DTD/xhtml11-strict-dtd”>
+
+<html xmlns=http://www.w3.org/1999/xhtml>
+<head><meta charset="utf-8"> 
+    <title>XYZ Auto Insurance Quoter</title>
+<link href=".\styles.css" rel="stylesheet" type="text/css"></link>
+<script type="text/javascript" src="script.js"></script>
+<style type="text/css">
+    </style>
+</head>  
+<body>
+<form name="autoform" action="server.php" method="post" onsubmit="validateAutoFormOnSubmit()">
+<h1>Welcome to the XYZ Auto Insurance Quoter!</h1>
+<p>
+<hr/>
+Welcome to XYZ Insurance! We provide services in the 
+following states: NY, CT, NJ, VT, MA, PA. Please note 	   	
+that we only insure cars manufactured in 2002 or later. 
+</p>
+<p>
+In order for us to better serve you by getting you the best 
+deal possible on your car insurance, please fill 	
+out the form below with the most accurate information 
+possible:  
+</p>
+<table>
+<tr>
+<td><label>First<br/>Name:</label></td>
+<td>
+<input type="text" id="firstname" name="namefirst" value="" required="true" onchange="firstnameValidity()"></input>
+    <label>M.I.:<input type="text" id="mi" name="namemi" size="1" maxlength="1" onchange="miValidity()"></input></label>
+    <label>Last Name:<input type="text" id="lastname" name="namelast" size="20" required="true" onchange="lastnameValidity()"></input></label>
+</td> 	
+</tr>
+<tr>
+<td><label>Address:</label></td>
+    <td><input type="text" id="address" name="nameaddress" size="50" required="true" onchange="addressValidity()"></input></td>
+</tr>
+<tr>  
+<td><label></label></td>
+    <td><input type="text" id="address" name="nameaddress" size="50" onchange="addressValidity()"></input></td>
+</tr>
+<tr>
+<td><label>City:</label></td>
+    <td><input type="text" id="city" name="namecity" size="20" required="true" onchange="cityValidity()"></input> 
+<label>State:
+    <select id="state" name="namestate" required="true" >
+<option>CT</option>
+<option>NJ</option>
+<option selected>NY</option>
+<option>VT</option>
+<option>MA</option>
+<option>PA</option>
+</select>
+</label>
+<label>
+    Zip (5-digits):<input type="text" id="zip" name="namezip" size="5" maxlength="5" required="true" onchange="zipValidity()"></input>
+</label>
+</td>	
+</tr>
+</table>
+<hr/>
+<p><b>Driver information</b></p>
+<table>
+<tr>
+<td>
+<label>
+    Date of birth (mm/dd/yyyy): <input type="text" id="monthdob" name="namedob" size="2" maxlength="2" required="true" onchange="monthdobValidity()"></input>
+    <label>/<input type="text" id="daydob" name="namedob" size="2" maxlength="2" required="true" onchange="daydobValidity()"></input></label>
+    <label>/<input type="text" id="yeardob" name="namedob" size="2" maxlength="4" required="true" onchange="yeardobValidity()"></input></label>
+</label>
+</td>
+</tr>
+<tr>
+<td>
+<label>Gender:
+    <select id="gender" name="namegender" required="true" onchange="genderValidity()">
+<option>Male</option>
+<option selected>Female</option>
+</select>
+</label>
+<label>Marital status:
+    <select id="maritalstatus" name="namemaritalstatus" required="true" onchange="maritalstatusValidity()">
+<option selected>Single</option>
+<option>Married</option>
+<option>Separated</option>
+<option>Divorced</option>
+<option>Widowed</option>
+</select>
+</label>
+</td>
+</tr>
+</table>
+<p>
+<label>Please indicate number of convictions for traffic violations in the past 5 years:
+    <input type="text" id="numofconv" name="namenumofconv" size="4" maxlength="4" required="true" onchange="numofconvValidity()"></input>
+</label>
+</p>
+<hr/>
+<p><b>Car Information</b></p>
+
+<label>Make:
+    <select id="make" name="namemake" required="true" onchange="makeValidity()">
+<option>Chevrolet</option>
+<option>Honda</option>
+<option>Ford</option>
+<option selected>Toyota</option> 
+</select>
+</label>
+<label>Model:
+    <select id="model" name="namemodel" required="true" onchange="modelValidity()">
+<option>Accord</option>
+<option>Camaro</option>
+<option>Camry</option>
+<option>Caprice</option>
+<option>Civic</option>
+<option selected>Corolla</option>
+<option>Edge</option>
+<option>Expedition</option>
+<option>Fiesta</option>
+<option>Odyssey</option>
+<option>RAV4</option>
+<option>Traverse</option>
+<option>Tahoe</option>
+<option>Volt</option>				
+</select>
+</label>
+<label>Year:
+    <select id="year" name="nameyear" required="true" onchange="yearValidity()">
+<option selected>2014</option>
+<option>2013</option>
+<option>2012</option>
+<option>2011</option>
+<option>2010</option>
+<option>2009</option>
+<option>2008</option>
+<option>2007</option>
+<option>2006</option>
+<option>2005</option>
+<option>2004</option>
+<option>2003</option>
+<option>2002</option>
+</select>
+</label>
+<label>Color:
+    <input type="text" id="color" name="namecolor" size="10" required="true" onchange="colorValidity()"></input>
+</label>
+<p>
+Please indicate whether the car is to be driven to work, or 
+used for pleasure, or both. Please check all that apply:
+</p>
+<label id="workpleasure">Work:<input type="checkbox" id="work" name="namework"></input></label>
+<label>Pleasure:<input type="checkbox" id="pleasure" name="namepleasure" checked="true"></input></label>
+<p>
+If "Work" checked, please indicate number of miles to work 
+    place (one-way): <input type="text" id="miles" name="namemiles" onchange="milesValidity()"></input></p>
+<hr/>
+<p><b>Income Information</b></p>
+<p>
+We are requesting income information because residents in 
+certain high-insurance premium areas may qualify for a   
+
+discount in their premiums based on their driving record and 
+income level. Please indicate your family's annual income: 
+</p>
+<table>
+<tr>
+<td>
+<label>Less than $25,000</label>
+</td> 
+<td>
+<input type="radio" name="incomegroup" value="less25000" checked></input>
+</td>
+</tr>
+<tr>
+<td>
+<label>Between $25,000 and $50,000</label>
+</td>
+<td> 
+<input type="radio" name="incomegroup" value="25000_50000"></input>
+</td>
+</tr>
+<tr> 
+<td>
+<label>Between $50,000 and $75,000</label>
+</td>
+<td>
+<input type="radio" name="incomegroup" value="50000_75000"></input>
+</td>
+</tr>
+<tr>
+<td>	  
+<label>Between $75,000 and $100,000</label>
+</td>
+<td> 
+<input type="radio" name="incomegroup" value="75000_100000"></input>
+</td>
+</tr>
+<tr>
+<td>
+<label>greater than $100,000</label>
+</td>
+<td>
+<input type="radio" name="incomegroup" value="greater100000"></input>
+</td>
+</tr>
+</table>
+<br/>
+<input type="Submit" id="submit" name="Submit" value="Submit Information" ></input>
+<input type="Reset" id="reset" name="Reset" onclick="resetFields()"></input>
+<hr/>
+<i>Last updated: October 6, 2014/ {Jason Laske (jlask2@brockport.edu)}</i>		
+</form>	
+
+<p id="demo">demo:</p>
+<p id="demo2">demo2:</p>
+<p id="demo3">demo3:</p>
+
+</body>
+</html>
